@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubAlloc Hub | Admin Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { background: linear-gradient(135deg, #f4f7ff 0%, #f8fafc 55%, #eef2ff 100%); }
+        .admin-header { background: linear-gradient(120deg, #172554, #3454d1); color: #fff; }
+        .admin-header .navbar-inner { min-height: 78px; }
+        .admin-header .brand, .admin-header .nav-links a { color: #fff; }
+        .admin-header .nav-links a { opacity: .9; }
+        .admin-header .nav-links a:hover { opacity: 1; }
+        .hero { background: linear-gradient(120deg, #fff, #eef2ff); border: 1px solid #dbe4ff; border-radius: 18px; padding: 28px; margin-bottom: 24px; box-shadow: var(--shadow); }
+        .hero h1 { margin: 0; font-size: clamp(26px, 4vw, 36px); color: #172554; }
+        .hero p { color: var(--text-muted); margin: 8px 0 0; }
+        .section-card { margin-top: 24px; }
+        .action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+        .action-tile { border: 1px solid var(--border); border-radius: 12px; background: #fff; padding: 18px; }
+        .action-tile h3 { margin: 0 0 7px; font-size: 17px; }
+        .action-tile p { color: var(--text-muted); margin: 0 0 14px; font-size: 14px; }
+        .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin: 16px 0; }
+        .subtle { color: var(--text-muted); }
+        #mySubstitutionsSection, #myNotificationsSection, #myTimetableSection { margin-top: 22px; }
+        #myNotificationsList > div, #mySubstitutionsSection > div { background: #fff; border: 1px solid var(--border) !important; border-radius: 12px !important; padding: 18px !important; margin-bottom: 12px !important; box-shadow: 0 4px 14px rgba(15,23,42,.04); }
+        #attendanceMessage, #allocationResult { margin-top: 16px; }
+        .logout-btn { background: #fff; color: #243da8; }
+        @media (max-width: 620px) { .hero { padding: 21px; } }
+    </style>
+</head>
+<body>
+    <header class="navbar admin-header">
+        <div class="navbar-inner">
+            <a class="brand" href="admin.html">SubAlloc Hub</a>
+            <nav class="nav-links" aria-label="Admin navigation">
+                <a href="#overview">Overview</a>
+                <a href="#management">Management</a>
+                <a href="#attendance">Attendance</a>
+                <a href="#substitution">Substitutions</a>
+            </nav>
+
+           <a
+    href="admin-profile.html"
+    style="
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        margin-right: 12px;
+    "
+>
+    Profile
+</a> 
+            <button class="logout-btn" type="button" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <main class="page-container">
+        <section class="hero" id="overview">
+            <h1 id="welcomeText">Welcome, Admin</h1>
+            <p>Manage faculty information, attendance, academic schedules, and substitution activity from one place.</p>
+        </section>
+
+        <section class="card-grid" aria-label="Dashboard statistics">
+            <article class="stat-card">
+                <p class="stat-label">Total Faculty</p>
+                <p class="stat-value" id="facultyCount">-</p>
+            </article>
+            <article class="stat-card">
+                <p class="stat-label">Subjects</p>
+                <p class="stat-value" id="subjectCount">-</p>
+            </article>
+            <article class="stat-card">
+                <p class="stat-label">Classes</p>
+                <p class="stat-value" id="classCount">-</p>
+            </article>
+            <article class="stat-card">
+                <p class="stat-label">Rooms</p>
+                <p class="stat-value" id="roomCount">-</p>
+            </article>
+        </section>
+
+        <section class="card section-card" id="management">
+            <div class="section-heading">
+                <div>
+                    <h2>Admin Management</h2>
+                    <p class="page-subtitle">Access the main academic and faculty management areas.</p>
+                </div>
+            </div>
+            <div class="action-grid">
+                
+                <article class="action-tile">
+
+    <h3>Faculty</h3>
+
+    <p>
+        Add, review, and maintain faculty records.
+    </p>
+
+    <a
+        class="btn"
+        href="admin-faculty.html"
+    >
+        Manage Faculty
+    </a>
+
+</article>
+                <article class="action-tile">
+
+    <h3>Subjects</h3>
+
+    <p>
+        Maintain subject information for the institution.
+    </p>
+
+    <a
+        class="btn"
+        href="admin-subjects.html"
+    >
+        Manage Subjects
+    </a>
+
+</article>
+                <article class="action-tile">
+
+    <h3>Classes</h3>
+
+    <p>
+        View and manage academic class information.
+    </p>
+
+    <a
+        class="btn"
+        href="admin-classes.html"
+    >
+        Manage Classes
+    </a>
+
+</article>
+                <article class="action-tile">
+    <h3>Rooms</h3>
+    <p>View and manage classrooms, labs, and seminar halls.</p>
+    <a class="btn" href="admin-rooms.html">
+        Manage Rooms
+    </a>
+</article>
+<article class="action-tile">
+    <h3>Attendance</h3>
+    <p>View faculty attendance and absence records.</p>
+    <a class="btn" href="admin-attendance.html">
+        Manage Attendance
+    </a>
+</article>
+<article class="action-tile">
+    <h3>Notifications</h3>
+    <p>View notification activity and delivery status.</p>
+    <a class="btn" href="admin-notifications.html">
+        Manage Notifications
+    </a>
+</article>
+<article class="action-tile">
+    <h3>Reports & Analytics</h3>
+    <p>View substitution activity, daily reports, and faculty workload.</p>
+    <a class="btn" href="admin-reports.html">
+        View Reports
+    </a>
+</article>
+                <article class="action-tile">
+    <h3>Timetable</h3>
+    <p>Review and maintain class schedules.</p>
+    <a class="btn" href="admin-timetable.html">
+        Manage Timetable
+    </a>
+</article>
+                <article class="action-tile">
+                    <h3>Substitutions</h3>
+                    <p>Review allocation records and their current statuses.</p>
+                    <a class="btn" href="admin-substitutions.html">View All Substitutions</a>
+                </article>
+
+                <article class="action-tile">
+    <h3>My Profile</h3>
+
+    <p>
+        View your administrator account
+        information and profile details.
+    </p>
+
+    <a
+        class="btn"
+        href="admin-profile.html"
+    >
+        View My Profile
+    </a>
+</article>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <div class="section-heading">
+                <div>
+                    <h2>My Faculty Dashboard</h2>
+                    <p class="page-subtitle">Your own faculty classes, substitutions, and notifications.</p>
+                </div>
+            </div>
+            <div class="card-grid">
+                <article class="stat-card">
+                    <p class="stat-label">Today's Classes</p>
+                    <p class="stat-value" id="myClassCount">-</p>
+                </article>
+                <article class="stat-card">
+                    <p class="stat-label">My Substitutions</p>
+                    <p class="stat-value" id="mySubstitutionCount">-</p>
+                </article>
+                <article class="stat-card">
+                    <p class="stat-label">My Notifications</p>
+                    <p class="stat-value" id="myNotificationCount">-</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="card section-card" id="attendance">
+            <div class="section-heading">
+                <div>
+                    <h2>Faculty Attendance</h2>
+                    <p class="page-subtitle">Record attendance for a selected faculty member and date.</p>
+                </div>
+            </div>
+            <form onsubmit="event.preventDefault(); saveFacultyAttendance();">
+                <div class="field-row">
+                    <div class="form-group">
+                        <label for="attendanceFaculty">Faculty member</label>
+                        <select id="attendanceFaculty" required>
+                            <option value="">Select Faculty</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="attendanceDate">Attendance date</label>
+                        <input type="date" id="attendanceDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="attendanceStatus">Attendance status</label>
+                        <select id="attendanceStatus" required>
+                            <option value="PRESENT">Present</option>
+                            <option value="ABSENT">Absent</option>
+                            <option value="LEAVE">Leave</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="attendanceRemarks">Remarks (optional)</label>
+                        <input type="text" id="attendanceRemarks" placeholder="Add a note if needed">
+                    </div>
+                </div>
+                <button type="submit">Save Attendance</button>
+            </form>
+            <div id="attendanceMessage" role="status" aria-live="polite"></div>
+        </section>
+
+        <section class="card section-card">
+            <div class="section-heading">
+                <div>
+                    <h2>Faculty Tools</h2>
+                    <p class="page-subtitle">Open your own schedule, assigned substitutions, and notifications.</p>
+                </div>
+            </div>
+            <div class="toolbar">
+                <a
+    class="btn"
+    href="admin-substitutions.html"
+>
+    View All Substitutions
+</a>
+                <a
+    class="btn btn-secondary"
+    href="admin-notifications.html"
+>
+    View Notifications
+</a>
+                <a
+    class="btn btn-secondary"
+    href="admin-timetable.html"
+>
+    View Timetable
+</a>
+            </div>
+            <div id="mySubstitutionsSection"></div>
+            <div id="myNotificationsSection" style="display:none;">
+                <h3>My Notifications</h3>
+                <div id="myNotificationsList"></div>
+            </div>
+            <div id="myTimetableSection"></div>
+        </section>
+
+        <section class="card section-card" id="substitution">
+            <div class="section-heading">
+                <div>
+                    <h2>Substitution Management</h2>
+                    <p class="page-subtitle">Run the current automatic allocation process and inspect the allocation history.</p>
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="form-group">
+                    <label for="allocationDate">Allocation date</label>
+                    <input type="date" id="allocationDate">
+                </div>
+            </div>
+            <div class="toolbar">
+                <button type="button" onclick="runAutomaticAllocation()">Run Automatic Allocation</button>
+                <a class="btn btn-secondary" href="admin-substitutions.html">View All Substitutions</a>
+            </div>
+            <div id="allocationResult" class="message message-info" role="status" aria-live="polite"></div>
+        </section>
+    </main>
+
+<!-- ======================================================
+     FACULTY SUBSTITUTION DETAILS
+     ====================================================== -->
+
+<section class="card section-card">
+
+    <div class="section-heading">
+
+        <div>
+            <h2>Faculty Substitution Details</h2>
+
+            <p class="page-subtitle">
+                View which faculty members have been assigned to substitute other classes.
+            </p>
+        </div>
+
+        <button
+            type="button"
+            class="btn"
+            onclick="loadFacultySubstitutionDetails()"
+        >
+            🔄 Refresh
+        </button>
+
+    </div>
+
+    <div
+        id="facultySubstitutionMessage"
+        class="message"
+        style="margin-bottom:15px;"
+    >
+        Loading substitution details...
+    </div>
+<!-- ======================================================
+     SUBSTITUTE FACULTY WORKLOAD
+     ====================================================== -->
+
+<h3 style="margin-top:24px; margin-bottom:12px;">
+    👨‍🏫 Substitute Faculty Workload
+</h3>
+
+<p class="page-subtitle" style="margin-bottom:15px;">
+    Number of substitution classes assigned to each faculty member.
+</p>
+
+<div style="overflow-x:auto; margin-bottom:25px;">
+
+    <table
+        style="
+            width:100%;
+            border-collapse:collapse;
+            min-width:500px;
+        "
+    >
+
+        <thead>
+
+            <tr>
+
+                <th
+                    style="
+                        padding:12px;
+                        text-align:left;
+                        background:#eef2ff;
+                    "
+                >
+                    Faculty
+                </th>
+
+                <th
+                    style="
+                        padding:12px;
+                        text-align:left;
+                        background:#eef2ff;
+                    "
+                >
+                    Substitutions
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="substituteWorkloadBody">
+
+            <tr>
+
+                <td
+                    colspan="2"
+                    style="
+                        padding:20px;
+                        text-align:center;
+                        color:#64748b;
+                    "
+                >
+                    Loading...
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+    <div style="overflow-x:auto;">
+
+        <table
+            style="
+                width:100%;
+                border-collapse:collapse;
+                min-width:900px;
+            "
+        >
+
+            <thead>
+
+                <tr>
+
+                    <th
+                        style="
+                            padding:12px;
+                            text-align:left;
+                            background:#eef2ff;
+                        "
+                    >
+                        Date
+                    </th>
+
+                    <th
+                        style="
+                            padding:12px;
+                            text-align:left;
+                            background:#eef2ff;
+                        "
+                    >
+                        Substitute Faculty
+                    </th>
+
+                    <th
+                        style="
+                            padding:12px;
+                            text-align:left;
+                            background:#eef2ff;
+                        "
+                    >
+                        Absent Faculty
+                    </th>
+
+                    <th
+                        style="
+                            padding:12px;
+                            text-align:left;
+                            background:#eef2ff;
+                        "
+                    >
+                        Class
+                    </th>
+
+                    <th
+                        style="
+                            padding:12px;
+                            text-align:left;
+                            background:#eef2ff;
+                        "
+                    >
+                        Subject
+                    </th>
+
+                    <th
+                        style="
+                            padding:12px;
+                            text-align:left;
+                            background:#eef2ff;
+                        "
+                    >
+                        Period
+                    </th>
+
+                    <th
+                        style="
+                            padding:12px;
+                            text-align:left;
+                            background:#eef2ff;
+                        "
+                    >
+                        Status
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="facultySubstitutionBody">
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        style="
+                            padding:25px;
+                            text-align:center;
+                            color:#64748b;
+                        "
+                    >
+                        Loading...
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>    
+
+    <footer class="footer">SubAlloc Hub · Faculty substitution and attendance management</footer>
+
+    <script>
+// ======================================================
+// CHECK LOGIN
+// ======================================================
+
+const storedUser =
+    sessionStorage.getItem("loggedInUser");
+
+
+if (!storedUser) {
+
+    window.location.href = "index.html";
+
+} else {
+
+    const user =
+        JSON.parse(storedUser);
+
+    // Admin dashboard is allowed for ADMIN
+    if (user.role !== "ADMIN") {
+
+        window.location.href =
+            "faculty.html";
+
+    } else {
+
+        document.getElementById(
+            "welcomeText"
+        ).textContent =
+            "Welcome, " + user.username;
+
+        loadDashboardStats();
+
+        loadFacultyDashboardCounts();
+
+         loadFacultySubstitutionDetails();
+
+    }
+
+}
+
+
+// ======================================================
+// ADMIN DASHBOARD STATISTICS
+// ======================================================
+
+async function loadDashboardStats() {
+
+    try {
+
+        const response = await fetch(
+    "http://localhost:3000/api/dashboard/stats",
+    {
+        credentials: "include"
+    }
+);
+
+        const data =
+            await response.json();
+
+        if (data.success) {
+
+            document.getElementById(
+                "facultyCount"
+            ).textContent =
+                data.stats.facultyCount;
+
+            document.getElementById(
+                "subjectCount"
+            ).textContent =
+                data.stats.subjectCount;
+
+            document.getElementById(
+                "classCount"
+            ).textContent =
+                data.stats.classCount;
+
+            document.getElementById(
+                "roomCount"
+            ).textContent =
+                data.stats.roomCount;
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Dashboard connection error:",
+            error
+        );
+
+    }
+
+}
+
+
+// ======================================================
+// FACULTY DASHBOARD COUNTS
+// ======================================================
+
+async function loadFacultyDashboardCounts() {
+
+    const userData =
+        sessionStorage.getItem("loggedInUser");
+
+    if (!userData) {
+        return;
+    }
+
+    const user =
+        JSON.parse(userData);
+
+    try {
+
+        const response = await fetch(
+    `http://localhost:3000/api/faculty/dashboard/${user.user_id}`,
+    {
+        credentials: "include"
+    }
+);
+
+        const data =
+            await response.json();
+
+        if (!data.success) {
+
+            console.error(
+                "Faculty dashboard error:",
+                data.message
+            );
+
+            return;
+        }
+
+        document.getElementById(
+            "myClassCount"
+        ).textContent =
+            data.stats.todayClasses;
+
+        document.getElementById(
+            "mySubstitutionCount"
+        ).textContent =
+            data.stats.substitutions;
+
+        document.getElementById(
+            "myNotificationCount"
+        ).textContent =
+            data.stats.notifications;
+
+    } catch (error) {
+
+        console.error(
+            "Faculty dashboard count error:",
+            error
+        );
+
+    }
+
+}
+
+
+// ======================================================
+// VIEW MY SUBSTITUTIONS
+// ======================================================
+
+async function loadMySubstitutions() {
+
+    const userData = sessionStorage.getItem("loggedInUser");
+
+    if (!userData) {
+        alert("Please login first.");
+        return;
+    }
+
+    const user = JSON.parse(userData);
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:3000/api/substitutions/${user.user_id}`
+        );
+
+        const data = await response.json();
+
+        if (!data.success) {
+            alert("Unable to load substitutions.");
+            return;
+        }
+
+        if (!data.substitutions || data.substitutions.length === 0) {
+            alert("No substitutions assigned.");
+            return;
+        }
+
+        let message = "MY SUBSTITUTIONS\n\n";
+
+        data.substitutions.forEach((substitution, index) => {
+
+            message += `${index + 1}. ${substitution.allocation_date}\n`;
+            message += `Class: ${substitution.class_name}\n`;
+            message += `Subject: ${substitution.subject_name}\n`;
+            message += `Period: ${substitution.period_number}\n`;
+            message += `Time: ${substitution.start_time} - ${substitution.end_time}\n`;
+            message += `Absent Faculty: ${substitution.absent_faculty}\n`;
+            message += `Status: ${substitution.status}\n`;
+
+            if (substitution.status === "PENDING") {
+                message += `\n[Acknowledge button will be shown below]\n`;
+            }
+
+            message += `--------------------------\n\n`;
+        });
+
+        alert(message);
+
+        // Show Acknowledge buttons
+        let section = document.getElementById("mySubstitutionsSection");
+
+        if (!section) {
+
+            section = document.createElement("div");
+
+            section.id = "mySubstitutionsSection";
+            section.style.marginTop = "20px";
+
+            document.body.appendChild(section);
+        }
+
+        section.innerHTML = "<h3>My Substitutions</h3>";
+
+        data.substitutions.forEach(substitution => {
+
+            const div = document.createElement("div");
+
+            div.style.padding = "15px";
+            div.style.marginBottom = "10px";
+            div.style.border = "1px solid #ddd";
+            div.style.borderRadius = "8px";
+
+            div.innerHTML = `
+                <strong>${substitution.class_name} - ${substitution.subject_name}</strong>
+
+                <p>
+                    Period: ${substitution.period_number}<br>
+                    Time: ${substitution.start_time} - ${substitution.end_time}<br>
+                    Absent Faculty: ${substitution.absent_faculty}<br>
+                    Status: <strong>${substitution.status}</strong>
+                </p>
+                ${
+    substitution.status === "PENDING"
+    ? `<button onclick="acknowledgeSubstitution(${substitution.allocation_id})">
+            Acknowledge
+       </button>`
+    : substitution.status === "ACKNOWLEDGED"
+    ? `<button onclick="completeSubstitution(${substitution.allocation_id})">
+            Complete
+       </button>`
+    : `<p>✅ ${substitution.status}</p>`
+}
+            `;
+
+            section.appendChild(div);
+        });
+
+    } catch (error) {
+
+        console.error("Substitution error:", error);
+
+        alert("Unable to connect to the server.");
+    }
+}
+
+// ======================================================
+// ACKNOWLEDGE SUBSTITUTION
+// ======================================================
+
+async function acknowledgeSubstitution(allocationId) {
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:3000/api/substitutions/acknowledge/${allocationId}`,
+            {
+                method: "PUT"
+            }
+        );
+
+        const data = await response.json();
+
+        if (data.success) {
+
+            alert("Substitution acknowledged successfully! ✅");
+
+            // Reload substitutions to show updated status
+            loadMySubstitutions();
+
+        } else {
+
+            alert(data.message || "Unable to acknowledge substitution.");
+        }
+
+    } catch (error) {
+
+        console.error("Acknowledge error:", error);
+
+        alert("Unable to connect to the server.");
+    }
+}
+
+// ======================================================
+// COMPLETE SUBSTITUTION
+// ======================================================
+
+async function completeSubstitution(allocationId) {
+
+    const confirmAction = confirm(
+        "Have you completed this substitution class?"
+    );
+
+    if (!confirmAction) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:3000/api/substitutions/complete/${allocationId}`,
+            {
+                method: "PUT"
+            }
+        );
+
+        const data = await response.json();
+
+        if (data.success) {
+
+            alert("Substitution completed successfully! ✅");
+
+            // Reload substitutions
+            loadMySubstitutions();
+
+            // Refresh dashboard count
+            loadFacultyDashboardCounts();
+
+        } else {
+
+            alert(
+                data.message ||
+                "Unable to complete substitution."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Complete substitution error:",
+            error
+        );
+
+        alert("Unable to connect to the server.");
+
+    }
+}
+
+
+// ======================================================
+// VIEW MY NOTIFICATIONS
+// ======================================================
+
+function loadMyNotifications() {
+    const user = JSON.parse(sessionStorage.getItem("loggedInUser"));
+
+    fetch(`http://localhost:3000/api/notifications/${user.user_id}`)
+        .then(response => response.json())
+        .then(data => {
+            const section = document.getElementById("myNotificationsSection");
+            const list = document.getElementById("myNotificationsList");
+
+            section.style.display = "block";
+            list.innerHTML = "";
+        const markAllButton = document.createElement("button");
+
+markAllButton.textContent = "Mark All as Read";
+
+markAllButton.style.padding = "10px 15px";
+markAllButton.style.marginBottom = "15px";
+markAllButton.style.background = "#1f3c88";
+markAllButton.style.color = "white";
+markAllButton.style.border = "none";
+markAllButton.style.borderRadius = "6px";
+markAllButton.style.cursor = "pointer";
+
+markAllButton.onclick = async function () {
+
+    const user = JSON.parse(
+        sessionStorage.getItem("loggedInUser")
+    );
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:3000/api/notifications/read-all/${user.user_id}`,
+            {
+                method: "PUT"
+            }
+        );
+
+        const data = await response.json();
+
+        if (data.success) {
+
+            alert("All notifications marked as read! ✅");
+
+            loadMyNotifications();
+
+            loadFacultyDashboardCounts();
+
+        } else {
+
+            alert(
+                data.message ||
+                "Unable to mark notifications as read."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Mark all notifications error:",
+            error
+        );
+
+        alert("Unable to connect to the server.");
+
+    }
+};
+
+section.insertBefore(
+    markAllButton,
+    list
+);
+
+            if (!data.success || !data.notifications || data.notifications.length === 0) {
+                list.innerHTML = "<p>No notifications available.</p>";
+                return;
+            }
+
+            data.notifications.forEach(notification => {
+                const div = document.createElement("div");
+
+                div.style.padding = "15px";
+                div.style.marginBottom = "10px";
+                div.style.border = "1px solid #ddd";
+                div.style.borderRadius = "8px";
+                div.style.background = notification.is_read ? "#f5f5f5" : "#eef6ff";
+
+                div.innerHTML = `
+                    <strong>${notification.title}</strong>
+                    <p>${notification.message}</p>
+                    <small>${new Date(notification.created_at).toLocaleString()}</small>
+                `;
+
+                list.appendChild(div);
+            });
+        })
+        .catch(error => {
+            console.error("Notification error:", error);
+            alert("Unable to load notifications.");
+        });
+}
+
+function loadMyTimetable() {
+    const user = JSON.parse(sessionStorage.getItem("loggedInUser"));
+
+    fetch(`http://localhost:3000/api/faculty/timetable/${user.user_id}`)
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success || !data.timetable || data.timetable.length === 0) {
+                alert("No timetable found.");
+                return;
+            }
+
+            let timetableHTML = `
+                <div style="margin-top:20px;">
+                    <h3>My Timetable</h3>
+
+                    <table border="1" cellpadding="10" cellspacing="0"
+                           style="width:100%; border-collapse:collapse;">
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Period</th>
+                                <th>Time</th>
+                                <th>Class</th>
+                                <th>Subject</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            data.timetable.forEach(item => {
+                timetableHTML += `
+                    <tr>
+                        <td>${item.day_of_week}</td>
+                        <td>${item.period_number}</td>
+                        <td>${item.start_time} - ${item.end_time}</td>
+                        <td>${item.class_name}</td>
+                        <td>${item.subject_name}</td>
+                        <td>${item.session_type}</td>
+                    </tr>
+                `;
+            });
+
+            timetableHTML += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            const oldTable = document.getElementById("myTimetableSection");
+
+            if (oldTable) {
+                oldTable.innerHTML = timetableHTML;
+            }
+        })
+        .catch(error => {
+            console.error("Timetable error:", error);
+            alert("Unable to load timetable.");
+        });
+}
+
+// ======================================================
+// LOAD FACULTY LIST FOR ATTENDANCE
+// ======================================================
+
+async function loadFacultyForAttendance() {
+
+    const facultySelect =
+        document.getElementById(
+            "attendanceFaculty"
+        );
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:3000/api/faculty",
+                {
+                    credentials: "include"
+                }
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        console.log(
+            "Faculty API response:",
+            data
+        );
+
+        if (
+            !data.success ||
+            !Array.isArray(data.faculty)
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Invalid faculty API response."
+            );
+
+        }
+
+        facultySelect.innerHTML = `
+            <option value="">
+                Select Faculty
+            </option>
+        `;
+
+        data.faculty.forEach(
+            function(faculty) {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value =
+                    faculty.faculty_id;
+
+                option.textContent =
+                    faculty.full_name;
+
+                facultySelect.appendChild(
+                    option
+                );
+
+            }
+        );
+
+        console.log(
+            "Faculty names added:",
+            data.faculty.length
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Faculty loading error:",
+            error
+        );
+
+        facultySelect.innerHTML = `
+            <option value="">
+                Unable to load faculty
+            </option>
+        `;
+
+    }
+
+}
+
+
+// ======================================================
+// SET TODAY'S DATE
+// ======================================================
+
+function setAttendanceDate() {
+
+    const today =
+        new Date().toISOString().split("T")[0];
+
+    document.getElementById(
+        "attendanceDate"
+    ).value = today;
+
+}
+
+
+// ======================================================
+// SAVE FACULTY ATTENDANCE
+// ======================================================
+async function saveFacultyAttendance() {
+
+    const userData =
+        sessionStorage.getItem("loggedInUser");
+
+    if (!userData) {
+        alert("Please login first.");
+        return;
+    }
+
+    const user =
+        JSON.parse(userData);
+
+    const facultyId =
+        document.getElementById(
+            "attendanceFaculty"
+        ).value;
+
+    const attendanceDate =
+        document.getElementById(
+            "attendanceDate"
+        ).value;
+
+    const status =
+        document.getElementById(
+            "attendanceStatus"
+        ).value;
+
+    const remarks =
+        document.getElementById(
+            "attendanceRemarks"
+        ).value;
+
+    if (!facultyId) {
+        alert("Please select a faculty member.");
+        return;
+    }
+
+    if (!attendanceDate) {
+        alert("Please select a date.");
+        return;
+    }
+
+    try {
+
+        // ==========================================
+        // STEP 1: SAVE ATTENDANCE
+        // ==========================================
+
+        const response = await fetch(
+    "http://localhost:3000/api/attendance",
+    {
+        method: "POST",
+
+        credentials: "include",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+                body: JSON.stringify({
+
+                    faculty_id:
+                        Number(facultyId),
+
+                    attendance_date:
+                        attendanceDate,
+
+                    status:
+                        status,
+
+                    remarks:
+                        remarks,
+
+                    marked_by:
+                        user.user_id
+
+                })
+            }
+        );
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            document.getElementById(
+                "attendanceMessage"
+            ).textContent =
+                data.message ||
+                "Unable to save attendance.";
+
+            document.getElementById(
+                "attendanceMessage"
+            ).style.color = "red";
+
+            return;
+        }
+
+
+        // ==========================================
+        // STEP 2: IF ABSENT OR LEAVE,
+        // AUTOMATICALLY ALLOCATE SUBSTITUTE
+        // ==========================================
+
+        if (
+            status === "ABSENT" ||
+            status === "LEAVE"
+        ) {
+
+            const allocationResponse =
+    await fetch(
+        "http://localhost:3000/api/substitutions/auto-allocate",
+        {
+            method: "POST",
+
+            credentials: "include",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                date: attendanceDate
+            })
+        }
+    );
+
+
+            const allocationData =
+                await allocationResponse.json();
+
+
+            if (allocationData.success) {
+
+    document.getElementById(
+        "attendanceMessage"
+    ).textContent =
+        data.existing
+            ? "Attendance was already recorded and automatic substitution was checked successfully!"
+            : "Attendance saved and automatic substitution completed!";
+
+    document.getElementById(
+        "attendanceMessage"
+    ).style.color = "green";
+
+} else {
+
+                document.getElementById(
+                    "attendanceMessage"
+                ).textContent =
+                    "Attendance saved, but substitution could not be completed: "
+                    + (allocationData.message || "Unknown error.");
+
+                document.getElementById(
+                    "attendanceMessage"
+                ).style.color = "orange";
+
+            }
+
+        } else {
+
+    // ==========================================
+    // PRESENT
+    // ==========================================
+
+    document.getElementById(
+        "attendanceMessage"
+    ).textContent =
+        data.existing
+            ? "Attendance record already existed and was updated successfully."
+            : "Attendance saved successfully!";
+
+    document.getElementById(
+        "attendanceMessage"
+    ).style.color = "green";
+}
+
+
+        document.getElementById(
+            "attendanceRemarks"
+        ).value = "";
+
+
+    } catch (error) {
+
+        console.error(
+            "Attendance error:",
+            error
+        );
+
+        document.getElementById(
+            "attendanceMessage"
+        ).textContent =
+            "Unable to connect to the server.";
+
+        document.getElementById(
+            "attendanceMessage"
+        ).style.color = "red";
+    }
+}
+
+
+// ======================================================
+// LOAD ATTENDANCE SECTION
+// ======================================================
+loadFacultyForAttendance();
+setAttendanceDate();
+
+
+// ======================================================
+// AUTOMATIC SUBSTITUTION ALLOCATION
+// ======================================================
+async function runAutomaticAllocation() {
+
+    const dateInput =
+        document.getElementById("allocationDate");
+
+    const resultBox =
+        document.getElementById("allocationResult");
+
+    const date = dateInput.value;
+
+    if (!date) {
+
+        resultBox.innerHTML =
+            "Please select a date.";
+
+        return;
+    }
+
+    resultBox.innerHTML =
+        "Running automatic allocation...";
+
+    try {
+
+        const response = await fetch(
+    "http://localhost:3000/api/substitutions/auto-allocate",
+    {
+        method: "POST",
+
+        credentials: "include",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            date: date
+        })
+    }
+);
+
+        const data =
+            await response.json();
+
+        console.log(
+            "Automatic allocation result:",
+            data
+        );
+
+        if (!data.success) {
+
+            resultBox.innerHTML =
+                data.message ||
+                "Automatic allocation failed.";
+
+            return;
+        }
+
+        resultBox.innerHTML =
+    `
+    <strong>Automatic allocation completed.</strong>
+    <br><br>
+    Date: ${data.date}
+    <br>
+    Day: ${data.day}
+    <br>
+    New allocations created:
+    ${data.allocations ? data.allocations.length : 0}
+    <br><br>
+    Existing allocations were not duplicated.
+    <br>
+    You can use "View All Substitutions" to see the complete allocation history.
+    `;
+
+    } catch (error) {
+
+        console.error(
+            "Automatic allocation error:",
+            error
+        );
+
+        resultBox.innerHTML =
+            "Unable to connect to the backend.";
+    }
+}
+        // Set the allocation date to today using the browser's local date.
+        (function setAllocationDateToToday() {
+            const input = document.getElementById("allocationDate");
+            if (input && !input.value) {
+                const now = new Date();
+                const localDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+                    .toISOString().slice(0, 10);
+                input.value = localDate;
+            }
+        })();
+
+// ======================================================
+// FACULTY SUBSTITUTION DETAILS
+// ======================================================
+
+async function loadFacultySubstitutionDetails() {
+
+    const messageBox =
+        document.getElementById(
+            "facultySubstitutionMessage"
+        );
+
+    const tableBody =
+        document.getElementById(
+            "facultySubstitutionBody"
+        );
+
+    messageBox.textContent =
+        "Loading substitution details...";
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:3000/api/admin/substitutions",
+                {
+                    credentials: "include"
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok || !data.success) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load substitution details."
+            );
+
+        }
+
+        const allocations =
+            Array.isArray(data.allocations)
+                ? data.allocations
+                : [];
+        const workloadBody =
+    document.getElementById(
+        "substituteWorkloadBody"
+    );
+
+const workload = {};
+
+allocations.forEach(
+    function(item) {
+
+        const faculty =
+            item.substitute_faculty;
+
+        if (
+            faculty &&
+            faculty !== "No substitute available"
+        ) {
+
+            if (!workload[faculty]) {
+                workload[faculty] = 0;
+            }
+
+            workload[faculty]++;
+
+        }
+
+    }
+);
+
+workloadBody.innerHTML = "";
+
+const workloadEntries =
+    Object.entries(workload)
+        .sort(
+            function(a, b) {
+                return b[1] - a[1];
+            }
+        );
+
+if (workloadEntries.length === 0) {
+
+    workloadBody.innerHTML = `
+        <tr>
+            <td
+                colspan="2"
+                style="
+                    padding:20px;
+                    text-align:center;
+                    color:#64748b;
+                "
+            >
+                No substitute faculty assignments yet.
+            </td>
+        </tr>
+    `;
+
+} else {
+
+    workloadEntries.forEach(
+        function(entry) {
+
+            const row =
+                document.createElement("tr");
+
+            row.innerHTML = `
+                <td
+                    style="
+                        padding:12px;
+                        border-bottom:1px solid #e2e8f0;
+                        font-weight:700;
+                    "
+                >
+                    ${entry[0]}
+                </td>
+
+                <td
+                    style="
+                        padding:12px;
+                        border-bottom:1px solid #e2e8f0;
+                    "
+                >
+                    ${entry[1]}
+                </td>
+            `;
+
+            workloadBody.appendChild(row);
+
+        }
+    );
+
+}
+    
+
+        if (allocations.length === 0) {
+
+            tableBody.innerHTML = `
+                <tr>
+
+                    <td
+                        colspan="7"
+                        style="
+                            padding:25px;
+                            text-align:center;
+                            color:#64748b;
+                        "
+                    >
+                        No substitution records found.
+                    </td>
+
+                </tr>
+            `;
+
+            messageBox.textContent =
+                "No substitution records available.";
+
+            return;
+        }
+
+        tableBody.innerHTML = "";
+
+        allocations.forEach(
+            function(item) {
+
+                const row =
+                    document.createElement("tr");
+
+                const date =
+                    item.allocation_date
+                        ? new Date(
+                            item.allocation_date
+                        ).toLocaleDateString(
+                            "en-IN",
+                            {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric"
+                            }
+                        )
+                        : "—";
+
+                row.innerHTML = `
+                    <td style="padding:12px; border-bottom:1px solid #e2e8f0;">
+                        ${date}
+                    </td>
+
+                    <td style="
+                        padding:12px;
+                        border-bottom:1px solid #e2e8f0;
+                        font-weight:700;
+                    ">
+                        ${item.substitute_faculty || "No substitute available"}
+                    </td>
+
+                    <td style="
+                        padding:12px;
+                        border-bottom:1px solid #e2e8f0;
+                    ">
+                        ${item.absent_faculty || "—"}
+                    </td>
+
+                    <td style="
+                        padding:12px;
+                        border-bottom:1px solid #e2e8f0;
+                    ">
+                        ${item.class_name || "—"}
+                    </td>
+
+                    <td style="
+                        padding:12px;
+                        border-bottom:1px solid #e2e8f0;
+                    ">
+                        ${item.subject_name || "—"}
+                    </td>
+
+                    <td style="
+                        padding:12px;
+                        border-bottom:1px solid #e2e8f0;
+                    ">
+                        ${item.slot_name || "—"}
+                    </td>
+
+                    <td style="
+                        padding:12px;
+                        border-bottom:1px solid #e2e8f0;
+                        font-weight:700;
+                    ">
+                        ${item.status || "—"}
+                    </td>
+                `;
+
+                tableBody.appendChild(row);
+
+            }
+        );
+
+        messageBox.textContent =
+            `${allocations.length} substitution record(s) loaded.`;
+
+    } catch (error) {
+
+        console.error(
+            "Faculty substitution details error:",
+            error
+        );
+
+        tableBody.innerHTML = `
+            <tr>
+
+                <td
+                    colspan="7"
+                    style="
+                        padding:25px;
+                        text-align:center;
+                        color:#b91c1c;
+                    "
+                >
+                    Unable to load substitution details.
+                </td>
+
+            </tr>
+        `;
+
+        messageBox.textContent =
+            "Unable to connect to the backend.";
+
+    }
+
+}
+
+// ======================================================
+// LOGOUT
+// ======================================================
+
+async function logout() {
+
+    try {
+
+        await fetch(
+            "http://localhost:3000/api/auth/logout",
+            {
+                method: "POST",
+                credentials: "include"
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Logout request error:",
+            error
+        );
+
+    }
+
+    sessionStorage.removeItem(
+        "loggedInUser"
+    );
+
+    window.location.href =
+        "index.html";
+
+}        
+    
+    </script>
+</body>
+</html>

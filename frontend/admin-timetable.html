@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SubAlloc Hub | Timetable Management</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        body {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f4f7ff 0%,
+                    #f8fafc 55%,
+                    #eef2ff 100%
+                );
+
+            min-height: 100vh;
+
+        }
+
+        .admin-header {
+
+            background:
+                linear-gradient(
+                    120deg,
+                    #172554,
+                    #3454d1
+                );
+
+            color: #ffffff;
+
+        }
+
+        .admin-header .navbar-inner {
+
+            min-height: 78px;
+
+        }
+
+        .admin-header .brand,
+        .admin-header .nav-links a {
+
+            color: #ffffff;
+
+        }
+
+        .admin-header .brand {
+
+            text-decoration: none;
+
+        }
+
+        .admin-header .nav-links a {
+
+            opacity: 0.9;
+
+        }
+
+        .admin-header .nav-links a:hover {
+
+            opacity: 1;
+
+        }
+
+        .timetable-container {
+
+            max-width: 1250px;
+
+            margin: 0 auto;
+
+            padding:
+                30px 20px 50px;
+
+        }
+
+        .timetable-hero {
+
+            background:
+                linear-gradient(
+                    120deg,
+                    #ffffff,
+                    #eef2ff
+                );
+
+            border:
+                1px solid #dbe4ff;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            margin-bottom: 24px;
+
+            box-shadow:
+                0 12px 30px rgba(
+                    15,
+                    23,
+                    42,
+                    0.08
+                );
+
+        }
+
+        .timetable-badge {
+
+            display: inline-block;
+
+            background: #e0e7ff;
+
+            color: #3730a3;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            padding: 7px 12px;
+
+            border-radius: 999px;
+
+            margin-bottom: 12px;
+
+        }
+
+        .timetable-hero h1 {
+
+            margin: 0;
+
+            color: #172554;
+
+            font-size:
+                clamp(
+                    26px,
+                    4vw,
+                    36px
+                );
+
+        }
+
+        .timetable-hero p {
+
+            margin:
+                9px 0 0;
+
+            color: #64748b;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+
+        }
+
+        .toolbar {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            background: #ffffff;
+
+            border:
+                1px solid #dbe4ff;
+
+            border-radius: 16px;
+
+            padding: 16px;
+
+            margin-bottom: 18px;
+
+            box-shadow:
+                0 8px 24px rgba(
+                    15,
+                    23,
+                    42,
+                    0.05
+                );
+
+        }
+
+        .filters {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            flex:
+                1 1 650px;
+
+        }
+
+        .search-input,
+        .filter-select {
+
+            border:
+                1px solid #cbd5e1;
+
+            border-radius: 10px;
+
+            padding:
+                12px 14px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            background: #f8fafc;
+
+        }
+
+        .search-input {
+
+            flex:
+                1 1 300px;
+
+        }
+
+        .filter-select {
+
+            min-width: 150px;
+
+        }
+
+        .search-input:focus,
+        .filter-select:focus {
+
+            border-color: #4f46e5;
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    79,
+                    70,
+                    229,
+                    0.12
+                );
+
+            background: #ffffff;
+
+        }
+
+        .toolbar-actions {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .page-btn {
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding:
+                11px 15px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+        }
+
+        .refresh-btn {
+
+            background: #3454d1;
+
+            color: #ffffff;
+
+        }
+
+        .back-btn {
+
+            background: #e2e8f0;
+
+            color: #1e293b;
+
+        }
+
+        .summary-bar {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            margin-bottom: 18px;
+
+        }
+
+        .summary-card {
+
+            flex:
+                1 1 180px;
+
+            background: #ffffff;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 14px;
+
+            padding:
+                16px 18px;
+
+            box-shadow:
+                0 8px 24px rgba(
+                    15,
+                    23,
+                    42,
+                    0.04
+                );
+
+        }
+
+        .summary-label {
+
+            margin:
+                0 0 5px;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+        }
+
+        .summary-value {
+
+            margin: 0;
+
+            color: #172554;
+
+            font-size: 24px;
+
+            font-weight: 800;
+
+        }
+
+        .table-card {
+
+            background: #ffffff;
+
+            border:
+                1px solid #dbe4ff;
+
+            border-radius: 16px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 10px 28px rgba(
+                    15,
+                    23,
+                    42,
+                    0.06
+                );
+
+        }
+
+        .table-heading {
+
+            padding:
+                18px 20px;
+
+            border-bottom:
+                1px solid #e2e8f0;
+
+        }
+
+        .table-heading h2 {
+
+            margin: 0;
+
+            font-size: 19px;
+
+            color: #172554;
+
+        }
+
+        .table-heading p {
+
+            margin:
+                4px 0 0;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+        }
+
+        .table-wrapper {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+        }
+
+        table {
+
+            width: 100%;
+
+            min-width: 1100px;
+
+            border-collapse: collapse;
+
+        }
+
+        thead th {
+
+            text-align: left;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #172554,
+                    #243ea8
+                );
+
+            color: #ffffff;
+
+            padding:
+                14px 16px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+
+        }
+
+        tbody td {
+
+            padding:
+                13px 16px;
+
+            border-bottom:
+                1px solid #eef2f7;
+
+            color: #334155;
+
+            font-size: 13px;
+
+            vertical-align: middle;
+
+        }
+
+        tbody tr:hover {
+
+            background: #f8faff;
+
+        }
+
+        tbody tr:last-child td {
+
+            border-bottom: none;
+
+        }
+
+        .day-badge {
+
+            display: inline-block;
+
+            background: #e0e7ff;
+
+            color: #3730a3;
+
+            padding:
+                5px 9px;
+
+            border-radius: 8px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+        }
+
+        .period-badge {
+
+            display: inline-block;
+
+            background: #ecfeff;
+
+            color: #0f766e;
+
+            padding:
+                5px 9px;
+
+            border-radius: 999px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+        }
+
+        .class-name {
+
+            font-weight: 700;
+
+            color: #0f172a;
+
+        }
+
+        .subject-code {
+
+            font-weight: 800;
+
+            color: #3730a3;
+
+        }
+
+        .faculty-name {
+
+            font-weight: 600;
+
+        }
+
+        .room-name {
+
+            color: #475569;
+
+            font-weight: 600;
+
+        }
+
+        .session-badge {
+
+            display: inline-block;
+
+            padding:
+                5px 9px;
+
+            border-radius: 999px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            background: #fef3c7;
+
+            color: #92400e;
+
+        }
+
+        .message-box {
+
+            padding:
+                30px 20px;
+
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+        }
+
+        .error-text {
+
+            color: #b91c1c;
+
+        }
+
+        .footer {
+
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            padding:
+                25px 20px 0;
+
+        }
+
+        @media (max-width: 760px) {
+
+            .timetable-container {
+
+                padding:
+                    22px 14px 40px;
+
+            }
+
+            .timetable-hero {
+
+                padding: 22px;
+
+            }
+
+            .filters {
+
+                flex-direction: column;
+
+            }
+
+            .search-input,
+            .filter-select {
+
+                width: 100%;
+
+                box-sizing: border-box;
+
+            }
+
+            .toolbar-actions {
+
+                width: 100%;
+
+            }
+
+            .toolbar-actions .page-btn {
+
+                flex: 1;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="navbar admin-header">
+
+    <div class="navbar-inner">
+
+        <a
+            class="brand"
+            href="admin.html"
+        >
+            🏫 SubAlloc Hub
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="admin.html">
+                Dashboard
+            </a>
+
+        </nav>
+
+        <button
+            type="button"
+            class="logout-btn"
+            onclick="logout()"
+        >
+            🚪 Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="timetable-container">
+
+
+    <!-- HERO -->
+
+    <section class="timetable-hero">
+
+        <span class="timetable-badge">
+            🔐 Administrator
+        </span>
+
+        <h1>
+            Timetable Management
+        </h1>
+
+        <p>
+            View the complete academic timetable configured
+            in SubAlloc Hub.
+        </p>
+
+    </section>
+
+
+    <!-- TOOLBAR -->
+
+    <section class="toolbar">
+
+        <div class="filters">
+
+            <input
+                type="search"
+                id="searchInput"
+                class="search-input"
+                placeholder="Search class, subject, faculty, room or day..."
+                autocomplete="off"
+            >
+
+            <select
+                id="dayFilter"
+                class="filter-select"
+            >
+                <option value="">All Days</option>
+            </select>
+
+            <select
+                id="classFilter"
+                class="filter-select"
+            >
+                <option value="">All Classes</option>
+            </select>
+
+        </div>
+
+
+        <div class="toolbar-actions">
+
+            <button
+                type="button"
+                class="page-btn refresh-btn"
+                id="refreshBtn"
+            >
+                🔄 Refresh
+            </button>
+
+            <a
+                href="admin.html"
+                class="page-btn back-btn"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- SUMMARY -->
+
+    <section class="summary-bar">
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Total Entries
+            </p>
+
+            <p
+                class="summary-value"
+                id="totalEntries"
+            >
+                -
+            </p>
+
+        </article>
+
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Showing
+            </p>
+
+            <p
+                class="summary-value"
+                id="showingEntries"
+            >
+                -
+            </p>
+
+        </article>
+
+    </section>
+
+
+    <!-- TABLE -->
+
+    <section class="table-card">
+
+        <div class="table-heading">
+
+            <h2>
+                📅 Complete Timetable
+            </h2>
+
+            <p>
+                Timetable information loaded from
+                the SubAlloc Hub backend.
+            </p>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>#</th>
+                        <th>Day</th>
+                        <th>Period</th>
+                        <th>Class</th>
+                        <th>Subject</th>
+                        <th>Faculty</th>
+                        <th>Room</th>
+                        <th>Session</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="timetableTableBody">
+
+                    <tr>
+
+                        <td
+                            colspan="8"
+                            class="message-box"
+                        >
+                            Loading timetable...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <div class="footer">
+        SubAlloc Hub · Timetable Management
+    </div>
+
+
+</main>
+
+
+<script>
+
+
+// =====================================================
+// BACKEND API
+// =====================================================
+
+const API_BASE_URL =
+    "http://localhost:3000";
+
+const TIMETABLE_API =
+    `${API_BASE_URL}/api/admin/timetable`;
+
+
+// =====================================================
+// PAGE ELEMENTS
+// =====================================================
+
+const timetableTableBody =
+    document.getElementById(
+        "timetableTableBody"
+    );
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+const dayFilter =
+    document.getElementById(
+        "dayFilter"
+    );
+
+const classFilter =
+    document.getElementById(
+        "classFilter"
+    );
+
+const refreshBtn =
+    document.getElementById(
+        "refreshBtn"
+    );
+
+const totalEntries =
+    document.getElementById(
+        "totalEntries"
+    );
+
+const showingEntries =
+    document.getElementById(
+        "showingEntries"
+    );
+
+
+// =====================================================
+// DATA
+// =====================================================
+
+let allTimetable = [];
+
+
+// =====================================================
+// CHECK ADMIN LOGIN
+// =====================================================
+
+function checkAdminLogin() {
+
+    const storedUser =
+        sessionStorage.getItem(
+            "loggedInUser"
+        );
+
+    if (!storedUser) {
+
+        window.location.href =
+            "index.html";
+
+        return false;
+    }
+
+    try {
+
+        const user =
+            JSON.parse(
+                storedUser
+            );
+
+        if (
+            String(user.role)
+                .toUpperCase() !==
+            "ADMIN"
+        ) {
+
+            window.location.href =
+                "faculty.html";
+
+            return false;
+        }
+
+        return true;
+
+    } catch (error) {
+
+        sessionStorage.removeItem(
+            "loggedInUser"
+        );
+
+        window.location.href =
+            "index.html";
+
+        return false;
+    }
+}
+
+
+// =====================================================
+// LOGOUT
+// =====================================================
+
+function logout() {
+
+    sessionStorage.removeItem(
+        "loggedInUser"
+    );
+
+    window.location.href =
+        "index.html";
+}
+
+
+// =====================================================
+// LOAD TIMETABLE
+// =====================================================
+
+async function loadTimetable() {
+
+    timetableTableBody.innerHTML = `
+        <tr>
+            <td
+                colspan="8"
+                class="message-box"
+            >
+                Loading timetable...
+            </td>
+        </tr>
+    `;
+
+    refreshBtn.disabled = true;
+
+    refreshBtn.textContent =
+        "⏳ Loading...";
+
+
+    try {
+
+        const response = await fetch(
+    "http://localhost:3000/api/admin/timetable",
+    {
+        credentials: "include"
+    }
+);
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+        }
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Timetable API response:",
+            data
+        );
+
+
+        if (
+            !data.success ||
+            !Array.isArray(
+                data.timetable
+            )
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Invalid timetable response"
+            );
+        }
+
+
+        allTimetable =
+            data.timetable;
+
+
+        totalEntries.textContent =
+            allTimetable.length;
+
+
+        populateFilters();
+
+        renderTimetable(
+            allTimetable
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Timetable loading error:",
+            error
+        );
+
+        allTimetable = [];
+
+
+        totalEntries.textContent =
+            "—";
+
+        showingEntries.textContent =
+            "—";
+
+
+        timetableTableBody.innerHTML = `
+            <tr>
+                <td
+                    colspan="8"
+                    class="message-box error-text"
+                >
+                    <strong>
+                        Unable to load timetable.
+                    </strong>
+
+                    <br><br>
+
+                    ${error.message}
+                </td>
+            </tr>
+        `;
+
+    } finally {
+
+        refreshBtn.disabled = false;
+
+        refreshBtn.textContent =
+            "🔄 Refresh";
+    }
+}
+
+
+// =====================================================
+// POPULATE FILTERS
+// =====================================================
+
+function populateFilters() {
+
+    const days = [];
+
+    const classes = [];
+
+
+    allTimetable.forEach(
+        function(item) {
+
+            if (
+                item.day_of_week &&
+                !days.includes(
+                    item.day_of_week
+                )
+            ) {
+
+                days.push(
+                    item.day_of_week
+                );
+            }
+
+
+            if (
+                item.class_name &&
+                !classes.includes(
+                    item.class_name
+                )
+            ) {
+
+                classes.push(
+                    item.class_name
+                );
+            }
+
+        }
+    );
+
+
+    const dayOrder = {
+
+        MONDAY: 1,
+        TUESDAY: 2,
+        WEDNESDAY: 3,
+        THURSDAY: 4,
+        FRIDAY: 5,
+        SATURDAY: 6
+
+    };
+
+
+    days.sort(
+        function(a, b) {
+
+            return (
+                (dayOrder[a] || 99) -
+                (dayOrder[b] || 99)
+            );
+
+        }
+    );
+
+
+    classes.sort();
+
+
+    dayFilter.innerHTML =
+        '<option value="">All Days</option>';
+
+
+    days.forEach(
+        function(day) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                day;
+
+            option.textContent =
+                day;
+
+            dayFilter.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    classFilter.innerHTML =
+        '<option value="">All Classes</option>';
+
+
+    classes.forEach(
+        function(className) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                className;
+
+            option.textContent =
+                className;
+
+            classFilter.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// RENDER TIMETABLE
+// =====================================================
+
+function renderTimetable(
+    timetable
+) {
+
+    if (
+        !timetable ||
+        timetable.length === 0
+    ) {
+
+        showingEntries.textContent =
+            "0";
+
+
+        timetableTableBody.innerHTML = `
+            <tr>
+                <td
+                    colspan="8"
+                    class="message-box"
+                >
+                    No timetable entries found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    showingEntries.textContent =
+        timetable.length;
+
+
+    timetableTableBody.innerHTML =
+        "";
+
+
+    timetable.forEach(
+        function(item, index) {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            // NUMBER
+
+            const numberCell =
+                document.createElement(
+                    "td"
+                );
+
+            numberCell.textContent =
+                index + 1;
+
+
+            // DAY
+
+            const dayCell =
+                document.createElement(
+                    "td"
+                );
+
+            const dayBadge =
+                document.createElement(
+                    "span"
+                );
+
+            dayBadge.className =
+                "day-badge";
+
+            dayBadge.textContent =
+                item.day_of_week ||
+                "—";
+
+            dayCell.appendChild(
+                dayBadge
+            );
+
+
+            // PERIOD
+
+            const periodCell =
+                document.createElement(
+                    "td"
+                );
+
+            const periodBadge =
+                document.createElement(
+                    "span"
+                );
+
+            periodBadge.className =
+                "period-badge";
+
+            periodBadge.textContent =
+                item.slot_name ||
+                (
+                    item.period_number
+                        ? "Period " +
+                          item.period_number
+                        : "—"
+                );
+
+            periodCell.appendChild(
+                periodBadge
+            );
+
+
+            // CLASS
+
+            const classCell =
+                document.createElement(
+                    "td"
+                );
+
+            classCell.className =
+                "class-name";
+
+            classCell.textContent =
+                item.class_name ||
+                "—";
+
+
+            // SUBJECT
+
+            const subjectCell =
+                document.createElement(
+                    "td"
+                );
+
+            subjectCell.innerHTML = `
+                <span class="subject-code">
+                    ${item.subject_code || ""}
+                </span>
+                <br>
+                ${item.subject_name || "—"}
+            `;
+
+
+            // FACULTY
+
+            const facultyCell =
+                document.createElement(
+                    "td"
+                );
+
+            facultyCell.className =
+                "faculty-name";
+
+            facultyCell.textContent =
+                item.faculty_name ||
+                "—";
+
+
+            // ROOM
+
+            const roomCell =
+                document.createElement(
+                    "td"
+                );
+
+            roomCell.className =
+                "room-name";
+
+            roomCell.textContent =
+                item.room_number ||
+                "—";
+
+
+            // SESSION
+
+            const sessionCell =
+                document.createElement(
+                    "td"
+                );
+
+            const sessionBadge =
+                document.createElement(
+                    "span"
+                );
+
+            sessionBadge.className =
+                "session-badge";
+
+            sessionBadge.textContent =
+                item.session_type ||
+                "—";
+
+            sessionCell.appendChild(
+                sessionBadge
+            );
+
+
+            // ADD CELLS
+
+            row.appendChild(
+                numberCell
+            );
+
+            row.appendChild(
+                dayCell
+            );
+
+            row.appendChild(
+                periodCell
+            );
+
+            row.appendChild(
+                classCell
+            );
+
+            row.appendChild(
+                subjectCell
+            );
+
+            row.appendChild(
+                facultyCell
+            );
+
+            row.appendChild(
+                roomCell
+            );
+
+            row.appendChild(
+                sessionCell
+            );
+
+
+            timetableTableBody.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// FILTER TIMETABLE
+// =====================================================
+
+function filterTimetable() {
+
+    const searchTerm =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+    const selectedDay =
+        dayFilter.value;
+
+    const selectedClass =
+        classFilter.value;
+
+
+    const filtered =
+        allTimetable.filter(
+            function(item) {
+
+                const searchableText =
+                    [
+                        item.timetable_id,
+                        item.day_of_week,
+                        item.slot_name,
+                        item.period_number,
+                        item.class_name,
+                        item.subject_code,
+                        item.subject_name,
+                        item.faculty_name,
+                        item.room_number,
+                        item.session_type
+                    ]
+                    .join(" ")
+                    .toLowerCase();
+
+
+                const matchesSearch =
+                    !searchTerm ||
+                    searchableText.includes(
+                        searchTerm
+                    );
+
+
+                const matchesDay =
+                    !selectedDay ||
+                    item.day_of_week ===
+                    selectedDay;
+
+
+                const matchesClass =
+                    !selectedClass ||
+                    item.class_name ===
+                    selectedClass;
+
+
+                return (
+                    matchesSearch &&
+                    matchesDay &&
+                    matchesClass
+                );
+
+            }
+        );
+
+
+    renderTimetable(
+        filtered
+    );
+
+}
+
+
+// =====================================================
+// EVENTS
+// =====================================================
+
+searchInput.addEventListener(
+    "input",
+    filterTimetable
+);
+
+dayFilter.addEventListener(
+    "change",
+    filterTimetable
+);
+
+classFilter.addEventListener(
+    "change",
+    filterTimetable
+);
+
+refreshBtn.addEventListener(
+    "click",
+    loadTimetable
+);
+
+
+// =====================================================
+// START
+// =====================================================
+
+if (
+    checkAdminLogin()
+) {
+
+    loadTimetable();
+
+}
+
+</script>
+
+
+</body>
+
+</html>

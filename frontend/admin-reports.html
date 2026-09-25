@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        SubAlloc Hub | Reports & Analytics
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f4f7ff,
+                    #f8fafc,
+                    #eef2ff
+                );
+
+            color: #1e293b;
+
+            min-height: 100vh;
+        }
+
+
+        /* ==================================================
+           HEADER
+           ================================================== */
+
+        .header {
+            background:
+                linear-gradient(
+                    120deg,
+                    #172554,
+                    #3454d1
+                );
+
+            color: white;
+
+            box-shadow:
+                0 8px 24px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.15
+                );
+        }
+
+
+        .header-inner {
+            max-width: 1250px;
+
+            margin: 0 auto;
+
+            min-height: 76px;
+
+            padding:
+                0 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+
+        .brand {
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 21px;
+
+            font-weight: 800;
+        }
+
+
+        .header-actions {
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .header-btn {
+            color: white;
+
+            text-decoration: none;
+
+            padding:
+                9px 14px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.3
+                );
+
+            border-radius: 9px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .header-btn:hover {
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.1
+                );
+        }
+
+
+        /* ==================================================
+           CONTAINER
+           ================================================== */
+
+        .container {
+            max-width: 1250px;
+
+            margin: 0 auto;
+
+            padding:
+                30px 20px 50px;
+        }
+
+
+        /* ==================================================
+           HERO
+           ================================================== */
+
+        .hero {
+            background: white;
+
+            border:
+                1px solid
+                #dbe4ff;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            margin-bottom: 24px;
+
+            box-shadow:
+                0 12px 30px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.07
+                );
+        }
+
+
+        .badge {
+            display: inline-block;
+
+            background: #e0e7ff;
+
+            color: #3730a3;
+
+            padding:
+                7px 12px;
+
+            border-radius: 999px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            margin-bottom: 10px;
+        }
+
+
+        .hero h1 {
+            margin: 0;
+
+            color: #172554;
+
+            font-size: 34px;
+        }
+
+
+        .hero p {
+            margin:
+                8px 0 0;
+
+            color: #64748b;
+
+            line-height: 1.6;
+
+            font-size: 15px;
+        }
+
+
+        /* ==================================================
+           SUMMARY
+           ================================================== */
+
+        .summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    6,
+                    minmax(
+                        150px,
+                        1fr
+                    )
+                );
+
+            gap: 15px;
+
+            margin-bottom: 24px;
+        }
+
+
+        .summary-card {
+            background: white;
+
+            border:
+                1px solid
+                #dbe4ff;
+
+            border-radius: 16px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 8px 24px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.05
+                );
+        }
+
+
+        .summary-label {
+            margin: 0;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .summary-value {
+            margin:
+                7px 0 0;
+
+            color: #172554;
+
+            font-size: 29px;
+
+            font-weight: 900;
+        }
+
+
+        /* ==================================================
+           SECTION
+           ================================================== */
+
+        .section {
+            background: white;
+
+            border:
+                1px solid
+                #dbe4ff;
+
+            border-radius: 16px;
+
+            overflow: hidden;
+
+            margin-bottom: 24px;
+
+            box-shadow:
+                0 10px 28px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.05
+                );
+        }
+
+
+        .section-heading {
+            padding:
+                18px 20px;
+
+            border-bottom:
+                1px solid
+                #e2e8f0;
+        }
+
+
+        .section-heading h2 {
+            margin: 0;
+
+            color: #172554;
+
+            font-size: 19px;
+        }
+
+
+        .section-heading p {
+            margin:
+                5px 0 0;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+
+        /* ==================================================
+           TABLE
+           ================================================== */
+
+        .table-wrapper {
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 650px;
+        }
+
+
+        th {
+            text-align: left;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #172554,
+                    #243ea8
+                );
+
+            color: white;
+
+            padding:
+                13px 15px;
+
+            font-size: 13px;
+        }
+
+
+        td {
+            padding:
+                13px 15px;
+
+            border-bottom:
+                1px solid
+                #eef2f7;
+
+            font-size: 14px;
+
+            color: #334155;
+        }
+
+
+        tr:hover td {
+            background: #f8faff;
+        }
+
+
+        .status {
+            display: inline-block;
+
+            padding:
+                6px 10px;
+
+            border-radius: 999px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+        }
+
+
+        .pending {
+            background: #fef3c7;
+
+            color: #92400e;
+        }
+
+
+        .acknowledged {
+            background: #dbeafe;
+
+            color: #1e40af;
+        }
+
+
+        .completed {
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+
+        .other {
+            background: #e2e8f0;
+
+            color: #475569;
+        }
+
+
+        .number {
+            font-weight: 800;
+
+            color: #172554;
+        }
+
+
+        /* ==================================================
+           MESSAGE
+           ================================================== */
+
+        .message {
+            padding: 30px;
+
+            text-align: center;
+
+            color: #64748b;
+        }
+
+
+        .error {
+            color: #b91c1c;
+        }
+
+
+        /* ==================================================
+           FOOTER
+           ================================================== */
+
+        .footer {
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            padding-top: 5px;
+        }
+
+
+        /* ==================================================
+           RESPONSIVE
+           ================================================== */
+
+        @media (
+            max-width: 1050px
+        ) {
+
+            .summary-grid {
+                grid-template-columns:
+                    repeat(
+                        3,
+                        minmax(
+                            150px,
+                            1fr
+                        )
+                    );
+            }
+
+        }
+
+
+        @media (
+            max-width: 650px
+        ) {
+
+            .container {
+                padding:
+                    20px 14px 40px;
+            }
+
+
+            .summary-grid {
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(
+                            130px,
+                            1fr
+                        )
+                    );
+            }
+
+
+            .hero h1 {
+                font-size: 27px;
+            }
+
+        }
+
+
+        @media (
+            max-width: 450px
+        ) {
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .header-inner {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                padding:
+                    14px 16px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     HEADER
+     ================================================== -->
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <a
+            class="brand"
+            href="admin.html"
+        >
+            🏫 SubAlloc Hub
+        </a>
+
+
+        <div class="header-actions">
+
+            <a
+                class="header-btn"
+                href="admin.html"
+            >
+                Dashboard
+            </a>
+
+            <a
+                class="header-btn"
+                href="admin-substitutions.html"
+            >
+                Substitutions
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ==================================================
+     MAIN
+     ================================================== -->
+
+<main class="container">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <span class="badge">
+            📊 Admin
+        </span>
+
+        <h1>
+            Reports & Analytics
+        </h1>
+
+        <p>
+            View substitution activity,
+            faculty workload, and recent
+            allocation information.
+        </p>
+
+    </section>
+
+
+    <!-- SUMMARY -->
+
+    <section class="summary-grid">
+
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Total Assignments
+            </p>
+
+            <p
+                class="summary-value"
+                id="totalAssignments"
+            >
+                —
+            </p>
+
+        </article>
+
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Pending
+            </p>
+
+            <p
+                class="summary-value"
+                id="pendingCount"
+            >
+                —
+            </p>
+
+        </article>
+
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Acknowledged
+            </p>
+
+            <p
+                class="summary-value"
+                id="acknowledgedCount"
+            >
+                —
+            </p>
+
+        </article>
+
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Completed
+            </p>
+
+            <p
+                class="summary-value"
+                id="completedCount"
+            >
+                —
+            </p>
+
+        </article>
+
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Substitute Faculty
+            </p>
+
+            <p
+                class="summary-value"
+                id="substituteFacultyCount"
+            >
+                —
+            </p>
+
+        </article>
+
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Absent Faculty
+            </p>
+
+            <p
+                class="summary-value"
+                id="absentFacultyCount"
+            >
+                —
+            </p>
+
+        </article>
+
+    </section>
+
+
+    <!-- FACULTY WORKLOAD -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <h2>
+                👨‍🏫 Faculty Substitution Workload
+            </h2>
+
+            <p>
+                Number of substitution classes
+                assigned to each faculty member.
+            </p>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Faculty
+                        </th>
+
+                        <th>
+                            Substitutions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="workloadBody">
+
+                    <tr>
+
+                        <td
+                            colspan="3"
+                            class="message"
+                        >
+                            Loading workload...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- RECENT ACTIVITY -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <h2>
+                📋 Recent Substitution Activity
+            </h2>
+
+            <p>
+                Latest substitution assignments
+                recorded in SubAlloc Hub.
+            </p>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Substitute Faculty
+                        </th>
+
+                        <th>
+                            Absent Faculty
+                        </th>
+
+                        <th>
+                            Class
+                        </th>
+
+                        <th>
+                            Subject
+                        </th>
+
+                        <th>
+                            Period
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="activityBody">
+
+                    <tr>
+
+                        <td
+                            colspan="8"
+                            class="message"
+                        >
+                            Loading activity...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <div class="footer">
+
+        SubAlloc Hub · Reports & Analytics
+
+    </div>
+
+
+</main>
+
+
+<script>
+
+
+// ==================================================
+// API
+// ==================================================
+
+const API_BASE_URL =
+    "http://localhost:3000";
+
+
+// ==================================================
+// DATA
+// ==================================================
+
+let substitutions = [];
+
+
+// ==================================================
+// LOGIN CHECK
+// ==================================================
+
+function checkAdminLogin() {
+
+    const storedUser =
+        sessionStorage.getItem(
+            "loggedInUser"
+        );
+
+
+    if (!storedUser) {
+
+        window.location.href =
+            "index.html";
+
+        return false;
+
+    }
+
+
+    try {
+
+        const user =
+            JSON.parse(
+                storedUser
+            );
+
+
+        if (
+            String(user.role)
+                .toUpperCase() !==
+            "ADMIN"
+        ) {
+
+            window.location.href =
+                "faculty.html";
+
+            return false;
+
+        }
+
+
+        return user;
+
+    } catch (error) {
+
+        console.error(
+            "Invalid login data:",
+            error
+        );
+
+        window.location.href =
+            "index.html";
+
+        return false;
+
+    }
+
+}
+
+
+// ==================================================
+// FORMAT DATE
+// ==================================================
+
+function formatDate(
+    value
+) {
+
+    if (!value) {
+        return "—";
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return String(value);
+
+    }
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+// ==================================================
+// STATUS
+// ==================================================
+
+function statusBadge(
+    status
+) {
+
+    const normalized =
+        String(
+            status || ""
+        ).toUpperCase();
+
+
+    let className =
+        "other";
+
+
+    if (
+        normalized ===
+        "PENDING"
+    ) {
+
+        className =
+            "pending";
+
+    } else if (
+        normalized ===
+        "ACKNOWLEDGED"
+    ) {
+
+        className =
+            "acknowledged";
+
+    } else if (
+        normalized ===
+        "COMPLETED"
+    ) {
+
+        className =
+            "completed";
+
+    }
+
+
+    return `
+        <span class="status ${className}">
+            ${normalized || "—"}
+        </span>
+    `;
+
+}
+
+
+// ==================================================
+// SUMMARY
+// ==================================================
+
+function updateSummary() {
+
+    document.getElementById(
+        "totalAssignments"
+    ).textContent =
+        substitutions.length;
+
+
+    document.getElementById(
+        "pendingCount"
+    ).textContent =
+        substitutions.filter(
+            item =>
+                String(
+                    item.status
+                ).toUpperCase() ===
+                "PENDING"
+        ).length;
+
+
+    document.getElementById(
+        "acknowledgedCount"
+    ).textContent =
+        substitutions.filter(
+            item =>
+                String(
+                    item.status
+                ).toUpperCase() ===
+                "ACKNOWLEDGED"
+        ).length;
+
+
+    document.getElementById(
+        "completedCount"
+    ).textContent =
+        substitutions.filter(
+            item =>
+                String(
+                    item.status
+                ).toUpperCase() ===
+                "COMPLETED"
+        ).length;
+
+
+    const substituteSet =
+        new Set();
+
+
+    const absentSet =
+        new Set();
+
+
+    substitutions.forEach(
+        function(item) {
+
+            if (
+                item.substitute_faculty
+            ) {
+
+                substituteSet.add(
+                    item.substitute_faculty
+                );
+
+            }
+
+
+            if (
+                item.absent_faculty
+            ) {
+
+                absentSet.add(
+                    item.absent_faculty
+                );
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "substituteFacultyCount"
+    ).textContent =
+        substituteSet.size;
+
+
+    document.getElementById(
+        "absentFacultyCount"
+    ).textContent =
+        absentSet.size;
+
+}
+
+
+// ==================================================
+// WORKLOAD
+// ==================================================
+
+function renderWorkload() {
+
+    const body =
+        document.getElementById(
+            "workloadBody"
+        );
+
+
+    const workload = {};
+
+
+    substitutions.forEach(
+    function(item) {
+
+        if (!item.substitute_faculty) {
+            return;
+        }
+
+        const faculty =
+            item.substitute_faculty;
+
+        workload[faculty] =
+            (
+                workload[faculty] ||
+                0
+            ) + 1;
+
+    }
+);
+
+
+    const rows =
+        Object.entries(workload)
+            .sort(
+                function(a, b) {
+
+                    return b[1] - a[1];
+
+                }
+            );
+
+
+    if (
+        rows.length === 0
+    ) {
+
+        body.innerHTML = `
+            <tr>
+                <td
+                    colspan="3"
+                    class="message"
+                >
+                    No workload data available.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    body.innerHTML =
+        rows.map(
+            function(row, index) {
+
+                return `
+                    <tr>
+
+                        <td class="number">
+                            ${index + 1}
+                        </td>
+
+                        <td>
+                            ${row[0]}
+                        </td>
+
+                        <td class="number">
+                            ${row[1]}
+                        </td>
+
+                    </tr>
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+// ==================================================
+// RECENT ACTIVITY
+// ==================================================
+
+function renderActivity() {
+
+    const body =
+        document.getElementById(
+            "activityBody"
+        );
+
+
+    if (
+        substitutions.length === 0
+    ) {
+
+        body.innerHTML = `
+            <tr>
+                <td
+                    colspan="8"
+                    class="message"
+                >
+                    No substitution activity found.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    body.innerHTML =
+        substitutions
+            .slice(0, 50)
+            .map(
+                function(item, index) {
+
+                    return `
+                        <tr>
+
+                            <td class="number">
+                                ${index + 1}
+                            </td>
+
+                            <td>
+                                ${formatDate(
+                                    item.allocation_date
+                                )}
+                            </td>
+
+                            <td>
+                                ${item.substitute_faculty || "—"}
+                            </td>
+
+                            <td>
+                                ${item.absent_faculty || "—"}
+                            </td>
+
+                            <td>
+                                ${item.class_name || "—"}
+                            </td>
+
+                            <td>
+                                ${item.subject_name || "—"}
+                            </td>
+
+                            <td>
+                                ${
+                                    item.slot_name ||
+                                    item.period_number ||
+                                    "—"
+                                }
+                            </td>
+
+                            <td>
+                                ${statusBadge(
+                                    item.status
+                                )}
+                            </td>
+
+                        </tr>
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+// ==================================================
+// LOAD REPORT DATA
+// ==================================================
+
+async function loadReports() {
+
+    const activityBody =
+        document.getElementById(
+            "activityBody"
+        );
+
+
+    try {
+
+        const response = await fetch(
+    "http://localhost:3000/api/admin/substitutions",
+    {
+        credentials: "include"
+    }
+);
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load reports."
+            );
+
+        }
+
+
+        substitutions =
+    Array.isArray(
+        data.allocations
+    )
+        ? data.allocations
+        : [];
+
+
+        updateSummary();
+
+        renderWorkload();
+
+        renderActivity();
+
+
+    } catch (error) {
+
+        console.error(
+            "Reports loading error:",
+            error
+        );
+
+
+        activityBody.innerHTML = `
+            <tr>
+                <td
+                    colspan="8"
+                    class="message error"
+                >
+                    Unable to load reports.
+                    Make sure the backend is running
+                    and you are logged in as Admin.
+                </td>
+            </tr>
+        `;
+
+
+        document.getElementById(
+            "workloadBody"
+        ).innerHTML = `
+            <tr>
+                <td
+                    colspan="3"
+                    class="message error"
+                >
+                    Unable to load workload.
+                </td>
+            </tr>
+        `;
+
+    }
+
+}
+
+
+// ==================================================
+// START
+// ==================================================
+
+if (
+    checkAdminLogin()
+) {
+
+    loadReports();
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>

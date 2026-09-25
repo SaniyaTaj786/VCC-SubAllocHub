@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SubAlloc Hub | Faculty Management</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        body {
+            background: linear-gradient(
+                135deg,
+                #f4f7ff 0%,
+                #f8fafc 55%,
+                #eef2ff 100%
+            );
+        }
+
+        .admin-header {
+            background: linear-gradient(
+                120deg,
+                #172554,
+                #3454d1
+            );
+            color: white;
+        }
+
+        .admin-header .navbar-inner {
+            min-height: 78px;
+        }
+
+        .admin-header .brand,
+        .admin-header .nav-links a {
+            color: white;
+        }
+
+        .admin-header .nav-links a {
+            opacity: .9;
+        }
+
+        .admin-header .nav-links a:hover {
+            opacity: 1;
+        }
+
+        .page-title {
+            margin-bottom: 24px;
+        }
+
+        .page-title h1 {
+            margin: 0;
+            color: #172554;
+        }
+
+        .page-title p {
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 220px;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #172554;
+            color: white;
+            padding: 13px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #e5e7eb;
+            white-space: nowrap;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .status-active {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #dcfce7;
+            color: #166534;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-inactive {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #fee2e2;
+            color: #991b1b;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .message-info {
+            display: block;
+            background: #eff6ff;
+            color: #1e40af;
+        }
+
+        .message-error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .back-btn {
+            background: white;
+            color: #243da8;
+            border: 1px solid #cbd5e1;
+        }
+
+        .back-btn:hover {
+            background: #eef2ff;
+        }
+
+        @media (max-width: 700px) {
+
+            .page-container {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+            th,
+            td {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar admin-header">
+
+    <div class="navbar-inner">
+
+        <a class="brand" href="admin.html">
+            SubAlloc Hub
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="admin.html">
+                Dashboard
+            </a>
+
+            <a href="admin.html#attendance">
+                Attendance
+            </a>
+
+            <a href="admin-substitutions.html">
+                Substitutions
+            </a>
+
+        </nav>
+
+        <button
+            class="logout-btn"
+            type="button"
+            onclick="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="page-container">
+
+    <section class="hero">
+
+        <h1>
+            Faculty Management
+        </h1>
+
+        <p>
+            View and manage faculty information available in SubAlloc Hub.
+        </p>
+
+    </section>
+
+
+    <section class="card">
+
+        <div class="page-title">
+
+            <h1>
+                Faculty List
+            </h1>
+
+            <p>
+                All faculty members registered in the system.
+            </p>
+
+        </div>
+
+
+        <div class="toolbar">
+
+            <input
+                type="text"
+                id="searchFaculty"
+                class="search-box"
+                placeholder="Search faculty by name, employee code or email..."
+                oninput="filterFaculty()">
+
+            <button
+                type="button"
+                onclick="loadFaculty()">
+
+                Refresh
+
+            </button>
+
+            <a
+                href="admin.html"
+                class="btn back-btn">
+
+                Back to Dashboard
+
+            </a>
+
+        </div>
+
+
+        <div
+            id="facultyMessage"
+            class="message">
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Employee Code</th>
+
+                        <th>Faculty Name</th>
+
+                        <th>Email</th>
+
+                        <th>Phone</th>
+
+                        <th>Designation</th>
+
+                        <th>Department</th>
+
+                        <th>Max Substitutions/Day</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="facultyTableBody">
+
+                    <tr>
+
+                        <td colspan="9">
+                            Loading faculty...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+
+    SubAlloc Hub · Faculty Management
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   LOGIN CHECK
+===================================================== */
+
+const storedUser =
+    sessionStorage.getItem("loggedInUser");
+
+
+if (!storedUser) {
+
+    window.location.href = "index.html";
+
+} else {
+
+    const user =
+        JSON.parse(storedUser);
+
+
+    if (user.role !== "ADMIN") {
+
+        window.location.href = "faculty.html";
+
+    }
+
+}
+
+
+/* =====================================================
+   FACULTY DATA
+===================================================== */
+
+let allFaculty = [];
+
+
+/* =====================================================
+   LOAD FACULTY
+===================================================== */
+
+async function loadFaculty() {
+
+    const tableBody =
+        document.getElementById("facultyTableBody");
+
+    const message =
+        document.getElementById("facultyMessage");
+
+
+    tableBody.innerHTML = `
+        <tr>
+            <td colspan="9">
+                Loading faculty...
+            </td>
+        </tr>
+    `;
+
+
+    message.style.display = "none";
+
+
+    try {
+
+        const response = await fetch(
+    "http://localhost:3000/api/faculty",
+    {
+        credentials: "include"
+    }
+);
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Faculty API response:",
+            data
+        );
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load faculty."
+            );
+
+        }
+
+
+        allFaculty =
+            data.faculty || [];
+
+
+        displayFaculty(allFaculty);
+
+
+    } catch (error) {
+
+        console.error(
+            "Faculty loading error:",
+            error
+        );
+
+
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="9">
+                    Unable to load faculty information.
+                </td>
+            </tr>
+        `;
+
+
+        message.textContent =
+            "Unable to connect to the backend.";
+
+        message.className =
+            "message message-error";
+
+    }
+
+}
+
+
+/* =====================================================
+   DISPLAY FACULTY
+===================================================== */
+
+function displayFaculty(facultyList) {
+
+    const tableBody =
+        document.getElementById(
+            "facultyTableBody"
+        );
+
+
+    if (
+        !facultyList ||
+        facultyList.length === 0
+    ) {
+
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="9">
+                    No faculty records found.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    tableBody.innerHTML = "";
+
+
+    facultyList.forEach(
+        faculty => {
+
+            const row =
+                document.createElement("tr");
+
+
+            const isActive =
+                faculty.is_active === undefined
+                ? true
+                : Boolean(faculty.is_active);
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${faculty.faculty_id}
+                </td>
+
+                <td>
+                    ${faculty.employee_code || "-"}
+                </td>
+
+                <td>
+                    <strong>
+                        ${faculty.full_name || "-"}
+                    </strong>
+                </td>
+
+                <td>
+                    ${faculty.email || "-"}
+                </td>
+
+                <td>
+                    ${faculty.phone || "-"}
+                </td>
+
+                <td>
+                    ${faculty.designation || "-"}
+                </td>
+
+                <td>
+                    ${faculty.department_name || "-"}
+                </td>
+
+                <td>
+                    ${faculty.max_substitutions_per_day ?? "-"}
+                </td>
+
+                <td>
+
+                    ${
+                        isActive
+
+                        ? `
+                            <span class="status-active">
+                                Active
+                            </span>
+                          `
+
+                        : `
+                            <span class="status-inactive">
+                                Inactive
+                            </span>
+                          `
+                    }
+
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(row);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   SEARCH FACULTY
+===================================================== */
+
+function filterFaculty() {
+
+    const search =
+        document
+            .getElementById("searchFaculty")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    if (!search) {
+
+        displayFaculty(allFaculty);
+
+        return;
+
+    }
+
+
+    const filtered =
+        allFaculty.filter(
+            faculty => {
+
+                return (
+
+                    String(
+                        faculty.full_name || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
+
+                    ||
+
+                    String(
+                        faculty.employee_code || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
+
+                    ||
+
+                    String(
+                        faculty.email || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
+
+                );
+
+            }
+        );
+
+
+    displayFaculty(filtered);
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    sessionStorage.removeItem(
+        "loggedInUser"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+loadFaculty();
+
+</script>
+
+</body>
+</html>

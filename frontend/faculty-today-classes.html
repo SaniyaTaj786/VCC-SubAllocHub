@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Today's Classes - SubAlloc Hub</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+
+        .header {
+            background: #1f3c88;
+            color: white;
+            padding: 20px;
+        }
+
+
+        .header-inner {
+            max-width: 1200px;
+            margin: auto;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+
+        .header p {
+            margin: 6px 0 0;
+            opacity: 0.9;
+        }
+
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+
+        .header-actions a,
+        .header-actions button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+
+        .back-btn {
+            background: white;
+            color: #1f3c88;
+        }
+
+
+        .refresh-btn {
+            background: #16a34a;
+            color: white;
+        }
+
+
+        .refresh-btn:hover {
+            background: #15803d;
+        }
+
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+
+        .hero {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        .hero h2 {
+            margin: 0 0 8px;
+        }
+
+
+        .hero p {
+            margin: 0;
+            color: #64748b;
+        }
+
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+
+        .summary-card {
+            background: white;
+            padding: 22px;
+            border-radius: 10px;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        .summary-card h3 {
+            margin: 0 0 10px;
+            color: #64748b;
+            font-size: 15px;
+        }
+
+
+        .summary-number {
+            font-size: 30px;
+            font-weight: bold;
+            color: #1f3c88;
+        }
+
+
+        .table-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0, 0, 0, 0.08);
+
+            overflow-x: auto;
+        }
+
+
+        .table-container h2 {
+            margin: 0 0 20px;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+
+        th {
+            background: #1f3c88;
+            color: white;
+            padding: 14px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+
+        td {
+            padding: 13px 14px;
+
+            border-bottom:
+                1px solid
+                #e2e8f0;
+
+            font-size: 14px;
+        }
+
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+
+        .session {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+
+        .theory {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+
+        .lab {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+
+        .loading,
+        .empty,
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+
+
+        .error {
+            color: #dc2626;
+        }
+
+
+        @media (max-width: 800px) {
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <header class="header">
+
+        <div class="header-inner">
+
+            <div>
+
+                <h1>Today's Classes</h1>
+
+                <p id="welcomeText">
+                    Faculty schedule
+                </p>
+
+            </div>
+
+
+            <div class="header-actions">
+
+                <a
+                    href="faculty.html"
+                    class="back-btn"
+                >
+                    ← Dashboard
+                </a>
+
+
+                <button
+                    type="button"
+                    class="refresh-btn"
+                    onclick="loadTodayClasses()"
+                >
+                    Refresh
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+
+        <section class="hero">
+
+            <h2 id="todayHeading">
+                Today's Schedule
+            </h2>
+
+            <p id="todayDescription">
+                Loading today's classes...
+            </p>
+
+        </section>
+
+
+        <section class="summary-grid">
+
+
+            <div class="summary-card">
+
+                <h3>Total Classes Today</h3>
+
+                <div
+                    class="summary-number"
+                    id="totalClasses"
+                >
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <h3>Theory Classes</h3>
+
+                <div
+                    class="summary-number"
+                    id="theoryClasses"
+                >
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <h3>Lab Classes</h3>
+
+                <div
+                    class="summary-number"
+                    id="labClasses"
+                >
+                    -
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <section class="table-container">
+
+            <h2>Class Schedule</h2>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Period</th>
+
+                        <th>Time</th>
+
+                        <th>Class</th>
+
+                        <th>Subject</th>
+
+                        <th>Session</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="todayClassesTable">
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            class="loading"
+                        >
+                            Loading today's classes...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+    </main>
+
+
+    <script>
+
+
+        // =====================================================
+        // LOGIN CHECK
+        // =====================================================
+
+        const storedUser =
+            sessionStorage.getItem(
+                "loggedInUser"
+            );
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+        const user =
+            JSON.parse(storedUser);
+
+
+        if (user.role === "ADMIN") {
+
+            window.location.href =
+                "admin.html";
+
+        }
+
+
+        document.getElementById(
+            "welcomeText"
+        ).textContent =
+            "Welcome, " + user.username;
+
+
+        // =====================================================
+        // DAY NAMES
+        // =====================================================
+
+        const dayNames = [
+            "SUNDAY",
+            "MONDAY",
+            "TUESDAY",
+            "WEDNESDAY",
+            "THURSDAY",
+            "FRIDAY",
+            "SATURDAY"
+        ];
+
+
+        const today =
+            new Date();
+
+
+        const todayName =
+            dayNames[
+                today.getDay()
+            ];
+
+
+        const todayDisplayName =
+            todayName.charAt(0) +
+            todayName.slice(1).toLowerCase();
+
+
+        document.getElementById(
+            "todayHeading"
+        ).textContent =
+            `${todayDisplayName} - Today's Schedule`;
+
+
+        document.getElementById(
+            "todayDescription"
+        ).textContent =
+            `Classes scheduled for ${todayDisplayName}.`;
+
+
+        // =====================================================
+        // LOAD TODAY'S CLASSES
+        // =====================================================
+
+        async function loadTodayClasses() {
+
+            const table =
+                document.getElementById(
+                    "todayClassesTable"
+                );
+
+
+            table.innerHTML = `
+                <tr>
+                    <td
+                        colspan="6"
+                        class="loading"
+                    >
+                        Loading today's classes...
+                    </td>
+                </tr>
+            `;
+
+
+            try {
+
+                const response =
+                    await fetch(
+    `http://localhost:3000/api/faculty/timetable/${user.user_id}`,
+    {
+        credentials: "include"
+    }
+)
+
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    "Faculty timetable API response:",
+                    data
+                );
+
+
+                if (!data.success) {
+
+                    table.innerHTML = `
+                        <tr>
+                            <td
+                                colspan="6"
+                                class="error"
+                            >
+                                ${
+                                    data.message ||
+                                    "Unable to load timetable."
+                                }
+                            </td>
+                        </tr>
+                    `;
+
+                    return;
+                }
+
+
+                const todayClasses =
+                    (data.timetable || [])
+                        .filter(
+                            item =>
+                                item.day_of_week ===
+                                todayName
+                        )
+                        .sort(
+                            (a, b) =>
+                                Number(
+                                    a.period_number
+                                ) -
+                                Number(
+                                    b.period_number
+                                )
+                        );
+
+
+                updateSummary(
+                    todayClasses
+                );
+
+
+                if (
+                    todayClasses.length === 0
+                ) {
+
+                    table.innerHTML = `
+                        <tr>
+                            <td
+                                colspan="6"
+                                class="empty"
+                            >
+                                No classes scheduled for
+                                ${todayDisplayName}.
+                            </td>
+                        </tr>
+                    `;
+
+                    return;
+                }
+
+
+                table.innerHTML = "";
+
+
+                todayClasses.forEach(
+                    (item, index) => {
+
+                        const row =
+                            document.createElement(
+                                "tr"
+                            );
+
+
+                        const sessionType =
+                            String(
+                                item.session_type ||
+                                ""
+                            ).toUpperCase();
+
+
+                        const sessionClass =
+                            sessionType === "LAB"
+                                ? "lab"
+                                : "theory";
+
+
+                        row.innerHTML = `
+
+                            <td>
+                                ${index + 1}
+                            </td>
+
+                            <td>
+                                Period
+                                ${escapeHtml(
+                                    item.period_number
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    item.start_time
+                                )}
+                                -
+                                ${escapeHtml(
+                                    item.end_time
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    item.class_name || "—"
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    item.subject_name || "—"
+                                )}
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="session ${sessionClass}"
+                                >
+                                    ${escapeHtml(
+                                        sessionType || "—"
+                                    )}
+                                </span>
+
+                            </td>
+
+                        `;
+
+
+                        table.appendChild(row);
+
+                    }
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Today's classes error:",
+                    error
+                );
+
+
+                table.innerHTML = `
+                    <tr>
+                        <td
+                            colspan="6"
+                            class="error"
+                        >
+                            Unable to connect to the server.
+                        </td>
+                    </tr>
+                `;
+
+            }
+
+        }
+
+
+        // =====================================================
+        // UPDATE SUMMARY
+        // =====================================================
+
+        function updateSummary(
+            classes
+        ) {
+
+            const total =
+                classes.length;
+
+
+            const theory =
+                classes.filter(
+                    item =>
+                        String(
+                            item.session_type || ""
+                        ).toUpperCase() ===
+                        "THEORY"
+                ).length;
+
+
+            const lab =
+                classes.filter(
+                    item =>
+                        String(
+                            item.session_type || ""
+                        ).toUpperCase() ===
+                        "LAB"
+                ).length;
+
+
+            document.getElementById(
+                "totalClasses"
+            ).textContent = total;
+
+
+            document.getElementById(
+                "theoryClasses"
+            ).textContent = theory;
+
+
+            document.getElementById(
+                "labClasses"
+            ).textContent = lab;
+
+        }
+
+
+        // =====================================================
+        // ESCAPE HTML
+        // =====================================================
+
+        function escapeHtml(value) {
+
+            return String(value)
+                .replaceAll(
+                    "&",
+                    "&amp;"
+                )
+                .replaceAll(
+                    "<",
+                    "&lt;"
+                )
+                .replaceAll(
+                    ">",
+                    "&gt;"
+                )
+                .replaceAll(
+                    '"',
+                    "&quot;"
+                )
+                .replaceAll(
+                    "'",
+                    "&#039;"
+                );
+
+        }
+
+
+        // =====================================================
+        // INITIAL LOAD
+        // =====================================================
+
+        loadTodayClasses();
+
+
+    </script>
+
+
+</body>
+
+</html>

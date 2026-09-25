@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Profile - SubAlloc Hub</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+
+        .header {
+            background: #1f3c88;
+            color: white;
+            padding: 20px;
+        }
+
+
+        .header-inner {
+            max-width: 900px;
+            margin: auto;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+
+        .header p {
+            margin: 6px 0 0;
+            opacity: 0.9;
+        }
+
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+
+        .header-actions a,
+        .header-actions button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+
+        .back-btn {
+            background: white;
+            color: #1f3c88;
+        }
+
+
+        .logout-btn {
+            background: #dc2626;
+            color: white;
+        }
+
+
+        .logout-btn:hover {
+            background: #b91c1c;
+        }
+
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+
+        .profile-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 18px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+
+            border-bottom:
+                1px solid
+                #e2e8f0;
+        }
+
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+
+            border-radius: 50%;
+
+            background: #1f3c88;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+
+        .profile-header h2 {
+            margin: 0 0 7px;
+        }
+
+
+        .profile-header p {
+            margin: 0;
+            color: #64748b;
+        }
+
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(2, 1fr);
+            gap: 20px;
+        }
+
+
+        .profile-item {
+            background: #f8fafc;
+
+            border:
+                1px solid
+                #e2e8f0;
+
+            border-radius: 8px;
+            padding: 18px;
+        }
+
+
+        .profile-label {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+
+        .profile-value {
+            font-size: 17px;
+            word-break: break-word;
+        }
+
+
+        .status {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+
+        .active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+
+        .inactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+
+        .info-box {
+            margin-top: 25px;
+
+            padding: 18px;
+
+            border-radius: 8px;
+
+            background: #eff6ff;
+
+            border:
+                1px solid
+                #bfdbfe;
+
+            color: #1e40af;
+
+            line-height: 1.6;
+        }
+
+
+        @media (max-width: 650px) {
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-header {
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <header class="header">
+
+        <div class="header-inner">
+
+
+            <div>
+
+                <h1>Admin Profile</h1>
+
+                <p id="welcomeText">
+                    Administrator account
+                </p>
+
+            </div>
+
+
+            <div class="header-actions">
+
+                <a
+                    href="admin.html"
+                    class="back-btn"
+                >
+                    ← Dashboard
+                </a>
+
+
+                <button
+                    type="button"
+                    class="logout-btn"
+                    onclick="logout()"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+
+        <section class="profile-card">
+
+            <div class="profile-header">
+
+
+                <div
+                    class="avatar"
+                    id="avatar"
+                >
+                    A
+                </div>
+
+
+                <div>
+
+                    <h2 id="profileUsername">
+                        Administrator
+                    </h2>
+
+                    <p>
+                        SubAlloc Hub Administrator
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="profile-grid">
+
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        User ID
+                    </div>
+
+                    <div
+                        class="profile-value"
+                        id="userId"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        Username
+                    </div>
+
+                    <div
+                        class="profile-value"
+                        id="username"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        Role
+                    </div>
+
+                    <div
+                        class="profile-value"
+                        id="role"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        Account Status
+                    </div>
+
+                    <div
+                        class="profile-value"
+                        id="accountStatus"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="info-box">
+
+                <strong>Administrator Access</strong>
+
+                <br>
+
+                This account can access the SubAlloc Hub
+                administration dashboard and system
+                management features.
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <script>
+
+
+        // =====================================================
+        // LOGIN CHECK
+        // =====================================================
+
+        const storedUser =
+            sessionStorage.getItem(
+                "loggedInUser"
+            );
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+        const user =
+            JSON.parse(storedUser);
+
+
+        // =====================================================
+        // ADMIN ROLE CHECK
+        // =====================================================
+
+        if (user.role !== "ADMIN") {
+
+            window.location.href =
+                "faculty.html";
+
+        }
+
+
+        // =====================================================
+        // DISPLAY PROFILE
+        // =====================================================
+
+        document.getElementById(
+            "welcomeText"
+        ).textContent =
+            "Welcome, " + user.username;
+
+
+        document.getElementById(
+            "profileUsername"
+        ).textContent =
+            user.username || "Administrator";
+
+
+        document.getElementById(
+            "userId"
+        ).textContent =
+            user.user_id ?? "—";
+
+
+        document.getElementById(
+            "username"
+        ).textContent =
+            user.username || "—";
+
+
+        document.getElementById(
+            "role"
+        ).textContent =
+            user.role || "—";
+
+
+        document.getElementById(
+            "avatar"
+        ).textContent =
+            (
+                user.username ||
+                "A"
+            )
+            .charAt(0)
+            .toUpperCase();
+
+
+        const statusElement =
+            document.getElementById(
+                "accountStatus"
+            );
+
+
+        /*
+         * The login response only stores the account
+         * information needed for the current session.
+         * A successful login means the active account
+         * passed the backend's account-status check.
+         */
+
+        statusElement.innerHTML = `
+            <span class="status active">
+                ACTIVE
+            </span>
+        `;
+
+
+        // =====================================================
+        // LOGOUT
+        // =====================================================
+
+        function logout() {
+
+            sessionStorage.removeItem(
+                "loggedInUser"
+            );
+
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

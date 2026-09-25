@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Profile - SubAlloc Hub</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+
+        .header {
+            background: #1f3c88;
+            color: white;
+            padding: 20px;
+        }
+
+
+        .header-inner {
+            max-width: 1000px;
+            margin: auto;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+
+        .header p {
+            margin: 6px 0 0;
+            opacity: 0.9;
+        }
+
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+
+        .header-actions a,
+        .header-actions button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+
+        .back-btn {
+            background: white;
+            color: #1f3c88;
+        }
+
+
+        .refresh-btn {
+            background: #16a34a;
+            color: white;
+        }
+
+
+        .refresh-btn:hover {
+            background: #15803d;
+        }
+
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+
+        .profile-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 18px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+
+            border-bottom:
+                1px solid
+                #e2e8f0;
+        }
+
+
+        .avatar {
+            width: 75px;
+            height: 75px;
+
+            border-radius: 50%;
+
+            background: #1f3c88;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+
+        .profile-header h2 {
+            margin: 0 0 6px;
+        }
+
+
+        .profile-header p {
+            margin: 0;
+            color: #64748b;
+        }
+
+
+        .profile-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .profile-item {
+            background: #f8fafc;
+
+            border: 1px solid
+                #e2e8f0;
+
+            border-radius: 8px;
+
+            padding: 18px;
+        }
+
+
+        .profile-label {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+
+        .profile-value {
+            font-size: 16px;
+            color: #1e293b;
+            word-break: break-word;
+        }
+
+
+        .status {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+
+        .active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+
+        .inactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #64748b;
+        }
+
+
+        .error {
+            text-align: center;
+            padding: 50px;
+            color: #dc2626;
+        }
+
+
+        @media (max-width: 700px) {
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-header {
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <header class="header">
+
+        <div class="header-inner">
+
+            <div>
+
+                <h1>My Profile</h1>
+
+                <p id="welcomeText">
+                    Faculty profile
+                </p>
+
+            </div>
+
+
+            <div class="header-actions">
+
+                <a
+                    href="faculty.html"
+                    class="back-btn"
+                >
+                    ← Dashboard
+                </a>
+
+
+                <button
+                    type="button"
+                    class="refresh-btn"
+                    onclick="loadProfile()"
+                >
+                    Refresh
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+
+        <section
+            class="profile-card"
+            id="profileContainer"
+        >
+
+            <div class="loading">
+                Loading profile...
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <script>
+
+
+        // =====================================================
+        // LOGIN CHECK
+        // =====================================================
+
+        const storedUser =
+            sessionStorage.getItem(
+                "loggedInUser"
+            );
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+        const user =
+            JSON.parse(storedUser);
+
+
+        if (user.role === "ADMIN") {
+
+            window.location.href =
+                "admin.html";
+
+        }
+
+
+        document.getElementById(
+            "welcomeText"
+        ).textContent =
+            "Welcome, " + user.username;
+
+
+        // =====================================================
+        // LOAD PROFILE
+        // =====================================================
+
+        async function loadProfile() {
+
+            const container =
+                document.getElementById(
+                    "profileContainer"
+                );
+
+
+            container.innerHTML = `
+                <div class="loading">
+                    Loading profile...
+                </div>
+            `;
+
+
+            try {
+
+                const response =
+                    await fetch(
+    `http://localhost:3000/api/faculty/profile/${user.user_id}`,
+    {
+        credentials: "include"
+    }
+);
+
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    "Faculty profile API response:",
+                    data
+                );
+
+
+                if (!data.success) {
+
+                    container.innerHTML = `
+                        <div class="error">
+                            ${
+                                data.message ||
+                                "Unable to load profile."
+                            }
+                        </div>
+                    `;
+
+                    return;
+                }
+
+
+                const profile =
+                    data.profile;
+
+
+                const firstLetter =
+                    (
+                        profile.full_name ||
+                        profile.username ||
+                        "F"
+                    )
+                    .trim()
+                    .charAt(0)
+                    .toUpperCase();
+
+
+                const accountStatus =
+                    Number(profile.is_active) === 1
+                        ? `
+                            <span class="status active">
+                                ACTIVE
+                            </span>
+                          `
+                        : `
+                            <span class="status inactive">
+                                INACTIVE
+                            </span>
+                          `;
+
+
+                container.innerHTML = `
+
+                    <div class="profile-header">
+
+                        <div class="avatar">
+                            ${firstLetter}
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                ${escapeHtml(
+                                    profile.full_name || "Faculty"
+                                )}
+                            </h2>
+
+                            <p>
+                                ${escapeHtml(
+                                    profile.designation || "Faculty Member"
+                                )}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-grid">
+
+
+                        <div class="profile-item">
+
+                            <div class="profile-label">
+                                Username
+                            </div>
+
+                            <div class="profile-value">
+                                ${escapeHtml(
+                                    profile.username || "—"
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-item">
+
+                            <div class="profile-label">
+                                Role
+                            </div>
+
+                            <div class="profile-value">
+                                ${escapeHtml(
+                                    profile.role || "—"
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-item">
+
+                            <div class="profile-label">
+                                Employee Code
+                            </div>
+
+                            <div class="profile-value">
+                                ${escapeHtml(
+                                    profile.employee_code || "—"
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-item">
+
+                            <div class="profile-label">
+                                Full Name
+                            </div>
+
+                            <div class="profile-value">
+                                ${escapeHtml(
+                                    profile.full_name || "—"
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-item">
+
+                            <div class="profile-label">
+                                Email
+                            </div>
+
+                            <div class="profile-value">
+                                ${escapeHtml(
+                                    profile.email || "—"
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-item">
+
+                            <div class="profile-label">
+                                Phone
+                            </div>
+
+                            <div class="profile-value">
+                                ${escapeHtml(
+                                    profile.phone || "—"
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-item">
+
+                            <div class="profile-label">
+                                Designation
+                            </div>
+
+                            <div class="profile-value">
+                                ${escapeHtml(
+                                    profile.designation || "—"
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-item">
+
+                            <div class="profile-label">
+                                Department
+                            </div>
+
+                            <div class="profile-value">
+                                ${escapeHtml(
+                                    profile.department_name || "—"
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-item">
+
+                            <div class="profile-label">
+                                Maximum Substitutions Per Day
+                            </div>
+
+                            <div class="profile-value">
+                                ${escapeHtml(
+                                    profile.max_substitutions_per_day ?? "—"
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-item">
+
+                            <div class="profile-label">
+                                Account Status
+                            </div>
+
+                            <div class="profile-value">
+                                ${accountStatus}
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                `;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Profile loading error:",
+                    error
+                );
+
+
+                container.innerHTML = `
+                    <div class="error">
+                        Unable to connect to the server.
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        // =====================================================
+        // ESCAPE HTML
+        // =====================================================
+
+        function escapeHtml(value) {
+
+            return String(value)
+                .replaceAll(
+                    "&",
+                    "&amp;"
+                )
+                .replaceAll(
+                    "<",
+                    "&lt;"
+                )
+                .replaceAll(
+                    ">",
+                    "&gt;"
+                )
+                .replaceAll(
+                    '"',
+                    "&quot;"
+                )
+                .replaceAll(
+                    "'",
+                    "&#039;"
+                );
+
+        }
+
+
+        // =====================================================
+        // INITIAL LOAD
+        // =====================================================
+
+        loadProfile();
+
+
+    </script>
+
+
+</body>
+
+</html>

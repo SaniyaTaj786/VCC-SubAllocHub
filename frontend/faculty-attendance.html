@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Attendance - SubAlloc Hub</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+
+        .header {
+            background: #1f3c88;
+            color: white;
+            padding: 20px;
+        }
+
+
+        .header-inner {
+            max-width: 1200px;
+            margin: auto;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+
+        .header p {
+            margin: 6px 0 0;
+            opacity: 0.9;
+        }
+
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+
+        .header-actions a,
+        .header-actions button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+
+        .back-btn {
+            background: white;
+            color: #1f3c88;
+        }
+
+
+        .refresh-btn {
+            background: #16a34a;
+            color: white;
+        }
+
+
+        .refresh-btn:hover {
+            background: #15803d;
+        }
+
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+
+        .summary-card {
+            background: white;
+            padding: 22px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        .summary-card h3 {
+            margin: 0 0 10px;
+            font-size: 15px;
+            color: #64748b;
+        }
+
+
+        .summary-number {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+
+        .attendance-container {
+            background: white;
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        .attendance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 15px;
+            flex-wrap: wrap;
+
+            margin-bottom: 20px;
+        }
+
+
+        .attendance-header h2 {
+            margin: 0;
+        }
+
+
+        .filter {
+            padding: 9px 12px;
+
+            border:
+                1px solid
+                #cbd5e1;
+
+            border-radius: 6px;
+            background: white;
+        }
+
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+
+        th {
+            background: #1f3c88;
+            color: white;
+            padding: 13px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+
+        td {
+            padding: 13px;
+
+            border-bottom:
+                1px solid
+                #e2e8f0;
+
+            font-size: 14px;
+        }
+
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+
+        .status {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+
+        .present {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+
+        .absent {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+
+        .leave {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+
+        .unknown {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+
+        .loading,
+        .empty,
+        .error {
+            text-align: center;
+            padding: 35px;
+            color: #64748b;
+        }
+
+
+        .error {
+            color: #dc2626;
+        }
+
+
+        @media (max-width: 900px) {
+
+            .summary-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <header class="header">
+
+        <div class="header-inner">
+
+            <div>
+
+                <h1>My Attendance</h1>
+
+                <p id="welcomeText">
+                    Faculty attendance
+                </p>
+
+            </div>
+
+
+            <div class="header-actions">
+
+                <a
+                    href="faculty.html"
+                    class="back-btn"
+                >
+                    ← Dashboard
+                </a>
+
+
+                <button
+                    type="button"
+                    class="refresh-btn"
+                    onclick="loadAttendance()"
+                >
+                    Refresh
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+
+        <!-- SUMMARY -->
+
+        <section class="summary-grid">
+
+
+            <div class="summary-card">
+
+                <h3>Total Records</h3>
+
+                <div
+                    class="summary-number"
+                    id="totalCount"
+                >
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <h3>Present</h3>
+
+                <div
+                    class="summary-number"
+                    id="presentCount"
+                >
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <h3>Absent</h3>
+
+                <div
+                    class="summary-number"
+                    id="absentCount"
+                >
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <h3>Leave</h3>
+
+                <div
+                    class="summary-number"
+                    id="leaveCount"
+                >
+                    -
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ATTENDANCE TABLE -->
+
+        <section class="attendance-container">
+
+
+            <div class="attendance-header">
+
+                <h2>Attendance History</h2>
+
+
+                <select
+                    id="statusFilter"
+                    class="filter"
+                    onchange="renderAttendance()"
+                >
+
+                    <option value="ALL">
+                        All Status
+                    </option>
+
+                    <option value="PRESENT">
+                        Present
+                    </option>
+
+                    <option value="ABSENT">
+                        Absent
+                    </option>
+
+                    <option value="LEAVE">
+                        Leave
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Date</th>
+
+                            <th>Faculty</th>
+
+                            <th>Employee Code</th>
+
+                            <th>Status</th>
+
+                            <th>Remarks</th>
+
+                            <th>Marked By</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="attendanceTable">
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="loading"
+                            >
+                                Loading attendance...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+
+        // =====================================================
+        // LOGIN CHECK
+        // =====================================================
+
+        const storedUser =
+            sessionStorage.getItem(
+                "loggedInUser"
+            );
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+        const user =
+            JSON.parse(storedUser);
+
+
+        if (user.role === "ADMIN") {
+
+            window.location.href =
+                "admin.html";
+
+        }
+
+
+        document.getElementById(
+            "welcomeText"
+        ).textContent =
+            "Welcome, " + user.username;
+
+
+        let attendanceRecords = [];
+
+
+        // =====================================================
+        // LOAD ATTENDANCE
+        // =====================================================
+
+        async function loadAttendance() {
+
+            const table =
+                document.getElementById(
+                    "attendanceTable"
+                );
+
+
+            table.innerHTML = `
+                <tr>
+                    <td
+                        colspan="7"
+                        class="loading"
+                    >
+                        Loading attendance...
+                    </td>
+                </tr>
+            `;
+
+
+            try {
+
+                const response = await fetch(
+    `http://localhost:3000/api/faculty/attendance/${user.user_id}`,
+    {
+        credentials: "include"
+    }
+);
+
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    "Faculty attendance API response:",
+                    data
+                );
+
+
+                if (!data.success) {
+
+                    table.innerHTML = `
+                        <tr>
+                            <td
+                                colspan="7"
+                                class="error"
+                            >
+                                ${
+                                    data.message ||
+                                    "Unable to load attendance."
+                                }
+                            </td>
+                        </tr>
+                    `;
+
+                    return;
+                }
+
+
+                attendanceRecords =
+                    data.attendance || [];
+
+
+                updateSummary();
+
+                renderAttendance();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Faculty attendance error:",
+                    error
+                );
+
+
+                table.innerHTML = `
+                    <tr>
+                        <td
+                            colspan="7"
+                            class="error"
+                        >
+                            Unable to connect to the server.
+                        </td>
+                    </tr>
+                `;
+
+            }
+
+        }
+
+
+        // =====================================================
+        // UPDATE SUMMARY
+        // =====================================================
+
+        function updateSummary() {
+
+            const total =
+                attendanceRecords.length;
+
+
+            const present =
+                attendanceRecords.filter(
+                    record =>
+                        record.status === "PRESENT"
+                ).length;
+
+
+            const absent =
+                attendanceRecords.filter(
+                    record =>
+                        record.status === "ABSENT"
+                ).length;
+
+
+            const leave =
+                attendanceRecords.filter(
+                    record =>
+                        record.status === "LEAVE"
+                ).length;
+
+
+            document.getElementById(
+                "totalCount"
+            ).textContent = total;
+
+
+            document.getElementById(
+                "presentCount"
+            ).textContent = present;
+
+
+            document.getElementById(
+                "absentCount"
+            ).textContent = absent;
+
+
+            document.getElementById(
+                "leaveCount"
+            ).textContent = leave;
+
+        }
+
+
+        // =====================================================
+        // RENDER ATTENDANCE
+        // =====================================================
+
+        function renderAttendance() {
+
+            const table =
+                document.getElementById(
+                    "attendanceTable"
+                );
+
+
+            const filter =
+                document.getElementById(
+                    "statusFilter"
+                ).value;
+
+
+            let filteredRecords =
+                attendanceRecords;
+
+
+            if (filter !== "ALL") {
+
+                filteredRecords =
+                    attendanceRecords.filter(
+                        record =>
+                            record.status === filter
+                    );
+
+            }
+
+
+            if (filteredRecords.length === 0) {
+
+                table.innerHTML = `
+                    <tr>
+                        <td
+                            colspan="7"
+                            class="empty"
+                        >
+                            No attendance records found.
+                        </td>
+                    </tr>
+                `;
+
+                return;
+            }
+
+
+            table.innerHTML = "";
+
+
+            filteredRecords.forEach(
+                (record, index) => {
+
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    const dateText =
+                        record.attendance_date
+                            ? new Date(
+                                record.attendance_date
+                            ).toLocaleDateString(
+                                "en-IN"
+                            )
+                            : "—";
+
+
+                    let statusClass =
+                        "unknown";
+
+
+                    if (
+                        record.status ===
+                        "PRESENT"
+                    ) {
+
+                        statusClass =
+                            "present";
+
+                    } else if (
+                        record.status ===
+                        "ABSENT"
+                    ) {
+
+                        statusClass =
+                            "absent";
+
+                    } else if (
+                        record.status ===
+                        "LEAVE"
+                    ) {
+
+                        statusClass =
+                            "leave";
+
+                    }
+
+
+                    row.innerHTML = `
+
+                        <td>
+                            ${index + 1}
+                        </td>
+
+                        <td>
+                            ${dateText}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(
+                                record.faculty_name || "—"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(
+                                record.employee_code || "—"
+                            )}
+                        </td>
+
+                        <td>
+
+                            <span
+                                class="status ${statusClass}"
+                            >
+                                ${escapeHtml(
+                                    record.status || "—"
+                                )}
+                            </span>
+
+                        </td>
+
+                        <td>
+                            ${escapeHtml(
+                                record.remarks || "—"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(
+                                record.marked_by || "—"
+                            )}
+                        </td>
+
+                    `;
+
+
+                    table.appendChild(row);
+
+                }
+            );
+
+        }
+
+
+        // =====================================================
+        // ESCAPE HTML
+        // =====================================================
+
+        function escapeHtml(value) {
+
+            return String(value)
+                .replaceAll(
+                    "&",
+                    "&amp;"
+                )
+                .replaceAll(
+                    "<",
+                    "&lt;"
+                )
+                .replaceAll(
+                    ">",
+                    "&gt;"
+                )
+                .replaceAll(
+                    '"',
+                    "&quot;"
+                )
+                .replaceAll(
+                    "'",
+                    "&#039;"
+                );
+
+        }
+
+
+        // =====================================================
+        // INITIAL LOAD
+        // =====================================================
+
+        loadAttendance();
+
+
+    </script>
+
+</body>
+
+</html>

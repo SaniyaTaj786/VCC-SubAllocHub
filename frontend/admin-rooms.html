@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SubAlloc Hub | Room Management</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        body {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f4f7ff 0%,
+                    #f8fafc 55%,
+                    #eef2ff 100%
+                );
+
+            min-height: 100vh;
+
+        }
+
+        .admin-header {
+
+            background:
+                linear-gradient(
+                    120deg,
+                    #172554,
+                    #3454d1
+                );
+
+            color: #ffffff;
+
+        }
+
+        .admin-header .navbar-inner {
+
+            min-height: 78px;
+
+        }
+
+        .admin-header .brand,
+        .admin-header .nav-links a {
+
+            color: #ffffff;
+
+        }
+
+        .admin-header .brand {
+
+            text-decoration: none;
+
+        }
+
+        .admin-header .nav-links a {
+
+            opacity: 0.9;
+
+        }
+
+        .admin-header .nav-links a:hover {
+
+            opacity: 1;
+
+        }
+
+        .rooms-container {
+
+            max-width: 1150px;
+
+            margin: 0 auto;
+
+            padding:
+                30px 20px 50px;
+
+        }
+
+        .rooms-hero {
+
+            background:
+                linear-gradient(
+                    120deg,
+                    #ffffff,
+                    #eef2ff
+                );
+
+            border:
+                1px solid #dbe4ff;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            margin-bottom: 24px;
+
+            box-shadow:
+                0 12px 30px rgba(
+                    15,
+                    23,
+                    42,
+                    0.08
+                );
+
+        }
+
+        .rooms-badge {
+
+            display: inline-block;
+
+            background: #e0e7ff;
+
+            color: #3730a3;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            padding: 7px 12px;
+
+            border-radius: 999px;
+
+            margin-bottom: 12px;
+
+        }
+
+        .rooms-hero h1 {
+
+            margin: 0;
+
+            color: #172554;
+
+            font-size:
+                clamp(
+                    26px,
+                    4vw,
+                    36px
+                );
+
+        }
+
+        .rooms-hero p {
+
+            margin:
+                9px 0 0;
+
+            color: #64748b;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+
+        }
+
+        .rooms-toolbar {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            background: #ffffff;
+
+            border:
+                1px solid #dbe4ff;
+
+            border-radius: 16px;
+
+            padding: 16px;
+
+            margin-bottom: 18px;
+
+            box-shadow:
+                0 8px 24px rgba(
+                    15,
+                    23,
+                    42,
+                    0.05
+                );
+
+        }
+
+        .search-wrapper {
+
+            flex:
+                1 1 350px;
+
+        }
+
+        #searchInput {
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            border:
+                1px solid #cbd5e1;
+
+            border-radius: 10px;
+
+            padding:
+                12px 14px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            background: #f8fafc;
+
+        }
+
+        #searchInput:focus {
+
+            border-color: #4f46e5;
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    79,
+                    70,
+                    229,
+                    0.12
+                );
+
+            background: #ffffff;
+
+        }
+
+        .toolbar-actions {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .page-btn {
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding:
+                11px 15px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+        }
+
+        .refresh-btn {
+
+            background: #3454d1;
+
+            color: #ffffff;
+
+        }
+
+        .back-btn {
+
+            background: #e2e8f0;
+
+            color: #1e293b;
+
+        }
+
+        .summary-bar {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            margin-bottom: 18px;
+
+        }
+
+        .summary-card {
+
+            flex:
+                1 1 180px;
+
+            background: #ffffff;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 14px;
+
+            padding:
+                16px 18px;
+
+            box-shadow:
+                0 8px 24px rgba(
+                    15,
+                    23,
+                    42,
+                    0.04
+                );
+
+        }
+
+        .summary-label {
+
+            margin:
+                0 0 5px;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+        }
+
+        .summary-value {
+
+            margin: 0;
+
+            color: #172554;
+
+            font-size: 24px;
+
+            font-weight: 800;
+
+        }
+
+        .table-card {
+
+            background: #ffffff;
+
+            border:
+                1px solid #dbe4ff;
+
+            border-radius: 16px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 10px 28px rgba(
+                    15,
+                    23,
+                    42,
+                    0.06
+                );
+
+        }
+
+        .table-heading {
+
+            padding:
+                18px 20px;
+
+            border-bottom:
+                1px solid #e2e8f0;
+
+        }
+
+        .table-heading h2 {
+
+            margin: 0;
+
+            font-size: 19px;
+
+            color: #172554;
+
+        }
+
+        .table-heading p {
+
+            margin:
+                4px 0 0;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+        }
+
+        .table-wrapper {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+        }
+
+        table {
+
+            width: 100%;
+
+            min-width: 800px;
+
+            border-collapse: collapse;
+
+        }
+
+        thead th {
+
+            text-align: left;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #172554,
+                    #243ea8
+                );
+
+            color: #ffffff;
+
+            padding:
+                14px 16px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+
+        }
+
+        tbody td {
+
+            padding:
+                14px 16px;
+
+            border-bottom:
+                1px solid #eef2f7;
+
+            color: #334155;
+
+            font-size: 14px;
+
+            vertical-align: middle;
+
+        }
+
+        tbody tr:hover {
+
+            background: #f8faff;
+
+        }
+
+        tbody tr:last-child td {
+
+            border-bottom: none;
+
+        }
+
+        .room-id {
+
+            display: inline-block;
+
+            background: #e0e7ff;
+
+            color: #3730a3;
+
+            padding:
+                6px 10px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+        }
+
+        .room-number {
+
+            font-weight: 800;
+
+            color: #0f172a;
+
+        }
+
+        .building-name {
+
+            color: #475569;
+
+            font-weight: 600;
+
+        }
+
+        .room-type {
+
+            display: inline-block;
+
+            background: #ecfeff;
+
+            color: #0f766e;
+
+            padding:
+                6px 10px;
+
+            border-radius: 999px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+        }
+
+        .capacity {
+
+            color: #475569;
+
+            font-weight: 600;
+
+        }
+
+        .message-box {
+
+            padding:
+                30px 20px;
+
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+        }
+
+        .error-text {
+
+            color: #b91c1c;
+
+        }
+
+        .footer {
+
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            padding:
+                25px 20px 0;
+
+        }
+
+        @media (max-width: 760px) {
+
+            .rooms-container {
+
+                padding:
+                    22px 14px 40px;
+
+            }
+
+            .rooms-hero {
+
+                padding: 22px;
+
+            }
+
+            .toolbar-actions {
+
+                width: 100%;
+
+            }
+
+            .toolbar-actions .page-btn {
+
+                flex: 1;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="navbar admin-header">
+
+    <div class="navbar-inner">
+
+        <a
+            class="brand"
+            href="admin.html"
+        >
+            🏫 SubAlloc Hub
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="admin.html">
+                Dashboard
+            </a>
+
+        </nav>
+
+        <button
+            type="button"
+            class="logout-btn"
+            onclick="logout()"
+        >
+            🚪 Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="rooms-container">
+
+
+    <!-- HERO -->
+
+    <section class="rooms-hero">
+
+        <span class="rooms-badge">
+            🔐 Administrator
+        </span>
+
+        <h1>
+            Room Management
+        </h1>
+
+        <p>
+            View the rooms configured in SubAlloc Hub.
+        </p>
+
+    </section>
+
+
+    <!-- TOOLBAR -->
+
+    <section class="rooms-toolbar">
+
+        <div class="search-wrapper">
+
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search by room number, building or room type..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="toolbar-actions">
+
+            <button
+                type="button"
+                class="page-btn refresh-btn"
+                id="refreshBtn"
+            >
+                🔄 Refresh
+            </button>
+
+            <a
+                href="admin.html"
+                class="page-btn back-btn"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- SUMMARY -->
+
+    <section class="summary-bar">
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Total Rooms
+            </p>
+
+            <p
+                class="summary-value"
+                id="totalRooms"
+            >
+                -
+            </p>
+
+        </article>
+
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Showing
+            </p>
+
+            <p
+                class="summary-value"
+                id="showingRooms"
+            >
+                -
+            </p>
+
+        </article>
+
+    </section>
+
+
+    <!-- TABLE -->
+
+    <section class="table-card">
+
+        <div class="table-heading">
+
+            <h2>
+                🏫 All Rooms
+            </h2>
+
+            <p>
+                Room information loaded from the
+                SubAlloc Hub backend.
+            </p>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Room ID</th>
+
+                        <th>Room Number</th>
+
+                        <th>Building</th>
+
+                        <th>Room Type</th>
+
+                        <th>Capacity</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="roomsTableBody">
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            class="message-box"
+                        >
+                            Loading rooms...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <div class="footer">
+
+        SubAlloc Hub · Room Management
+
+    </div>
+
+
+</main>
+
+
+<script>
+
+
+// =====================================================
+// BACKEND API
+// =====================================================
+
+const API_BASE_URL =
+    "http://localhost:3000";
+
+const ROOMS_API =
+    `${API_BASE_URL}/api/rooms`;
+
+
+// =====================================================
+// PAGE ELEMENTS
+// =====================================================
+
+const roomsTableBody =
+    document.getElementById(
+        "roomsTableBody"
+    );
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+const refreshBtn =
+    document.getElementById(
+        "refreshBtn"
+    );
+
+const totalRooms =
+    document.getElementById(
+        "totalRooms"
+    );
+
+const showingRooms =
+    document.getElementById(
+        "showingRooms"
+    );
+
+
+// =====================================================
+// DATA
+// =====================================================
+
+let allRooms = [];
+
+
+// =====================================================
+// CHECK ADMIN LOGIN
+// =====================================================
+
+function checkAdminLogin() {
+
+    const storedUser =
+        sessionStorage.getItem(
+            "loggedInUser"
+        );
+
+    if (!storedUser) {
+
+        window.location.href =
+            "index.html";
+
+        return false;
+    }
+
+
+    try {
+
+        const user =
+            JSON.parse(
+                storedUser
+            );
+
+        if (
+            String(user.role)
+                .toUpperCase() !==
+            "ADMIN"
+        ) {
+
+            window.location.href =
+                "faculty.html";
+
+            return false;
+        }
+
+        return true;
+
+    } catch (error) {
+
+        sessionStorage.removeItem(
+            "loggedInUser"
+        );
+
+        window.location.href =
+            "index.html";
+
+        return false;
+    }
+}
+
+
+// =====================================================
+// LOGOUT
+// =====================================================
+
+function logout() {
+
+    sessionStorage.removeItem(
+        "loggedInUser"
+    );
+
+    window.location.href =
+        "index.html";
+}
+
+
+// =====================================================
+// LOAD ROOMS
+// =====================================================
+
+async function loadRooms() {
+
+    roomsTableBody.innerHTML = `
+        <tr>
+            <td
+                colspan="6"
+                class="message-box"
+            >
+                Loading rooms...
+            </td>
+        </tr>
+    `;
+
+
+    refreshBtn.disabled = true;
+
+    refreshBtn.textContent =
+        "⏳ Loading...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                ROOMS_API
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Rooms API response:",
+            data
+        );
+
+
+        if (
+            !data.success ||
+            !Array.isArray(
+                data.rooms
+            )
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Invalid rooms response"
+            );
+
+        }
+
+
+        allRooms =
+            data.rooms;
+
+
+        totalRooms.textContent =
+            allRooms.length;
+
+
+        renderRooms(
+            allRooms
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Rooms loading error:",
+            error
+        );
+
+
+        allRooms = [];
+
+
+        totalRooms.textContent =
+            "—";
+
+        showingRooms.textContent =
+            "—";
+
+
+        roomsTableBody.innerHTML = `
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="message-box error-text"
+                >
+
+                    <strong>
+                        Unable to load rooms.
+                    </strong>
+
+                    <br><br>
+
+                    ${error.message}
+
+                </td>
+
+            </tr>
+        `;
+
+
+    } finally {
+
+        refreshBtn.disabled = false;
+
+        refreshBtn.textContent =
+            "🔄 Refresh";
+
+    }
+
+}
+
+
+// =====================================================
+// RENDER ROOMS
+// =====================================================
+
+function renderRooms(
+    rooms
+) {
+
+    if (
+        !rooms ||
+        rooms.length === 0
+    ) {
+
+        showingRooms.textContent =
+            "0";
+
+
+        roomsTableBody.innerHTML = `
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="message-box"
+                >
+                    No rooms found.
+                </td>
+
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    showingRooms.textContent =
+        rooms.length;
+
+
+    roomsTableBody.innerHTML =
+        "";
+
+
+    rooms.forEach(
+        function(item, index) {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            // NUMBER
+
+            const numberCell =
+                document.createElement(
+                    "td"
+                );
+
+            numberCell.textContent =
+                index + 1;
+
+
+            // ROOM ID
+
+            const idCell =
+                document.createElement(
+                    "td"
+                );
+
+            const idBadge =
+                document.createElement(
+                    "span"
+                );
+
+            idBadge.className =
+                "room-id";
+
+            idBadge.textContent =
+                item.room_id || "—";
+
+            idCell.appendChild(
+                idBadge
+            );
+
+
+            // ROOM NUMBER
+
+            const roomNumberCell =
+                document.createElement(
+                    "td"
+                );
+
+            roomNumberCell.className =
+                "room-number";
+
+            roomNumberCell.textContent =
+                item.room_number || "—";
+
+
+            // BUILDING
+
+            const buildingCell =
+                document.createElement(
+                    "td"
+                );
+
+            buildingCell.className =
+                "building-name";
+
+            buildingCell.textContent =
+                item.building_name || "—";
+
+
+            // ROOM TYPE
+
+            const typeCell =
+                document.createElement(
+                    "td"
+                );
+
+            const typeBadge =
+                document.createElement(
+                    "span"
+                );
+
+            typeBadge.className =
+                "room-type";
+
+            typeBadge.textContent =
+                item.room_type || "—";
+
+            typeCell.appendChild(
+                typeBadge
+            );
+
+
+            // CAPACITY
+
+            const capacityCell =
+                document.createElement(
+                    "td"
+                );
+
+            capacityCell.className =
+                "capacity";
+
+            capacityCell.textContent =
+                item.capacity === null ||
+                item.capacity === undefined ||
+                item.capacity === ""
+                    ? "Not specified"
+                    : item.capacity;
+
+
+            // ADD CELLS
+
+            row.appendChild(
+                numberCell
+            );
+
+            row.appendChild(
+                idCell
+            );
+
+            row.appendChild(
+                roomNumberCell
+            );
+
+            row.appendChild(
+                buildingCell
+            );
+
+            row.appendChild(
+                typeCell
+            );
+
+            row.appendChild(
+                capacityCell
+            );
+
+
+            roomsTableBody.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// SEARCH ROOMS
+// =====================================================
+
+function filterRooms() {
+
+    const searchTerm =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+
+    if (!searchTerm) {
+
+        renderRooms(
+            allRooms
+        );
+
+        return;
+
+    }
+
+
+    const filteredRooms =
+        allRooms.filter(
+            function(item) {
+
+                const searchableText =
+                    [
+                        item.room_id,
+                        item.room_number,
+                        item.building_name,
+                        item.room_type,
+                        item.capacity
+                    ]
+                    .join(" ")
+                    .toLowerCase();
+
+
+                return searchableText.includes(
+                    searchTerm
+                );
+
+            }
+        );
+
+
+    renderRooms(
+        filteredRooms
+    );
+
+}
+
+
+// =====================================================
+// EVENTS
+// =====================================================
+
+searchInput.addEventListener(
+    "input",
+    filterRooms
+);
+
+refreshBtn.addEventListener(
+    "click",
+    loadRooms
+);
+
+
+// =====================================================
+// START
+// =====================================================
+
+if (
+    checkAdminLogin()
+) {
+
+    loadRooms();
+
+}
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Substitution Management - SubAlloc Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #eef2ff, #f8fafc);
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        .header {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .header h1 {
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+        }
+
+        .actions {
+            margin-top: 20px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #4f46e5;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            background: #4338ca;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+
+        th {
+            background: #4f46e5;
+            color: white;
+            padding: 14px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 13px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .no-substitute {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .acknowledged {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .cancelled {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+
+        .error {
+            text-align: center;
+            padding: 30px;
+            color: #dc2626;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>Substitution Management</h1>
+
+        <p>
+            View and monitor all faculty substitution allocations.
+        </p>
+
+        <div class="actions">
+            <a href="admin.html" class="back-btn">
+                ← Back to Admin Dashboard
+            </a>
+        </div>
+
+    </div>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Allocation ID</th>
+                    <th>Date</th>
+                    <th>Absent Faculty</th>
+                    <th>Substitute Faculty</th>
+                    <th>Class</th>
+                    <th>Subject</th>
+                    <th>Period</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody id="allocationsTable">
+
+                <tr>
+                    <td colspan="8" class="loading">
+                        Loading allocations...
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<script>
+
+async function loadAdminSubstitutions() {
+
+    const table =
+        document.getElementById("allocationsTable");
+
+    try {
+
+        const response = await fetch(
+    "http://localhost:3000/api/admin/substitutions",
+    {
+        credentials: "include"
+    }
+);
+
+        const data = await response.json();
+
+        if (!data.success) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="8" class="error">
+                        Failed to load allocations.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        if (
+            !data.allocations ||
+            data.allocations.length === 0
+        ) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="8" class="loading">
+                        No substitution allocations found.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        table.innerHTML =
+            data.allocations.map(item => {
+
+                let statusClass = "";
+
+                if (item.status === "COMPLETED") {
+                    statusClass = "completed";
+                }
+                else if (item.status === "PENDING") {
+                    statusClass = "pending";
+                }
+                else if (
+                    item.status === "NO_SUBSTITUTE_AVAILABLE"
+                ) {
+                    statusClass = "no-substitute";
+                }
+                else if (item.status === "ACKNOWLEDGED") {
+                    statusClass = "acknowledged";
+                }
+                else if (item.status === "CANCELLED") {
+                    statusClass = "cancelled";
+                }
+
+
+                return `
+                    <tr>
+
+                        <td>
+                            ${item.allocation_id}
+                        </td>
+
+                        <td>
+                            ${
+                                item.allocation_date
+                                ? new Date(
+                                    item.allocation_date
+                                ).toLocaleDateString()
+                                : "-"
+                            }
+                        </td>
+
+                        <td>
+                            ${item.absent_faculty || "-"}
+                        </td>
+
+                        <td>
+                            ${
+                                item.substitute_faculty
+                                || "No substitute available"
+                            }
+                        </td>
+
+                        <td>
+                            ${item.class_name || "-"}
+                        </td>
+
+                        <td>
+                            ${item.subject_name || "-"}
+                        </td>
+
+                        <td>
+                            ${item.slot_name || "-"}
+                        </td>
+
+                        <td>
+
+                            <span class="status ${statusClass}">
+                                ${
+                                    item.status
+                                    ? item.status.replaceAll(
+                                        "_",
+                                        " "
+                                    )
+                                    : "-"
+                                }
+                            </span>
+
+                        </td>
+
+                    </tr>
+                `;
+
+            }).join("");
+
+
+    }
+    catch (error) {
+
+        console.error(
+            "Error loading substitutions:",
+            error
+        );
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="8" class="error">
+                    Could not connect to the server.
+                </td>
+            </tr>
+        `;
+
+    }
+
+}
+
+
+loadAdminSubstitutions();
+
+</script>
+
+</body>
+</html>

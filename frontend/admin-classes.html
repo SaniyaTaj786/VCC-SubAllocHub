@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>SubAlloc Hub | Class Management</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+    /* =====================================================
+       PAGE BACKGROUND
+       ===================================================== */
+
+    body {
+        background:
+            linear-gradient(
+                135deg,
+                #f4f7ff 0%,
+                #f8fafc 55%,
+                #eef2ff 100%
+            );
+
+        min-height: 100vh;
+    }
+
+
+    /* =====================================================
+       ADMIN HEADER
+       ===================================================== */
+
+    .admin-header {
+        background:
+            linear-gradient(
+                120deg,
+                #172554,
+                #3454d1
+            );
+
+        color: #ffffff;
+    }
+
+    .admin-header .navbar-inner {
+        min-height: 78px;
+    }
+
+    .admin-header .brand,
+    .admin-header .nav-links a {
+        color: #ffffff;
+    }
+
+    .admin-header .brand {
+        text-decoration: none;
+    }
+
+    .admin-header .nav-links a {
+        opacity: 0.9;
+    }
+
+    .admin-header .nav-links a:hover {
+        opacity: 1;
+    }
+
+
+    /* =====================================================
+       MAIN CONTAINER
+       ===================================================== */
+
+    .classes-container {
+        max-width: 1180px;
+
+        margin: 0 auto;
+
+        padding:
+            30px 20px 50px;
+    }
+
+
+    /* =====================================================
+       HERO
+       ===================================================== */
+
+    .classes-hero {
+        background:
+            linear-gradient(
+                120deg,
+                #ffffff,
+                #eef2ff
+            );
+
+        border:
+            1px solid #dbe4ff;
+
+        border-radius: 18px;
+
+        padding: 28px;
+
+        margin-bottom: 24px;
+
+        box-shadow:
+            0 12px 30px rgba(
+                15,
+                23,
+                42,
+                0.08
+            );
+    }
+
+    .classes-badge {
+        display: inline-block;
+
+        background: #e0e7ff;
+
+        color: #3730a3;
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        padding: 7px 12px;
+
+        border-radius: 999px;
+
+        margin-bottom: 12px;
+    }
+
+    .classes-hero h1 {
+        margin: 0;
+
+        color: #172554;
+
+        font-size:
+            clamp(
+                26px,
+                4vw,
+                36px
+            );
+    }
+
+    .classes-hero p {
+        margin:
+            9px 0 0;
+
+        color: #64748b;
+
+        font-size: 15px;
+
+        line-height: 1.6;
+    }
+
+
+    /* =====================================================
+       TOOLBAR
+       ===================================================== */
+
+    .classes-toolbar {
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 12px;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        background: #ffffff;
+
+        border:
+            1px solid #dbe4ff;
+
+        border-radius: 16px;
+
+        padding: 16px;
+
+        margin-bottom: 18px;
+
+        box-shadow:
+            0 8px 24px rgba(
+                15,
+                23,
+                42,
+                0.05
+            );
+    }
+
+    .search-wrapper {
+        flex:
+            1 1 340px;
+
+        position: relative;
+    }
+
+    .search-icon {
+        position: absolute;
+
+        left: 14px;
+
+        top: 50%;
+
+        transform:
+            translateY(-50%);
+
+        font-size: 17px;
+
+        pointer-events: none;
+    }
+
+    #searchInput {
+        width: 100%;
+
+        box-sizing: border-box;
+
+        border:
+            1px solid #cbd5e1;
+
+        border-radius: 10px;
+
+        padding:
+            12px 14px 12px 42px;
+
+        font-size: 14px;
+
+        outline: none;
+
+        background: #f8fafc;
+    }
+
+    #searchInput:focus {
+        border-color: #4f46e5;
+
+        box-shadow:
+            0 0 0 3px rgba(
+                79,
+                70,
+                229,
+                0.12
+            );
+
+        background: #ffffff;
+    }
+
+    .toolbar-actions {
+        display: flex;
+
+        gap: 10px;
+
+        flex-wrap: wrap;
+    }
+
+    .page-btn {
+        border: none;
+
+        border-radius: 10px;
+
+        padding:
+            11px 15px;
+
+        font-size: 14px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        text-decoration: none;
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 7px;
+
+        transition:
+            transform 0.15s ease,
+            opacity 0.15s ease;
+    }
+
+    .page-btn:hover {
+        transform:
+            translateY(-1px);
+
+        opacity: 0.95;
+    }
+
+    .refresh-btn {
+        background: #3454d1;
+
+        color: #ffffff;
+    }
+
+    .back-btn {
+        background: #e2e8f0;
+
+        color: #1e293b;
+    }
+
+
+    /* =====================================================
+       SUMMARY
+       ===================================================== */
+
+    .summary-bar {
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 12px;
+
+        margin-bottom: 18px;
+    }
+
+    .summary-card {
+        flex:
+            1 1 180px;
+
+        background: #ffffff;
+
+        border:
+            1px solid #e2e8f0;
+
+        border-radius: 14px;
+
+        padding:
+            16px 18px;
+
+        box-shadow:
+            0 8px 24px rgba(
+                15,
+                23,
+                42,
+                0.04
+            );
+    }
+
+    .summary-label {
+        margin:
+            0 0 5px;
+
+        color: #64748b;
+
+        font-size: 13px;
+
+        font-weight: 600;
+    }
+
+    .summary-value {
+        margin: 0;
+
+        color: #172554;
+
+        font-size: 24px;
+
+        font-weight: 800;
+    }
+
+
+    /* =====================================================
+       TABLE CARD
+       ===================================================== */
+
+    .table-card {
+        background: #ffffff;
+
+        border:
+            1px solid #dbe4ff;
+
+        border-radius: 16px;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 10px 28px rgba(
+                15,
+                23,
+                42,
+                0.06
+            );
+    }
+
+    .table-heading {
+        padding:
+            18px 20px;
+
+        border-bottom:
+            1px solid #e2e8f0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 10px;
+    }
+
+    .table-heading h2 {
+        margin: 0;
+
+        font-size: 19px;
+
+        color: #172554;
+    }
+
+    .table-heading p {
+        margin:
+            4px 0 0;
+
+        color: #64748b;
+
+        font-size: 13px;
+    }
+
+    .table-wrapper {
+        width: 100%;
+
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+
+        min-width: 700px;
+
+        border-collapse: collapse;
+    }
+
+    thead th {
+        text-align: left;
+
+        background:
+            linear-gradient(
+                90deg,
+                #172554,
+                #243ea8
+            );
+
+        color: #ffffff;
+
+        padding:
+            14px 16px;
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+    }
+
+    tbody td {
+        padding:
+            14px 16px;
+
+        border-bottom:
+            1px solid #eef2f7;
+
+        color: #334155;
+
+        font-size: 14px;
+
+        vertical-align: middle;
+    }
+
+    tbody tr:hover {
+        background: #f8faff;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+
+    /* =====================================================
+       CLASS BADGES
+       ===================================================== */
+
+    .class-code {
+        display: inline-block;
+
+        background: #e0e7ff;
+
+        color: #3730a3;
+
+        padding:
+            6px 10px;
+
+        border-radius: 8px;
+
+        font-size: 12px;
+
+        font-weight: 800;
+    }
+
+    .class-name {
+        font-weight: 700;
+
+        color: #0f172a;
+    }
+
+    .course-name {
+        color: #475569;
+
+        font-weight: 600;
+    }
+
+    .semester-badge {
+        display: inline-block;
+
+        background: #ecfeff;
+
+        color: #0f766e;
+
+        padding:
+            5px 9px;
+
+        border-radius: 999px;
+
+        font-size: 12px;
+
+        font-weight: 700;
+    }
+
+    .section-badge {
+        display: inline-block;
+
+        background: #fef3c7;
+
+        color: #92400e;
+
+        padding:
+            5px 9px;
+
+        border-radius: 999px;
+
+        font-size: 12px;
+
+        font-weight: 700;
+    }
+
+
+    /* =====================================================
+       MESSAGES
+       ===================================================== */
+
+    .message-box {
+        padding:
+            30px 20px;
+
+        text-align: center;
+
+        color: #64748b;
+
+        font-size: 14px;
+    }
+
+    .loading-text {
+        color: #475569;
+    }
+
+    .error-text {
+        color: #b91c1c;
+    }
+
+    .empty-text {
+        color: #64748b;
+    }
+
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    .classes-footer {
+        text-align: center;
+
+        color: #64748b;
+
+        font-size: 13px;
+
+        padding:
+            25px 20px 0;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media (max-width: 760px) {
+
+        .classes-container {
+            padding:
+                22px 14px 40px;
+        }
+
+        .classes-hero {
+            padding: 22px;
+        }
+
+        .classes-toolbar {
+            align-items: stretch;
+        }
+
+        .toolbar-actions {
+            width: 100%;
+        }
+
+        .toolbar-actions .page-btn {
+            flex: 1;
+        }
+
+        .table-heading {
+            align-items: flex-start;
+
+            flex-direction: column;
+        }
+
+    }
+
+
+    @media (max-width: 520px) {
+
+        .classes-hero h1 {
+            font-size: 26px;
+        }
+
+        .classes-toolbar {
+            padding: 13px;
+        }
+
+        .toolbar-actions {
+            flex-direction: column;
+        }
+
+        .page-btn {
+            width: 100%;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
+<header class="navbar admin-header">
+
+    <div class="navbar-inner">
+
+        <a
+            class="brand"
+            href="admin.html"
+        >
+            🏫 SubAlloc Hub
+        </a>
+
+
+        <nav class="nav-links">
+
+            <a href="admin.html">
+                Dashboard
+            </a>
+
+        </nav>
+
+
+        <button
+            type="button"
+            class="logout-btn"
+            onclick="logout()"
+        >
+            🚪 Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+     ===================================================== -->
+
+<main class="classes-container">
+
+
+    <!-- =================================================
+         HERO
+         ================================================= -->
+
+    <section class="classes-hero">
+
+        <span class="classes-badge">
+            🔐 Administrator
+        </span>
+
+        <h1>
+            Class Management
+        </h1>
+
+        <p>
+            View the academic classes configured
+            in SubAlloc Hub.
+        </p>
+
+    </section>
+
+
+    <!-- =================================================
+         TOOLBAR
+         ================================================= -->
+
+    <section class="classes-toolbar">
+
+
+        <div class="search-wrapper">
+
+            <span class="search-icon">
+                🔎
+            </span>
+
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search by class, course, semester or section..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="toolbar-actions">
+
+            <button
+                type="button"
+                class="page-btn refresh-btn"
+                id="refreshBtn"
+            >
+                🔄 Refresh
+            </button>
+
+
+            <a
+                href="admin.html"
+                class="page-btn back-btn"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         SUMMARY
+         ================================================= -->
+
+    <section class="summary-bar">
+
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Total Classes
+            </p>
+
+            <p
+                class="summary-value"
+                id="totalClasses"
+            >
+                -
+            </p>
+
+        </article>
+
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Showing
+            </p>
+
+            <p
+                class="summary-value"
+                id="showingClasses"
+            >
+                -
+            </p>
+
+        </article>
+
+
+    </section>
+
+
+    <!-- =================================================
+         CLASS TABLE
+         ================================================= -->
+
+    <section class="table-card">
+
+
+        <div class="table-heading">
+
+            <div>
+
+                <h2>
+                    🏫 All Classes
+                </h2>
+
+                <p>
+                    Class information loaded from
+                    the SubAlloc Hub backend.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Class Name</th>
+                        <th>Programme</th>
+                        <th>Semester</th>
+                        <th>Section</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="classesTableBody">
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            class="message-box loading-text"
+                        >
+                            Loading classes...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <div class="classes-footer">
+        SubAlloc Hub · Class Management
+    </div>
+
+
+</main>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+     ===================================================== -->
+
+<script>
+
+
+    // =================================================
+    // BACKEND API
+    // =================================================
+
+    const API_BASE_URL =
+        "http://localhost:3000";
+
+
+    const CLASSES_API =
+        `${API_BASE_URL}/api/classes`;
+
+
+    // =================================================
+    // PAGE ELEMENTS
+    // =================================================
+
+    const classesTableBody =
+        document.getElementById(
+            "classesTableBody"
+        );
+
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const refreshBtn =
+        document.getElementById(
+            "refreshBtn"
+        );
+
+
+    const totalClasses =
+        document.getElementById(
+            "totalClasses"
+        );
+
+
+    const showingClasses =
+        document.getElementById(
+            "showingClasses"
+        );
+
+
+    // =================================================
+    // CLASS DATA
+    // =================================================
+
+    let allClasses = [];
+
+
+    // =================================================
+    // CHECK ADMIN LOGIN
+    // =================================================
+
+    function checkAdminLogin() {
+
+        const storedUser =
+            sessionStorage.getItem(
+                "loggedInUser"
+            );
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "index.html";
+
+            return false;
+        }
+
+
+        let user;
+
+
+        try {
+
+            user =
+                JSON.parse(
+                    storedUser
+                );
+
+        } catch (error) {
+
+            console.error(
+                "Invalid login data:",
+                error
+            );
+
+            sessionStorage.removeItem(
+                "loggedInUser"
+            );
+
+            window.location.href =
+                "index.html";
+
+            return false;
+        }
+
+
+        if (
+            String(user.role)
+                .toUpperCase() !== "ADMIN"
+        ) {
+
+            window.location.href =
+                "faculty.html";
+
+            return false;
+        }
+
+
+        return true;
+    }
+
+
+    // =================================================
+    // LOGOUT
+    // =================================================
+
+    function logout() {
+
+        sessionStorage.removeItem(
+            "loggedInUser"
+        );
+
+        window.location.href =
+            "index.html";
+    }
+
+
+    // =================================================
+    // LOAD CLASSES
+    // =================================================
+
+    async function loadClasses() {
+
+        classesTableBody.innerHTML = `
+            <tr>
+                <td
+                    colspan="6"
+                    class="message-box loading-text"
+                >
+                    Loading classes...
+                </td>
+            </tr>
+        `;
+
+
+        refreshBtn.disabled = true;
+
+        refreshBtn.textContent =
+            "⏳ Loading...";
+
+
+        try {
+
+            const response = await fetch(
+    "http://localhost:3000/api/classes",
+    {
+        credentials: "include"
+    }
+);
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `HTTP ${response.status}`
+                );
+            }
+
+
+            const data =
+                await response.json();
+
+
+            console.log(
+                "Classes API response:",
+                data
+            );
+
+
+            // -----------------------------------------
+            // SUPPORT COMMON API RESPONSE FORMATS
+            // -----------------------------------------
+
+            if (
+                Array.isArray(data)
+            ) {
+
+                allClasses = data;
+
+            } else if (
+                Array.isArray(
+                    data.classes
+                )
+            ) {
+
+                allClasses =
+                    data.classes;
+
+            } else if (
+                Array.isArray(
+                    data.data
+                )
+            ) {
+
+                allClasses =
+                    data.data;
+
+            } else {
+
+                allClasses = [];
+
+            }
+
+
+            // -----------------------------------------
+            // NORMALIZE DATA
+            // -----------------------------------------
+
+            allClasses =
+                allClasses.map(
+                    function(item) {
+
+                        
+                 return {
+
+    class_id:
+        item.class_id ??
+        item.id ??
+        "",
+
+    class_name:
+        item.class_name ??
+        item.name ??
+        "",
+
+    programme:
+        item.programme ??
+        "",
+
+    semester:
+        item.semester ??
+        "",
+
+    section_name:
+        item.section_name ??
+        ""
+
+};
+                    }
+                );
+
+
+            // -----------------------------------------
+            // SORT
+            // -----------------------------------------
+
+            allClasses.sort(
+                function(a, b) {
+
+                    const aValue =
+                        String(
+                            a.class_name ||
+                            a.course
+                        ).toLowerCase();
+
+                    const bValue =
+                        String(
+                            b.class_name ||
+                            b.course
+                        ).toLowerCase();
+
+                    return aValue.localeCompare(
+                        bValue
+                    );
+
+                }
+            );
+
+
+            totalClasses.textContent =
+                allClasses.length;
+
+
+            renderClasses(
+                allClasses
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Class loading error:",
+                error
+            );
+
+
+            allClasses = [];
+
+
+            totalClasses.textContent =
+                "—";
+
+            showingClasses.textContent =
+                "—";
+
+
+            classesTableBody.innerHTML = `
+                <tr>
+                    <td
+                        colspan="6"
+                        class="message-box error-text"
+                    >
+                        <strong>
+                            Unable to load classes.
+                        </strong>
+
+                        <br><br>
+
+                        Make sure the backend is running
+                        on http://localhost:3000.
+
+                        <br><br>
+
+                        The page is requesting:
+
+                        <br>
+
+                        <code>
+                            ${CLASSES_API}
+                        </code>
+
+                    </td>
+                </tr>
+            `;
+
+        } finally {
+
+            refreshBtn.disabled = false;
+
+            refreshBtn.textContent =
+                "🔄 Refresh";
+
+        }
+
+    }
+
+
+    // =================================================
+    // RENDER CLASSES
+    // =================================================
+
+    function renderClasses(
+        classes
+    ) {
+
+        if (
+            !classes ||
+            classes.length === 0
+        ) {
+
+            showingClasses.textContent =
+                "0";
+
+
+            classesTableBody.innerHTML = `
+                <tr>
+                    <td
+                        colspan="6"
+                        class="message-box empty-text"
+                    >
+                        No classes found.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        showingClasses.textContent =
+            classes.length;
+
+
+        classesTableBody.innerHTML =
+            "";
+
+
+        classes.forEach(
+            function(item, index) {
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                // -------------------------------------
+                // NUMBER
+                // -------------------------------------
+
+                const numberCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                numberCell.textContent =
+                    index + 1;
+
+
+                // -------------------------------------
+                // CLASS ID
+                // -------------------------------------
+
+                const idCell =
+                    document.createElement(
+                        "td"
+                    );
+
+
+                const idBadge =
+                    document.createElement(
+                        "span"
+                    );
+
+                idBadge.className =
+                    "class-code";
+
+                idBadge.textContent =
+                    item.class_id || "—";
+
+
+                idCell.appendChild(
+                    idBadge
+                );
+
+
+                // -------------------------------------
+                // CLASS NAME
+                // -------------------------------------
+
+                const nameCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                nameCell.className =
+                    "class-name";
+
+                nameCell.textContent =
+                    item.class_name || "—";
+
+
+                // -------------------------------------
+// PROGRAMME
+// -------------------------------------
+
+const courseCell =
+    document.createElement(
+        "td"
+    );
+
+courseCell.className =
+    "course-name";
+
+courseCell.textContent =
+    item.programme || "—";
+
+
+                // -------------------------------------
+                // SEMESTER
+                // -------------------------------------
+
+                const semesterCell =
+                    document.createElement(
+                        "td"
+                    );
+
+
+                const semesterBadge =
+                    document.createElement(
+                        "span"
+                    );
+
+                semesterBadge.className =
+                    "semester-badge";
+
+
+                if (
+                    item.semester !== "" &&
+                    item.semester !== null &&
+                    item.semester !== undefined
+                ) {
+
+                    semesterBadge.textContent =
+                        "Semester " +
+                        item.semester;
+
+                } else {
+
+                    semesterBadge.textContent =
+                        "—";
+                }
+
+
+                semesterCell.appendChild(
+                    semesterBadge
+);
+// -------------------------------------
+// SECTION
+// -------------------------------------
+
+const sectionCell =
+    document.createElement(
+        "td"
+    );
+
+const sectionBadge =
+    document.createElement(
+        "span"
+    );
+
+sectionBadge.className =
+    "section-badge";
+
+sectionBadge.textContent =
+    item.section_name || "Main";
+
+sectionCell.appendChild(
+    sectionBadge
+);
+
+
+
+                // -------------------------------------
+                // ADD CELLS
+                // -------------------------------------
+
+                row.appendChild(
+                    numberCell
+                );
+
+                row.appendChild(
+                    idCell
+                );
+
+                row.appendChild(
+                    nameCell
+                );
+
+                row.appendChild(
+                    courseCell
+                );
+
+                row.appendChild(
+                    semesterCell
+                );
+
+                row.appendChild(
+                    sectionCell
+                );
+
+
+                classesTableBody.appendChild(
+                    row
+                );
+
+            }
+        );
+    }
+
+
+    // =================================================
+    // SEARCH CLASSES
+    // =================================================
+
+    function filterClasses() {
+
+        const searchTerm =
+            searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        if (!searchTerm) {
+
+            renderClasses(
+                allClasses
+            );
+
+            return;
+        }
+
+
+        const filteredClasses =
+            allClasses.filter(
+                function(item) {
+
+                    const classId =
+                        String(
+                            item.class_id ||
+                            ""
+                        ).toLowerCase();
+
+
+                    const className =
+                        String(
+                            item.class_name ||
+                            ""
+                        ).toLowerCase();
+
+
+                    const programme =
+                     String(
+                       item.programme ||
+                       ""
+                       ).toLowerCase();
+
+
+                    const semester =
+                        String(
+                            item.semester ||
+                            ""
+                        ).toLowerCase();
+
+
+                    const section =
+                         String(
+                         item.section_name ||
+                        ""
+                         ).toLowerCase();
+
+
+                    return (
+                        classId.includes(
+                            searchTerm
+                        ) ||
+
+                        className.includes(
+                            searchTerm
+                        ) ||
+
+                        programme.includes(
+                           searchTerm
+                        )||
+
+                        semester.includes(
+                            searchTerm
+                        ) ||
+
+                        section.includes(
+                            searchTerm
+                        )
+                    );
+
+                }
+            );
+
+
+        renderClasses(
+            filteredClasses
+        );
+    }
+
+
+    // =================================================
+    // EVENTS
+    // =================================================
+
+    searchInput.addEventListener(
+        "input",
+        filterClasses
+    );
+
+
+    refreshBtn.addEventListener(
+        "click",
+        loadClasses
+    );
+
+
+    // =================================================
+    // INITIAL LOAD
+    // =================================================
+
+    if (checkAdminLogin()) {
+
+        loadClasses();
+
+    }
+
+</script>
+```
+
+</body>
+
+</html>

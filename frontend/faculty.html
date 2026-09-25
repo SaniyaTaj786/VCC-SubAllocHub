@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>SubAlloc Hub - Faculty Dashboard</title>
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #f2f5f9;
+        min-height: 100vh;
+    }
+
+    header {
+        background: #1f3c88;
+        color: white;
+        padding: 18px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    .logout-btn {
+        background: white;
+        color: #1f3c88;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .container {
+        padding: 30px;
+    }
+
+    .welcome {
+        margin-bottom: 25px;
+    }
+
+    .welcome h2 {
+        color: #222;
+        margin-bottom: 8px;
+    }
+
+    .welcome p {
+        color: #666;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h3 {
+        color: #555;
+        margin-bottom: 12px;
+    }
+
+    .card .number {
+        font-size: 30px;
+        font-weight: bold;
+        color: #1f3c88;
+    }
+
+    .section {
+        margin-top: 30px;
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .section h2 {
+        margin-bottom: 15px;
+    }
+
+    .section button {
+        padding: 12px 18px;
+        margin: 5px;
+        border: none;
+        border-radius: 6px;
+        background: #1f3c88;
+        color: white;
+        cursor: pointer;
+    }
+
+    .section button:hover {
+        background: #162d68;
+    }
+
+    @media (max-width: 800px) {
+
+        .cards {
+            grid-template-columns: 1fr;
+        }
+
+    }
+    .faculty-page-btn {
+    display: inline-block;
+    padding: 12px 18px;
+    margin: 5px;
+    border: none;
+    border-radius: 6px;
+    background: #1f3c88;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.faculty-page-btn:hover {
+    background: #162d68;
+}
+
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+
+```
+<h1>SubAlloc Hub - Faculty</h1>
+
+<button
+    class="logout-btn"
+    onclick="logout()">
+    Logout
+</button>
+```
+
+</header>
+
+<div class="container">
+
+```
+<div class="welcome">
+
+    <h2 id="welcomeText">
+        Welcome, Faculty
+    </h2>
+
+    <p>
+        View your timetable, substitutions and notifications.
+    </p>
+
+</div>
+
+
+<div class="cards">
+
+    <div class="card">
+
+        <h3>Today's Classes</h3>
+
+        <div
+            class="number"
+            id="classCount">
+            -
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>Substitutions</h3>
+
+        <div
+            class="number"
+            id="substitutionCount">
+            -
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>Notifications</h3>
+
+        <div
+            class="number"
+            id="notificationCount">
+            -
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="section">
+
+    <h2>Faculty Options</h2>
+
+    <a
+    href="faculty-timetable.html"
+    class="faculty-page-btn"
+>
+    View Timetable
+</a>
+<a
+    href="faculty-substitutions.html"
+    class="faculty-page-btn"
+>
+    View Substitutions
+</a>
+
+    <a
+    href="faculty-notifications.html"
+    class="faculty-page-btn"
+>
+    View Notifications
+</a>
+
+<a
+    href="faculty-today-classes.html"
+    class="faculty-page-btn"
+>
+    Today's Classes
+</a>
+
+<a
+    href="faculty-attendance.html"
+    class="faculty-page-btn"
+>
+    Attendance
+</a>
+
+<a
+    href="faculty-profile.html"
+    class="faculty-page-btn"
+>
+    My Profile
+</a>
+
+    <div id="notificationsArea" style="
+    margin-top: 20px;
+    display: none;
+     ">
+    </div>
+    
+    <div id="timetableArea" style="margin-top: 20px; display: none;"></div>
+    <div id="substitutionsArea" style="margin-top: 20px; display: none;"></div>
+       
+</div>
+
+<script>
+
+
+// ======================================================
+// CHECK LOGIN
+// ======================================================
+
+const storedUser =
+    sessionStorage.getItem("loggedInUser");
+
+
+if (!storedUser) {
+
+    window.location.href = "index.html";
+
+} else {
+
+    const user =
+        JSON.parse(storedUser);
+
+    if (user.role === "ADMIN") {
+
+        window.location.href =
+            "admin.html";
+
+    }
+
+    document.getElementById(
+        "welcomeText"
+    ).textContent =
+        "Welcome, " + user.username;
+
+}
+
+
+// ======================================================
+// LOGOUT
+// ======================================================
+
+function logout() {
+
+    sessionStorage.removeItem(
+        "loggedInUser"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+// ======================================================
+// LOAD NOTIFICATIONS
+// ======================================================
+
+async function loadNotifications() {
+
+    const userData =
+        sessionStorage.getItem("loggedInUser");
+
+    if (!userData) {
+        alert("Please login first.");
+        return;
+    }
+
+    const user =
+        JSON.parse(userData);
+
+    const notificationsArea =
+        document.getElementById("notificationsArea");
+
+    notificationsArea.style.display = "block";
+    notificationsArea.innerHTML =
+        "<p>Loading notifications...</p>";
+
+    try {
+
+        const response = await fetch(
+    `http://localhost:3000/api/notifications/${user.user_id}`,
+    {
+        credentials: "include"
+    }
+);
+
+        const data =
+            await response.json();
+
+        console.log("Notifications API response:", data);
+
+        if (!data.success) {
+
+            notificationsArea.textContent =
+                data.message ||
+                "Unable to load notifications.";
+
+            return;
+        }
+
+        if (
+            !data.notifications ||
+            data.notifications.length === 0
+        ) {
+
+            notificationsArea.innerHTML =
+                "<p>No notifications found.</p>";
+
+            return;
+        }
+
+        const heading =
+            document.createElement("h3");
+
+        heading.textContent =
+            "My Notifications";
+
+        notificationsArea.innerHTML = "";
+
+        notificationsArea.appendChild(
+            heading
+        );
+
+        data.notifications.forEach(
+            function(notification) {
+
+                const notificationBox =
+                    document.createElement("div");
+
+                notificationBox.style.border =
+                    "1px solid #ccc";
+
+                notificationBox.style.padding =
+                    "15px";
+
+                notificationBox.style.marginTop =
+                    "10px";
+
+                notificationBox.style.borderRadius =
+                    "6px";
+
+                const title =
+                    document.createElement("h4");
+
+                title.textContent =
+                    notification.title;
+
+                const message =
+                    document.createElement("p");
+
+                message.textContent =
+                    notification.message;
+
+                message.style.marginTop =
+                    "8px";
+
+                const date =
+                    document.createElement("small");
+
+                date.textContent =
+                    notification.created_at
+                        ? new Date(
+                            notification.created_at
+                          ).toLocaleString("en-IN")
+                        : "";
+
+                date.style.display =
+                    "block";
+
+                date.style.marginTop =
+                    "8px";
+
+                notificationBox.appendChild(
+                    title
+                );
+
+                notificationBox.appendChild(
+                    message
+                );
+
+                notificationBox.appendChild(
+                    date
+                );
+
+                if (
+                    notification.is_read === 0
+                ) {
+
+                    const readButton =
+                        document.createElement("button");
+
+                    readButton.textContent =
+                        "Mark as Read";
+
+                    readButton.style.marginTop =
+                        "10px";
+
+                    readButton.onclick =
+                        function() {
+
+                            markNotificationAsRead(
+                                notification.notification_id
+                            );
+
+                        };
+
+                    notificationBox.appendChild(
+                        readButton
+                    );
+
+                } else {
+
+                    const readText =
+                        document.createElement("span");
+
+                    readText.textContent =
+                        "Read";
+
+                    readText.style.display =
+                        "block";
+
+                    readText.style.marginTop =
+                        "10px";
+
+                    notificationBox.appendChild(
+                        readText
+                    );
+
+                }
+
+                notificationsArea.appendChild(
+                    notificationBox
+                );
+
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Notification error:",
+            error
+        );
+
+        notificationsArea.textContent =
+            "Unable to connect to the server.";
+
+    }
+}
+
+
+// ======================================================
+// MARK NOTIFICATION AS READ
+// ======================================================
+
+async function markNotificationAsRead(
+    notificationId
+) {
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:3000/api/notifications/read/${notificationId}`,
+            {
+                method: "PUT",
+                credentials: "include"
+            }
+        );
+
+        const data =
+            await response.json();
+
+        if (data.success) {
+
+            alert(
+                "Notification marked as read."
+            );
+
+            loadNotifications();
+
+            loadDashboardCounts();
+
+        } else {
+
+            alert(
+                data.message ||
+                "Unable to mark notification as read."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Mark notification error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the server."
+        );
+
+    }
+}
+
+// ======================================================
+// LOAD MY SUBSTITUTIONS
+// ======================================================
+
+async function loadSubstitutions() {
+
+    const userData = sessionStorage.getItem("loggedInUser");
+
+    if (!userData) {
+        alert("Please login first.");
+        return;
+    }
+
+    const user = JSON.parse(userData);
+    const substitutionsArea = document.getElementById("substitutionsArea");
+
+    substitutionsArea.style.display = "block";
+    substitutionsArea.innerHTML = "<p>Loading substitutions...</p>";
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:3000/api/substitutions/${user.user_id}`
+        );
+
+        const data = await response.json();
+
+        console.log("Substitution API response:", data);
+
+        if (!data.success) {
+            substitutionsArea.textContent =
+                data.message || "Unable to load substitutions.";
+            return;
+        }
+
+        if (!data.substitutions || data.substitutions.length === 0) {
+            substitutionsArea.textContent = "No substitutions assigned.";
+            return;
+        }
+
+        const heading = document.createElement("h3");
+        heading.textContent = "My Substitutions";
+
+        const table = document.createElement("table");
+
+        table.style.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.style.marginTop = "15px";
+
+        const headers = [
+          "Date",
+          "Class",
+         "Subject",
+         "Period",
+         "Time",
+         "Absent Faculty",
+         "Status",
+         "Action"
+        ];
+
+        const thead = document.createElement("thead");
+        const headerRow = document.createElement("tr");
+
+        headers.forEach(function(headerText) {
+
+            const th = document.createElement("th");
+
+            th.textContent = headerText;
+            th.style.border = "1px solid #ccc";
+            th.style.padding = "10px";
+            th.style.backgroundColor = "#f2f2f2";
+
+            headerRow.appendChild(th);
+
+        });
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement("tbody");
+
+        data.substitutions.forEach(function(substitution) {
+
+            const row = document.createElement("tr");
+
+            const values = [
+                substitution.allocation_date
+                    ? new Date(substitution.allocation_date).toLocaleDateString("en-IN")
+                     : "",
+                substitution.class_name,
+                substitution.subject_name,
+                substitution.period_number,
+                `${substitution.start_time} - ${substitution.end_time}`,
+                substitution.absent_faculty,
+                substitution.status
+            ];
+
+           values.forEach(function(value) {
+
+    const td = document.createElement("td");
+
+    td.textContent = value ?? "";
+    td.style.border = "1px solid #ccc";
+    td.style.padding = "10px";
+
+    row.appendChild(td);
+
+});
+
+// Add an action column
+const actionCell = document.createElement("td");
+
+actionCell.style.border = "1px solid #ccc";
+actionCell.style.padding = "10px";
+
+if (substitution.status === "PENDING") {
+
+    const acknowledgeButton = document.createElement("button");
+
+    acknowledgeButton.textContent = "Acknowledge";
+
+    acknowledgeButton.onclick = function() {
+        acknowledgeSubstitution(substitution.allocation_id);
+    };
+
+    actionCell.appendChild(acknowledgeButton);
+
+} else if (substitution.status === "ACKNOWLEDGED") {
+
+    const completeButton = document.createElement("button");
+
+    completeButton.textContent = "Complete";
+
+    completeButton.onclick = function() {
+        completeSubstitution(substitution.allocation_id);
+    };
+
+    actionCell.appendChild(completeButton);
+
+} else {
+
+    actionCell.textContent = "No action";
+
+}
+
+row.appendChild(actionCell); 
+
+            tbody.appendChild(row);
+
+        });
+
+        table.appendChild(tbody);
+
+        substitutionsArea.innerHTML = "";
+        substitutionsArea.appendChild(heading);
+        substitutionsArea.appendChild(table);
+
+    } catch (error) {
+
+        console.error("Substitution error:", error);
+
+        substitutionsArea.textContent =
+            "Unable to connect to the server.";
+
+    }
+}
+
+// ======================================================
+// LOAD FACULTY DASHBOARD COUNTS
+// ======================================================
+
+async function loadDashboardCounts() {
+
+    const userData =
+        sessionStorage.getItem("loggedInUser");
+
+    if (!userData) {
+        return;
+    }
+
+    const user =
+        JSON.parse(userData);
+
+    try {
+
+        const response = await fetch(
+    `http://localhost:3000/api/faculty/dashboard/${user.user_id}`,
+    {
+        credentials: "include"
+    }
+);
+
+        const data =
+            await response.json();
+
+        if (!data.success) {
+            console.error(
+                "Dashboard error:",
+                data.message
+            );
+            return;
+        }
+
+        document.getElementById(
+            "classCount"
+        ).textContent =
+            data.stats.todayClasses;
+
+        document.getElementById(
+            "substitutionCount"
+        ).textContent =
+            data.stats.substitutions;
+
+        document.getElementById(
+            "notificationCount"
+        ).textContent =
+            data.stats.notifications;
+
+    } catch (error) {
+
+        console.error(
+            "Dashboard count error:",
+            error
+        );
+
+    }
+
+}
+
+
+// ======================================================
+// LOAD DASHBOARD WHEN PAGE OPENS
+// ======================================================
+
+loadDashboardCounts();
+
+// ======================================================
+// LOAD MY TIMETABLE
+// ======================================================
+
+async function loadMyTimetable() {
+
+    const userData = sessionStorage.getItem("loggedInUser");
+
+    if (!userData) {
+        alert("Please login first.");
+        return;
+    }
+
+    const user = JSON.parse(userData);
+
+    const timetableArea = document.getElementById("timetableArea");
+
+    timetableArea.style.display = "block";
+    timetableArea.innerHTML = "<p>Loading timetable...</p>";
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:3000/api/faculty/timetable/${user.user_id}`
+        );
+
+        const data = await response.json();
+
+        if (!data.success) {
+            timetableArea.textContent =
+                data.message || "Unable to load timetable.";
+            return;
+        }
+
+        if (!data.timetable || data.timetable.length === 0) {
+            timetableArea.textContent =
+                "No timetable entries found for your account.";
+            return;
+        }
+
+        const heading = document.createElement("h3");
+        heading.textContent = "My Timetable";
+
+        const table = document.createElement("table");
+
+        table.style.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.style.marginTop = "15px";
+
+const headers = [
+    "Day",
+    "Period",
+    "Time",
+    "Class",
+    "Subject",
+    "Session"
+];
+
+        const thead = document.createElement("thead");
+        const headerRow = document.createElement("tr");
+
+        headers.forEach(function(headerText) {
+
+            const th = document.createElement("th");
+
+            th.textContent = headerText;
+            th.style.border = "1px solid #ccc";
+            th.style.padding = "10px";
+            th.style.backgroundColor = "#f2f2f2";
+
+            headerRow.appendChild(th);
+
+        });
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement("tbody");
+
+        data.timetable.forEach(function(item) {
+
+            const row = document.createElement("tr");
+
+            const values = [
+                item.day_of_week,
+                item.period_number,
+                `${item.start_time} - ${item.end_time}`,
+                item.class_name,
+                item.subject_name,
+                item.session_type
+            ];
+
+            values.forEach(function(value) {
+
+                const td = document.createElement("td");
+
+                td.textContent = value ?? "";
+                td.style.border = "1px solid #ccc";
+                td.style.padding = "10px";
+
+                row.appendChild(td);
+
+            });
+
+            tbody.appendChild(row);
+
+        });
+
+        table.appendChild(tbody);
+
+        timetableArea.innerHTML = "";
+        timetableArea.appendChild(heading);
+        timetableArea.appendChild(table);
+
+    } catch (error) {
+
+        console.error("Timetable loading error:", error);
+
+        timetableArea.textContent =
+            "Unable to connect to the server.";
+
+    }
+}
+
+// ======================================================
+// ACKNOWLEDGE SUBSTITUTION
+// ======================================================
+
+async function acknowledgeSubstitution(allocationId) {
+
+    const confirmAction = confirm(
+        "Do you want to acknowledge this substitution?"
+    );
+
+    if (!confirmAction) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:3000/api/substitutions/acknowledge/${allocationId}`,
+            {
+                method: "PUT"
+            }
+        );
+
+        const data = await response.json();
+
+        if (data.success) {
+
+            alert("Substitution acknowledged successfully!");
+
+            // Reload the substitutions table
+            loadSubstitutions();
+
+        } else {
+
+            alert(data.message || "Unable to acknowledge substitution.");
+
+        }
+
+    } catch (error) {
+
+        console.error("Acknowledge error:", error);
+
+        alert("Unable to connect to the server.");
+
+    }
+}
+
+// ======================================================
+// COMPLETE SUBSTITUTION
+// ======================================================
+
+async function completeSubstitution(allocationId) {
+
+    const confirmAction = confirm(
+        "Have you completed this substitution class?"
+    );
+
+    if (!confirmAction) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:3000/api/substitutions/complete/${allocationId}`,
+            {
+                method: "PUT"
+            }
+        );
+
+        const data = await response.json();
+
+        if (data.success) {
+
+            alert("Substitution completed successfully!");
+
+            loadSubstitutions();
+
+        } else {
+
+            alert(
+                data.message ||
+                "Unable to complete substitution."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Complete substitution error:",
+            error
+        );
+
+        alert("Unable to connect to the server.");
+
+    }
+}
+
+</script>
+
+</body>
+
+</html>

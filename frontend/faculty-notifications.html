@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Notifications - SubAlloc Hub</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        .header {
+            background: #1f3c88;
+            color: white;
+            padding: 20px;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .header p {
+            margin: 6px 0 0;
+            opacity: 0.9;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .header-actions a,
+        .header-actions button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            background: white;
+            color: #1f3c88;
+        }
+
+        .read-all-btn {
+            background: #16a34a;
+            color: white;
+        }
+
+        .read-all-btn:hover {
+            background: #15803d;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 22px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .summary-card h3 {
+            margin: 0 0 10px;
+            font-size: 15px;
+            color: #64748b;
+        }
+
+        .summary-number {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .notifications-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .notifications-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .notifications-header h2 {
+            margin: 0;
+        }
+
+        .filter {
+            padding: 9px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background: white;
+        }
+
+        .notification-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 15px;
+            background: #ffffff;
+        }
+
+        .notification-card.unread {
+            border-left: 5px solid #1f3c88;
+            background: #eff6ff;
+        }
+
+        .notification-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .notification-title {
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .notification-message {
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .notification-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .type-badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 15px;
+            background: #e2e8f0;
+            color: #334155;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .unread-badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 15px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .read-badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 15px;
+            background: #dcfce7;
+            color: #166534;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .notification-actions {
+            margin-top: 14px;
+        }
+
+        .mark-read-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            background: #1f3c88;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .mark-read-btn:hover {
+            background: #162d68;
+        }
+
+        .loading,
+        .empty,
+        .error {
+            text-align: center;
+            padding: 35px;
+            color: #64748b;
+        }
+
+        .error {
+            color: #dc2626;
+        }
+
+        @media (max-width: 800px) {
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-inner {
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="header-inner">
+
+            <div>
+
+                <h1>My Notifications</h1>
+
+                <p id="welcomeText">
+                    Faculty notifications
+                </p>
+
+            </div>
+
+            <div class="header-actions">
+
+                <a
+                    href="faculty.html"
+                    class="back-btn"
+                >
+                    ← Dashboard
+                </a>
+
+                <button
+                    type="button"
+                    class="read-all-btn"
+                    onclick="markAllNotificationsRead()"
+                >
+                    Mark All as Read
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+
+        <!-- SUMMARY -->
+
+        <section class="summary-grid">
+
+            <div class="summary-card">
+
+                <h3>Total Notifications</h3>
+
+                <div
+                    class="summary-number"
+                    id="totalCount"
+                >
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <h3>Unread</h3>
+
+                <div
+                    class="summary-number"
+                    id="unreadCount"
+                >
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <h3>Read</h3>
+
+                <div
+                    class="summary-number"
+                    id="readCount"
+                >
+                    -
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <section class="notifications-container">
+
+            <div class="notifications-header">
+
+                <h2>Notifications</h2>
+
+                <select
+                    id="statusFilter"
+                    class="filter"
+                    onchange="renderNotifications()"
+                >
+
+                    <option value="ALL">
+                        All
+                    </option>
+
+                    <option value="UNREAD">
+                        Unread
+                    </option>
+
+                    <option value="READ">
+                        Read
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div id="notificationsList">
+
+                <div class="loading">
+                    Loading notifications...
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <script>
+
+
+        // =====================================================
+        // LOGIN CHECK
+        // =====================================================
+
+        const storedUser =
+            sessionStorage.getItem("loggedInUser");
+
+
+        if (!storedUser) {
+
+            window.location.href = "index.html";
+
+        }
+
+
+        const user =
+            JSON.parse(storedUser);
+
+
+        if (user.role === "ADMIN") {
+
+            window.location.href = "admin.html";
+
+        }
+
+
+        document.getElementById(
+            "welcomeText"
+        ).textContent =
+            "Welcome, " + user.username;
+
+
+        let notifications = [];
+
+
+        // =====================================================
+        // LOAD NOTIFICATIONS
+        // =====================================================
+
+        async function loadNotifications() {
+
+            const list =
+                document.getElementById(
+                    "notificationsList"
+                );
+
+            list.innerHTML =
+                '<div class="loading">Loading notifications...</div>';
+
+
+            try {
+
+                const response = await fetch(
+    `http://localhost:3000/api/notifications/${user.user_id}`,
+    {
+        credentials: "include"
+    }
+);
+
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    "Notifications API response:",
+                    data
+                );
+
+
+                if (!data.success) {
+
+                    list.innerHTML =
+                        `<div class="error">
+                            ${data.message || "Unable to load notifications."}
+                        </div>`;
+
+                    return;
+                }
+
+
+                notifications =
+                    data.notifications || [];
+
+
+                updateSummary();
+
+
+                renderNotifications();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Notifications error:",
+                    error
+                );
+
+
+                list.innerHTML =
+                    `<div class="error">
+                        Unable to connect to the server.
+                    </div>`;
+
+            }
+
+        }
+
+
+        // =====================================================
+        // UPDATE SUMMARY
+        // =====================================================
+
+        function updateSummary() {
+
+            const total =
+                notifications.length;
+
+
+            const unread =
+                notifications.filter(
+                    notification =>
+                        Number(notification.is_read) === 0
+                ).length;
+
+
+            const read =
+                total - unread;
+
+
+            document.getElementById(
+                "totalCount"
+            ).textContent = total;
+
+
+            document.getElementById(
+                "unreadCount"
+            ).textContent = unread;
+
+
+            document.getElementById(
+                "readCount"
+            ).textContent = read;
+
+        }
+
+
+        // =====================================================
+        // RENDER NOTIFICATIONS
+        // =====================================================
+
+        function renderNotifications() {
+
+            const list =
+                document.getElementById(
+                    "notificationsList"
+                );
+
+
+            const filter =
+                document.getElementById(
+                    "statusFilter"
+                ).value;
+
+
+            let filtered =
+                notifications;
+
+
+            if (filter === "UNREAD") {
+
+                filtered =
+                    notifications.filter(
+                        notification =>
+                            Number(notification.is_read) === 0
+                    );
+
+            }
+
+
+            if (filter === "READ") {
+
+                filtered =
+                    notifications.filter(
+                        notification =>
+                            Number(notification.is_read) === 1
+                    );
+
+            }
+
+
+            if (filtered.length === 0) {
+
+                list.innerHTML =
+                    `<div class="empty">
+                        No notifications found.
+                    </div>`;
+
+                return;
+            }
+
+
+            list.innerHTML = "";
+
+
+            filtered.forEach(
+                notification => {
+
+                    const card =
+                        document.createElement("div");
+
+
+                    card.className =
+                        "notification-card";
+
+
+                    if (
+                        Number(notification.is_read) === 0
+                    ) {
+
+                        card.classList.add(
+                            "unread"
+                        );
+
+                    }
+
+
+                    const dateText =
+                        notification.created_at
+                            ? new Date(
+                                notification.created_at
+                              ).toLocaleString(
+                                "en-IN"
+                              )
+                            : "—";
+
+
+                    const statusBadge =
+                        Number(notification.is_read) === 0
+                            ? `<span class="unread-badge">
+                                UNREAD
+                               </span>`
+                            : `<span class="read-badge">
+                                READ
+                               </span>`;
+
+
+                    const actionButton =
+                        Number(notification.is_read) === 0
+                            ? `<div class="notification-actions">
+                                <button
+                                    class="mark-read-btn"
+                                    onclick="markNotificationAsRead(${notification.notification_id})"
+                                >
+                                    Mark as Read
+                                </button>
+                               </div>`
+                            : "";
+
+
+                    card.innerHTML = `
+
+                        <div class="notification-top">
+
+                            <div>
+
+                                <div class="notification-title">
+                                    ${escapeHtml(
+                                        notification.title || "Notification"
+                                    )}
+                                </div>
+
+                                <div class="notification-message">
+                                    ${escapeHtml(
+                                        notification.message || ""
+                                    )}
+                                </div>
+
+                            </div>
+
+                            <div>
+                                ${statusBadge}
+                            </div>
+
+                        </div>
+
+
+                        <div class="notification-meta">
+
+                            <span class="type-badge">
+                                ${escapeHtml(
+                                    notification.notification_type || "GENERAL"
+                                )}
+                            </span>
+
+                            <span>
+                                ${dateText}
+                            </span>
+
+                        </div>
+
+                        ${actionButton}
+
+                    `;
+
+
+                    list.appendChild(card);
+
+                }
+            );
+
+        }
+
+
+        // =====================================================
+        // MARK ONE NOTIFICATION AS READ
+        // =====================================================
+
+        async function markNotificationAsRead(
+            notificationId
+        ) {
+
+            try {
+
+                const response = await fetch(
+                        `http://localhost:3000/api/notifications/read/${notificationId}`,
+                        {
+                            method: "PUT",
+                            credentials: "include"
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!data.success) {
+                
+
+                    alert(
+                        data.message ||
+                        "Unable to mark notification as read."
+                    );
+
+                    return;
+                }
+
+
+                await loadNotifications();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Mark read error:",
+                    error
+                );
+
+
+                alert(
+                    "Unable to connect to the server."
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // MARK ALL NOTIFICATIONS AS READ
+        // =====================================================
+
+        async function markAllNotificationsRead() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        `http://localhost:3000/api/notifications/read-all/${user.user_id}`,
+                        {
+                            method: "PUT",
+                            credentials: "include"
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!data.success) {
+
+                    alert(
+                        data.message ||
+                        "Unable to mark all notifications as read."
+                    );
+
+                    return;
+                }
+
+
+                alert(
+                    "All notifications marked as read."
+                );
+
+
+                await loadNotifications();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Mark all read error:",
+                    error
+                );
+
+
+                alert(
+                    "Unable to connect to the server."
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // ESCAPE HTML
+        // =====================================================
+
+        function escapeHtml(value) {
+
+            return String(value)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+
+        }
+
+
+        // =====================================================
+        // INITIAL LOAD
+        // =====================================================
+
+        loadNotifications();
+
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,2197 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        SubAlloc Hub | My Substitutions
+    </title>
+
+    <link rel="stylesheet" href="css/style.css">
+    >
+
+    <style>
+
+        body {
+            background:
+                linear-gradient(
+                    135deg,
+                    #f4f7ff 0%,
+                    #f8fafc 55%,
+                    #eef2ff 100%
+                );
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
+
+        .faculty-header {
+            background:
+                linear-gradient(
+                    120deg,
+                    #172554,
+                    #3454d1
+                );
+            color: #ffffff;
+        }
+
+
+        .faculty-header .navbar-inner {
+            min-height: 78px;
+        }
+
+
+        .faculty-header .brand,
+        .faculty-header .nav-links a {
+            color: #ffffff;
+        }
+
+
+        .faculty-header .brand {
+            text-decoration: none;
+        }
+
+
+        .faculty-header .nav-links a {
+            opacity: 0.9;
+        }
+
+
+        .faculty-header .nav-links a:hover {
+            opacity: 1;
+        }
+
+
+        /* =====================================================
+           CONTAINER
+           ===================================================== */
+
+        .substitution-container {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
+
+
+        /* =====================================================
+           HERO
+           ===================================================== */
+
+        .substitution-hero {
+            background:
+                linear-gradient(
+                    120deg,
+                    #ffffff,
+                    #eef2ff
+                );
+
+            border:
+                1px solid #dbe4ff;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 12px 30px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.08
+                );
+        }
+
+
+        .substitution-badge {
+            display: inline-block;
+
+            background: #e0e7ff;
+
+            color: #3730a3;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            padding:
+                7px
+                12px;
+
+            border-radius: 999px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .substitution-hero h1 {
+            margin: 0;
+
+            color: #172554;
+
+            font-size:
+                clamp(
+                    26px,
+                    4vw,
+                    36px
+                );
+        }
+
+
+        .substitution-hero p {
+            margin:
+                9px
+                0
+                0;
+
+            color: #64748b;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           TOOLBAR
+           ===================================================== */
+
+        .toolbar {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 12px;
+
+            background: #ffffff;
+
+            border:
+                1px solid #dbe4ff;
+
+            border-radius: 16px;
+
+            padding: 16px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 8px 24px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.05
+                );
+        }
+
+
+        .toolbar-actions {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+        }
+
+
+        .page-btn {
+            border: none;
+
+            border-radius: 10px;
+
+            padding:
+                11px
+                16px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+        }
+
+
+        .refresh-btn {
+            background: #3454d1;
+
+            color: #ffffff;
+        }
+
+
+        .back-btn {
+            background: #e2e8f0;
+
+            color: #1e293b;
+        }
+
+
+        .page-btn:hover {
+            opacity: 0.93;
+        }
+
+
+        /* =====================================================
+           SUMMARY
+           ===================================================== */
+
+        .summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    4,
+                    minmax(
+                        150px,
+                        1fr
+                    )
+                );
+
+            gap: 12px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .summary-card {
+            background: #ffffff;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 14px;
+
+            padding: 18px;
+
+            box-shadow:
+                0 8px 24px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.04
+                );
+        }
+
+
+        .summary-label {
+            margin:
+                0
+                0
+                6px;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        .summary-value {
+            margin: 0;
+
+            color: #172554;
+
+            font-size: 26px;
+
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           FILTERS
+           ===================================================== */
+
+        .filter-card {
+            background: #ffffff;
+
+            border:
+                1px solid #dbe4ff;
+
+            border-radius: 16px;
+
+            padding: 18px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 8px 24px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.05
+                );
+        }
+
+
+        .filter-card h2 {
+            margin:
+                0
+                0
+                12px;
+
+            color: #172554;
+
+            font-size: 17px;
+        }
+
+
+        .filter-row {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+        }
+
+
+        .filter-btn {
+            border:
+                1px solid #cbd5e1;
+
+            background: #f8fafc;
+
+            color: #334155;
+
+            border-radius: 999px;
+
+            padding:
+                8px
+                13px;
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .filter-btn.active {
+            background: #3454d1;
+
+            color: #ffffff;
+
+            border-color: #3454d1;
+        }
+
+
+        /* =====================================================
+           TABLE
+           ===================================================== */
+
+        .table-card {
+            background: #ffffff;
+
+            border:
+                1px
+                solid
+                #dbe4ff;
+
+            border-radius: 16px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 10px 28px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.06
+                );
+        }
+
+
+        .table-heading {
+            padding:
+                18px
+                20px;
+
+            border-bottom:
+                1px
+                solid
+                #e2e8f0;
+        }
+
+
+        .table-heading h2 {
+            margin: 0;
+
+            color: #172554;
+
+            font-size: 19px;
+        }
+
+
+        .table-heading p {
+            margin:
+                5px
+                0
+                0;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+
+        .table-wrapper {
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+
+        table {
+            width: 100%;
+
+            min-width: 1050px;
+
+            border-collapse: collapse;
+        }
+
+
+        thead th {
+            text-align: left;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #172554,
+                    #243ea8
+                );
+
+            color: #ffffff;
+
+            padding:
+                14px
+                16px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        tbody td {
+            padding:
+                14px
+                16px;
+
+            border-bottom:
+                1px
+                solid
+                #eef2f7;
+
+            color: #334155;
+
+            font-size: 14px;
+
+            vertical-align: middle;
+        }
+
+
+        tbody tr:hover {
+            background: #f8faff;
+        }
+
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        /* =====================================================
+           BADGES
+           ===================================================== */
+
+        .date-text {
+            font-weight: 700;
+
+            color: #0f172a;
+
+            white-space: nowrap;
+        }
+
+
+        .period-badge {
+            display: inline-block;
+
+            background: #e0e7ff;
+
+            color: #3730a3;
+
+            padding:
+                5px
+                9px;
+
+            border-radius: 999px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        .class-name {
+            font-weight: 700;
+
+            color: #0f172a;
+        }
+
+
+        .subject-name {
+            font-weight: 600;
+
+            color: #334155;
+        }
+
+
+        .session-badge {
+            display: inline-block;
+
+            padding:
+                5px
+                9px;
+
+            border-radius: 999px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        .theory {
+            background: #dbeafe;
+
+            color: #1e40af;
+        }
+
+
+        .lab {
+            background: #fef3c7;
+
+            color: #92400e;
+        }
+
+
+        .status-badge {
+            display: inline-block;
+
+            padding:
+                6px
+                10px;
+
+            border-radius: 999px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+        }
+
+
+        .status-pending {
+            background: #fef3c7;
+
+            color: #92400e;
+        }
+
+
+        .status-acknowledged {
+            background: #dbeafe;
+
+            color: #1e40af;
+        }
+
+
+        .status-completed {
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+
+        .status-other {
+            background: #e2e8f0;
+
+            color: #475569;
+        }
+
+
+        /* =====================================================
+           ACTION BUTTONS
+           ===================================================== */
+
+        .action-btn {
+            border: none;
+
+            border-radius: 8px;
+
+            padding:
+                8px
+                11px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+        }
+
+
+        .acknowledge-btn {
+            background: #3454d1;
+
+            color: #ffffff;
+        }
+
+
+        .complete-btn {
+            background: #16a34a;
+
+            color: #ffffff;
+        }
+
+
+        .no-action {
+            color: #64748b;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           MESSAGE
+           ===================================================== */
+
+        .message-box {
+            padding:
+                30px
+                20px;
+
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+
+        .error-text {
+            color: #b91c1c;
+        }
+
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+
+        .substitution-footer {
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            padding-top: 14px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 850px) {
+
+            .summary-grid {
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(
+                            150px,
+                            1fr
+                        )
+                    );
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .substitution-container {
+                padding:
+                    22px
+                    14px
+                    40px;
+            }
+
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .toolbar-actions {
+                width: 100%;
+            }
+
+
+            .page-btn {
+                flex: 1;
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .toolbar-actions {
+                flex-direction: column;
+            }
+
+
+            .page-btn {
+                width: 100%;
+
+                flex: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
+<header class="navbar faculty-header">
+
+    <div class="navbar-inner">
+
+        <a
+            class="brand"
+            href="faculty.html"
+        >
+            🏫 SubAlloc Hub
+        </a>
+
+
+        <nav class="nav-links">
+
+            <a href="faculty.html">
+                Dashboard
+            </a>
+
+        </nav>
+
+
+        <button
+            type="button"
+            class="logout-btn"
+            onclick="logout()"
+        >
+            🚪 Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+     ===================================================== -->
+
+<main class="substitution-container">
+
+
+    <!-- =================================================
+         HERO
+         ================================================= -->
+
+    <section class="substitution-hero">
+
+        <span class="substitution-badge">
+            👨‍🏫 Faculty
+        </span>
+
+        <h1>
+            My Substitutions
+        </h1>
+
+        <p id="facultyDescription">
+            Loading your substitution assignments...
+        </p>
+
+    </section>
+
+
+    <!-- =================================================
+         TOOLBAR
+         ================================================= -->
+
+    <section class="toolbar">
+
+        <strong>
+            Assigned Substitution Classes
+        </strong>
+
+
+        <div class="toolbar-actions">
+
+            <button
+                type="button"
+                class="page-btn refresh-btn"
+                id="refreshBtn"
+            >
+                🔄 Refresh
+            </button>
+
+
+            <a
+                href="faculty.html"
+                class="page-btn back-btn"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         SUMMARY
+         ================================================= -->
+
+    <section class="summary-grid">
+
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Total
+            </p>
+
+            <p
+                class="summary-value"
+                id="totalCount"
+            >
+                -
+            </p>
+
+        </article>
+
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Pending
+            </p>
+
+            <p
+                class="summary-value"
+                id="pendingCount"
+            >
+                -
+            </p>
+
+        </article>
+
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Acknowledged
+            </p>
+
+            <p
+                class="summary-value"
+                id="acknowledgedCount"
+            >
+                -
+            </p>
+
+        </article>
+
+
+        <article class="summary-card">
+
+            <p class="summary-label">
+                Completed
+            </p>
+
+            <p
+                class="summary-value"
+                id="completedCount"
+            >
+                -
+            </p>
+
+        </article>
+
+
+    </section>
+
+
+    <!-- =================================================
+         STATUS FILTER
+         ================================================= -->
+
+    <section class="filter-card">
+
+        <h2>
+            🔎 Filter by Status
+        </h2>
+
+
+        <div class="filter-row">
+
+            <button
+                type="button"
+                class="filter-btn active"
+                data-status="ALL"
+            >
+                All
+            </button>
+
+
+            <button
+                type="button"
+                class="filter-btn"
+                data-status="PENDING"
+            >
+                Pending
+            </button>
+
+
+            <button
+                type="button"
+                class="filter-btn"
+                data-status="ACKNOWLEDGED"
+            >
+                Acknowledged
+            </button>
+
+
+            <button
+                type="button"
+                class="filter-btn"
+                data-status="COMPLETED"
+            >
+                Completed
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         TABLE
+         ================================================= -->
+
+    <section class="table-card">
+
+        <div class="table-heading">
+
+            <h2>
+                📋 Substitution Assignments
+            </h2>
+
+            <p>
+                Your substitution assignments loaded from the SubAlloc Hub backend.
+            </p>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Class
+                        </th>
+
+                        <th>
+                            Subject
+                        </th>
+
+                        <th>
+                            Period
+                        </th>
+
+                        <th>
+                            Time
+                        </th>
+
+                        <th>
+                            Room
+                        </th>
+
+                        <th>
+                            Absent Faculty
+                        </th>
+
+                        <th>
+                            Session
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="substitutionBody">
+
+                    <tr>
+
+                        <td
+                            colspan="11"
+                            class="message-box"
+                        >
+                            Loading substitutions...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <div class="substitution-footer">
+
+        SubAlloc Hub · My Substitutions
+
+    </div>
+
+
+</main>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+     ===================================================== -->
+
+<script>
+
+
+// ======================================================
+// API
+// ======================================================
+
+const API_BASE_URL =
+    "http://localhost:3000";
+
+
+// ======================================================
+// ELEMENTS
+// ======================================================
+
+const substitutionBody =
+    document.getElementById(
+        "substitutionBody"
+    );
+
+
+const refreshBtn =
+    document.getElementById(
+        "refreshBtn"
+    );
+
+
+const facultyDescription =
+    document.getElementById(
+        "facultyDescription"
+    );
+
+
+const totalCount =
+    document.getElementById(
+        "totalCount"
+    );
+
+
+const pendingCount =
+    document.getElementById(
+        "pendingCount"
+    );
+
+
+const acknowledgedCount =
+    document.getElementById(
+        "acknowledgedCount"
+    );
+
+
+const completedCount =
+    document.getElementById(
+        "completedCount"
+    );
+
+
+const filterButtons =
+    document.querySelectorAll(
+        ".filter-btn"
+    );
+
+
+// ======================================================
+// DATA
+// ======================================================
+
+let allSubstitutions =
+    [];
+
+
+let selectedStatus =
+    "ALL";
+
+
+// ======================================================
+// LOGIN CHECK
+// ======================================================
+
+function checkFacultyLogin() {
+
+    const storedUser =
+        sessionStorage.getItem(
+            "loggedInUser"
+        );
+
+
+    if (!storedUser) {
+
+        window.location.href =
+            "index.html";
+
+        return false;
+
+    }
+
+
+    let user;
+
+
+    try {
+
+        user =
+            JSON.parse(
+                storedUser
+            );
+
+    } catch (error) {
+
+        console.error(
+            "Invalid login data:",
+            error
+        );
+
+        sessionStorage.removeItem(
+            "loggedInUser"
+        );
+
+        window.location.href =
+            "index.html";
+
+        return false;
+
+    }
+
+
+    if (
+        String(user.role)
+            .toUpperCase() !==
+        "FACULTY"
+    ) {
+
+        window.location.href =
+            "admin.html";
+
+        return false;
+
+    }
+
+
+    facultyDescription.textContent =
+        "Substitution assignments for " +
+        (
+            user.username ||
+            "Faculty"
+        ) +
+        ".";
+
+
+    return user;
+
+}
+
+
+// ======================================================
+// LOGOUT
+// ======================================================
+
+function logout() {
+
+    sessionStorage.removeItem(
+        "loggedInUser"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+// ======================================================
+// FORMAT DATE
+// ======================================================
+
+function formatDate(
+    dateValue
+) {
+
+    if (!dateValue) {
+        return "—";
+    }
+
+
+    const date =
+        new Date(
+            dateValue
+        );
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return String(
+            dateValue
+        );
+
+    }
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+// ======================================================
+// SUMMARY
+// ======================================================
+
+function updateSummary() {
+
+    totalCount.textContent =
+        allSubstitutions.length;
+
+
+    pendingCount.textContent =
+        allSubstitutions.filter(
+            function(item) {
+
+                return String(
+                    item.status
+                ).toUpperCase() ===
+                    "PENDING";
+
+            }
+        ).length;
+
+
+    acknowledgedCount.textContent =
+        allSubstitutions.filter(
+            function(item) {
+
+                return String(
+                    item.status
+                ).toUpperCase() ===
+                    "ACKNOWLEDGED";
+
+            }
+        ).length;
+
+
+    completedCount.textContent =
+        allSubstitutions.filter(
+            function(item) {
+
+                return String(
+                    item.status
+                ).toUpperCase() ===
+                    "COMPLETED";
+
+            }
+        ).length;
+
+}
+
+
+// ======================================================
+// LOAD SUBSTITUTIONS
+// ======================================================
+
+async function loadSubstitutions() {
+
+    const userData =
+        sessionStorage.getItem(
+            "loggedInUser"
+        );
+
+
+    if (!userData) {
+
+        window.location.href =
+            "index.html";
+
+        return;
+
+    }
+
+
+    const user =
+        JSON.parse(
+            userData
+        );
+
+
+    substitutionBody.innerHTML = `
+        <tr>
+            <td
+                colspan="11"
+                class="message-box"
+            >
+                Loading substitutions...
+            </td>
+        </tr>
+    `;
+
+
+    refreshBtn.disabled =
+        true;
+
+
+    refreshBtn.textContent =
+        "⏳ Loading...";
+
+
+    try {
+
+        const response =
+    await fetch(
+        `${API_BASE_URL}/api/substitutions/${user.user_id}`,
+        {
+            credentials: "include"
+        }
+    );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Faculty substitutions API response:",
+            data
+        );
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load substitutions."
+            );
+
+        }
+
+
+        allSubstitutions =
+            Array.isArray(
+                data.substitutions
+            )
+                ? data.substitutions
+                : [];
+
+
+        updateSummary();
+
+        renderSubstitutions();
+
+    } catch (error) {
+
+        console.error(
+            "Substitution loading error:",
+            error
+        );
+
+
+        totalCount.textContent =
+            "—";
+
+        pendingCount.textContent =
+            "—";
+
+        acknowledgedCount.textContent =
+            "—";
+
+        completedCount.textContent =
+            "—";
+
+
+        substitutionBody.innerHTML = `
+            <tr>
+                <td
+                    colspan="11"
+                    class="message-box error-text"
+                >
+                    <strong>
+                        Unable to load substitutions.
+                    </strong>
+
+                    <br><br>
+
+                    Make sure the backend is running on:
+
+                    <br>
+
+                    <code>
+                        http://localhost:3000
+                    </code>
+
+                </td>
+            </tr>
+        `;
+
+    } finally {
+
+        refreshBtn.disabled =
+            false;
+
+        refreshBtn.textContent =
+            "🔄 Refresh";
+
+    }
+
+}
+
+
+// ======================================================
+// RENDER SUBSTITUTIONS
+// ======================================================
+
+function renderSubstitutions() {
+
+    let rows =
+        allSubstitutions;
+
+
+    if (
+        selectedStatus !==
+        "ALL"
+    ) {
+
+        rows =
+            allSubstitutions.filter(
+                function(item) {
+
+                    return String(
+                        item.status
+                    ).toUpperCase() ===
+                        selectedStatus;
+
+                }
+            );
+
+    }
+
+
+    if (
+        !rows ||
+        rows.length === 0
+    ) {
+
+        substitutionBody.innerHTML = `
+            <tr>
+                <td
+                    colspan="11"
+                    class="message-box"
+                >
+                    No substitution assignments found.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    substitutionBody.innerHTML =
+        "";
+
+
+    rows.forEach(
+        function(item, index) {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            // ------------------------------------------
+            // NUMBER
+            // ------------------------------------------
+
+            const numberCell =
+                document.createElement(
+                    "td"
+                );
+
+            numberCell.textContent =
+                index + 1;
+
+
+            // ------------------------------------------
+            // DATE
+            // ------------------------------------------
+
+            const dateCell =
+                document.createElement(
+                    "td"
+                );
+
+            dateCell.className =
+                "date-text";
+
+            dateCell.textContent =
+                formatDate(
+                    item.allocation_date
+                );
+
+
+            // ------------------------------------------
+            // CLASS
+            // ------------------------------------------
+
+            const classCell =
+                document.createElement(
+                    "td"
+                );
+
+            classCell.className =
+                "class-name";
+
+            classCell.textContent =
+                item.class_name ||
+                "—";
+
+
+            // ------------------------------------------
+            // SUBJECT
+            // ------------------------------------------
+
+            const subjectCell =
+                document.createElement(
+                    "td"
+                );
+
+            subjectCell.className =
+                "subject-name";
+
+            subjectCell.textContent =
+                item.subject_name ||
+                "—";
+
+
+            // ------------------------------------------
+            // PERIOD
+            // ------------------------------------------
+
+            const periodCell =
+                document.createElement(
+                    "td"
+                );
+
+            periodCell.innerHTML = `
+                <span class="period-badge">
+                    P${item.period_number ?? "—"}
+                </span>
+            `;
+
+
+            // ------------------------------------------
+            // TIME
+            // ------------------------------------------
+
+            const timeCell =
+                document.createElement(
+                    "td"
+                );
+
+            timeCell.textContent =
+                `${item.start_time || "—"} - ${
+                    item.end_time || "—"
+                }`;
+
+
+            // ------------------------------------------
+            // ROOM
+            // ------------------------------------------
+
+            const roomCell =
+                document.createElement(
+                    "td"
+                );
+
+            roomCell.textContent =
+                item.room_number ||
+                "—";
+
+
+            // ------------------------------------------
+            // ABSENT FACULTY
+            // ------------------------------------------
+
+            const absentCell =
+                document.createElement(
+                    "td"
+                );
+
+            absentCell.textContent =
+                item.absent_faculty ||
+                "—";
+
+
+            // ------------------------------------------
+            // SESSION
+            // ------------------------------------------
+
+            const sessionCell =
+                document.createElement(
+                    "td"
+                );
+
+
+            const session =
+                String(
+                    item.session_type ||
+                    "THEORY"
+                ).toUpperCase();
+
+
+            sessionCell.innerHTML = `
+                <span class="session-badge ${
+                    session === "LAB"
+                        ? "lab"
+                        : "theory"
+                }">
+                    ${session}
+                </span>
+            `;
+
+
+            // ------------------------------------------
+            // STATUS
+            // ------------------------------------------
+
+            const statusCell =
+                document.createElement(
+                    "td"
+                );
+
+
+            const status =
+                String(
+                    item.status ||
+                    ""
+                ).toUpperCase();
+
+
+            let statusClass =
+                "status-other";
+
+
+            if (
+                status === "PENDING"
+            ) {
+
+                statusClass =
+                    "status-pending";
+
+            } else if (
+                status === "ACKNOWLEDGED"
+            ) {
+
+                statusClass =
+                    "status-acknowledged";
+
+            } else if (
+                status === "COMPLETED"
+            ) {
+
+                statusClass =
+                    "status-completed";
+
+            }
+
+
+            statusCell.innerHTML = `
+                <span class="status-badge ${statusClass}">
+                    ${status || "—"}
+                </span>
+            `;
+
+
+            // ------------------------------------------
+            // ACTION
+            // ------------------------------------------
+
+            const actionCell =
+                document.createElement(
+                    "td"
+                );
+
+
+            if (
+                status === "PENDING"
+            ) {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.type =
+                    "button";
+
+                button.className =
+                    "action-btn acknowledge-btn";
+
+                button.textContent =
+                    "Acknowledge";
+
+                button.onclick =
+                    function() {
+
+                        acknowledgeSubstitution(
+                            item.allocation_id
+                        );
+
+                    };
+
+                actionCell.appendChild(
+                    button
+                );
+
+
+            } else if (
+                status === "ACKNOWLEDGED"
+            ) {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.type =
+                    "button";
+
+                button.className =
+                    "action-btn complete-btn";
+
+                button.textContent =
+                    "Complete";
+
+                button.onclick =
+                    function() {
+
+                        completeSubstitution(
+                            item.allocation_id
+                        );
+
+                    };
+
+                actionCell.appendChild(
+                    button
+                );
+
+
+            } else {
+
+                const text =
+                    document.createElement(
+                        "span"
+                    );
+
+                text.className =
+                    "no-action";
+
+                text.textContent =
+                    "No action";
+
+                actionCell.appendChild(
+                    text
+                );
+
+            }
+
+
+            // ------------------------------------------
+            // ADD CELLS
+            // ------------------------------------------
+
+            row.appendChild(
+                numberCell
+            );
+
+            row.appendChild(
+                dateCell
+            );
+
+            row.appendChild(
+                classCell
+            );
+
+            row.appendChild(
+                subjectCell
+            );
+
+            row.appendChild(
+                periodCell
+            );
+
+            row.appendChild(
+                timeCell
+            );
+
+            row.appendChild(
+                roomCell
+            );
+
+            row.appendChild(
+                absentCell
+            );
+
+            row.appendChild(
+                sessionCell
+            );
+
+            row.appendChild(
+                statusCell
+            );
+
+            row.appendChild(
+                actionCell
+            );
+
+
+            substitutionBody.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+// ======================================================
+// ACKNOWLEDGE
+// ======================================================
+
+async function acknowledgeSubstitution(
+    allocationId
+) {
+
+    const confirmed =
+        confirm(
+            "Do you want to acknowledge this substitution?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+    await fetch(
+        `${API_BASE_URL}/api/substitutions/acknowledge/${allocationId}`,
+        {
+            method: "PUT",
+            credentials: "include"
+        }
+    );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            data.success
+        ) {
+
+            alert(
+                "Substitution acknowledged successfully!"
+            );
+
+            await loadSubstitutions();
+
+        } else {
+
+            alert(
+                data.message ||
+                "Unable to acknowledge substitution."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Acknowledge error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the server."
+        );
+
+    }
+
+}
+
+
+// ======================================================
+// COMPLETE
+// ======================================================
+
+async function completeSubstitution(
+    allocationId
+) {
+
+    const confirmed =
+        confirm(
+            "Have you completed this substitution class?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+    await fetch(
+        `${API_BASE_URL}/api/substitutions/complete/${allocationId}`,
+        {
+            method: "PUT",
+            credentials: "include"
+        }
+    );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            data.success
+        ) {
+
+            alert(
+                "Substitution completed successfully!"
+            );
+
+            await loadSubstitutions();
+
+        } else {
+
+            alert(
+                data.message ||
+                "Unable to complete substitution."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Complete substitution error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the server."
+        );
+
+    }
+
+}
+
+
+// ======================================================
+// STATUS FILTER
+// ======================================================
+
+filterButtons.forEach(
+    function(button) {
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                filterButtons.forEach(
+                    function(item) {
+
+                        item.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                selectedStatus =
+                    button.dataset.status;
+
+
+                renderSubstitutions();
+
+            }
+        );
+
+    }
+);
+
+
+// ======================================================
+// REFRESH BUTTON
+// ======================================================
+
+refreshBtn.addEventListener(
+    "click",
+    loadSubstitutions
+);
+
+
+// ======================================================
+// START
+// ======================================================
+
+if (
+    checkFacultyLogin()
+) {
+
+    loadSubstitutions();
+
+}
+
+</script>
+
+
+</body>
+
+</html>
