@@ -931,15 +931,10 @@ if (req.session.user.role !== "ADMIN") {
 
     FROM faculty f
 
-    INNER JOIN faculty_subjects fs
-        ON f.faculty_id = fs.faculty_id
-
     INNER JOIN users u
         ON f.user_id = u.user_id
 
-    WHERE fs.subject_id = ?
-
-    AND f.faculty_id != ?
+    WHERE f.faculty_id != ?
 
     AND u.is_active = 1
 
@@ -953,7 +948,7 @@ if (req.session.user.role !== "ADMIN") {
 
     ORDER BY substitution_count ASC,
              f.faculty_id ASC
-`; 
+`;
 
 
                             const eligibleFaculty =
@@ -961,11 +956,10 @@ if (req.session.user.role !== "ADMIN") {
         eligibleSql,
         [
             allocationDate,
-            timetable.subject_id,
             timetable.faculty_id,
             allocationDate
         ]
-    );   
+    ); 
 
 
                                 let selectedFaculty =
