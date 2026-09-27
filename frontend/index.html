@@ -1,186 +1,2371 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SubAlloc Hub - Login</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        SubAlloc Hub | Faculty Substitution Management
+    </title>
+
 
     <style>
+
+        /* =====================================================
+           RESET
+           ===================================================== */
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
         }
 
-        body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #f2f5f9;
+
+        html {
+            scroll-behavior: smooth;
         }
 
-        .login-container {
-            width: 380px;
-            padding: 35px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
-        }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 8px;
-            color: #1f3c88;
-        }
+         /* =========================================================
+   DARK GOLD GEOMETRIC BACKGROUND
+   ========================================================= */
 
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 25px;
-        }
+body {
+    min-height: 100vh;
 
-        label {
-            display: block;
-            margin-bottom: 7px;
-            font-weight: bold;
-        }
+    position: relative;
+    overflow-x: hidden;
 
-        input {
+    background-color: #030201;
+
+    background-image:
+
+        /* Bright golden diagonal highlights */
+        linear-gradient(
+            135deg,
+            transparent 0%,
+            transparent 17%,
+            rgba(255, 196, 45, 0.18) 17.5%,
+            rgba(255, 215, 75, 0.65) 18.2%,
+            rgba(255, 196, 45, 0.12) 19%,
+            transparent 20%,
+
+            transparent 30%,
+            rgba(218, 154, 20, 0.20) 30.5%,
+            rgba(255, 205, 60, 0.50) 31.2%,
+            rgba(218, 154, 20, 0.08) 32%,
+            transparent 33%,
+
+            transparent 45%,
+            rgba(255, 196, 45, 0.18) 45.5%,
+            rgba(255, 220, 95, 0.55) 46.2%,
+            transparent 47%
+        ),
+
+        /* Large geometric gold panels */
+        linear-gradient(
+            135deg,
+            transparent 0%,
+            transparent 12%,
+            rgba(87, 55, 4, 0.80) 12.5%,
+            rgba(160, 106, 10, 0.55) 22%,
+            transparent 22.7%,
+
+            transparent 28%,
+            rgba(92, 59, 5, 0.72) 28.5%,
+            rgba(189, 128, 15, 0.48) 40%,
+            transparent 40.7%,
+
+            transparent 50%,
+            rgba(75, 48, 3, 0.65) 50.5%,
+            rgba(151, 99, 8, 0.40) 63%,
+            transparent 63.7%
+        ),
+
+        /* Crossed diagonal panels */
+        linear-gradient(
+            45deg,
+            transparent 0%,
+            transparent 15%,
+            rgba(120, 78, 7, 0.48) 15.5%,
+            rgba(220, 160, 25, 0.38) 24%,
+            transparent 24.7%,
+
+            transparent 35%,
+            rgba(105, 67, 5, 0.40) 35.5%,
+            rgba(206, 143, 18, 0.32) 43%,
+            transparent 43.7%,
+
+            transparent 54%,
+            rgba(92, 58, 4, 0.34) 54.5%,
+            rgba(190, 126, 12, 0.28) 62%,
+            transparent 62.7%
+        ),
+
+        /* Warm golden glow */
+        radial-gradient(
+            circle at 22% 45%,
+            rgba(255, 190, 35, 0.22),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 48% 78%,
+            rgba(255, 170, 20, 0.14),
+            transparent 23%
+        ),
+
+        /* Dark luxury base */
+        linear-gradient(
+            110deg,
+            #020201 0%,
+            #0b0702 22%,
+            #191004 46%,
+            #241704 68%,
+            #050301 100%
+        );
+
+    background-attachment: fixed;
+}
+
+
+/* =========================================================
+   GOLDEN LIGHT STREAKS
+   ========================================================= */
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    width: 950px;
+    height: 950px;
+
+    left: -430px;
+    top: -280px;
+
+    transform: rotate(45deg);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent 0%,
+            transparent 43%,
+
+            rgba(255, 196, 45, 0.10) 44%,
+            rgba(255, 218, 90, 0.52) 45%,
+            rgba(255, 191, 40, 0.18) 46%,
+
+            transparent 47%,
+            transparent 56%,
+
+            rgba(255, 186, 35, 0.08) 57%,
+            rgba(255, 214, 80, 0.34) 58%,
+            transparent 59%
+        );
+
+    filter: blur(2px);
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+/* =========================================================
+   SOFT GOLD GLOW
+   ========================================================= */
+
+body::after {
+    content: "";
+
+    position: fixed;
+
+    width: 560px;
+    height: 560px;
+
+    left: -190px;
+    bottom: -210px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 196, 45, 0.28) 0%,
+            rgba(217, 145, 15, 0.15) 35%,
+            transparent 72%
+        );
+
+    filter: blur(30px);
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+        /* =====================================================
+           NAVBAR
+           ===================================================== */
+
+        .navbar {
+            position: sticky;
+
+            top: 0;
+
+            z-index: 20;
+
             width: 100%;
-            padding: 12px;
+
+            background:
+                rgba(
+                    2,
+                    10,
+                    25,
+                    0.86
+                );
+
+            border-bottom:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.10
+                );
+
+            backdrop-filter:
+                blur(14px);
+
+            -webkit-backdrop-filter:
+                blur(14px);
+        }
+
+
+        .navbar-inner {
+            max-width: 1180px;
+
+            min-height: 74px;
+
+            margin: auto;
+
+            padding:
+                0 22px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 25px;
+        }
+
+
+        .brand {
+            text-decoration: none;
+
+            color: #ffffff;
+
+            font-size: 22px;
+
+            font-weight: 900;
+
+            letter-spacing: 0.2px;
+        }
+
+
+        .brand span {
+            background:
+                linear-gradient(
+                    90deg,
+                    #60a5fa,
+                    #22d3ee
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+        }
+
+
+        .nav-links {
+            display: flex;
+
+            align-items: center;
+
+            gap: 26px;
+        }
+
+
+        .nav-links a {
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.88
+                );
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition:
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .nav-links a:hover {
+            color: #67e8f9;
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        .nav-login {
+            padding:
+                10px 18px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #06b6d4
+                );
+
+            color: #ffffff !important;
+
+            box-shadow:
+                0 8px 22px
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.30
+                );
+        }
+
+
+        /* =====================================================
+           MAIN
+           ===================================================== */
+
+        main {
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .container {
+            max-width: 1180px;
+
+            margin: auto;
+
+            padding:
+                0 22px;
+        }
+
+
+        /* =====================================================
+           HERO
+           ===================================================== */
+
+        .hero {
+            min-height: 650px;
+
+            padding:
+                90px 0 80px;
+
+            display: grid;
+
+            grid-template-columns:
+                1.1fr
+                0.9fr;
+
+            gap: 70px;
+
+            align-items: center;
+        }
+
+
+        .hero-content {
+            max-width: 650px;
+        }
+
+
+        .hero-badge {
+            display: inline-block;
+
+            padding:
+                8px 14px;
+
             margin-bottom: 18px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
+
+            border:
+                1px solid
+                rgba(
+                    96,
+                    165,
+                    250,
+                    0.30
+                );
+
+            border-radius: 999px;
+
+            background:
+                rgba(
+                    30,
+                    64,
+                    175,
+                    0.16
+                );
+
+            color: #93c5fd;
+
+            font-size: 13px;
+
+            font-weight: 800;
+        }
+
+
+        .hero h1 {
+            font-size:
+                clamp(
+                    42px,
+                    6vw,
+                    72px
+                );
+
+            line-height:
+                1.02;
+
+            margin-bottom: 22px;
+
+            color: #ffffff;
+
+            font-weight: 900;
+        }
+
+
+        .hero h1 span {
+            background:
+                linear-gradient(
+                    90deg,
+                    #60a5fa,
+                    #22d3ee,
+                    #38bdf8
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+        }
+
+
+        .hero-text {
+            max-width: 620px;
+
+            color:
+                rgba(
+                    226,
+                    232,
+                    240,
+                    0.84
+                );
+
+            font-size: 17px;
+
+            line-height: 1.75;
+
+            margin-bottom: 28px;
+        }
+
+
+        .hero-actions {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+        }
+
+
+        .primary-btn,
+        .secondary-btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding:
+                13px 20px;
+
+            border-radius: 11px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            transition:
+                transform 0.22s ease,
+                box-shadow 0.22s ease;
+        }
+
+
+        .primary-btn {
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #06b6d4
+                );
+
+            box-shadow:
+                0 10px 26px
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.30
+                );
+        }
+
+
+        .secondary-btn {
+            color: #dbeafe;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.18
+                );
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.06
+                );
+        }
+
+
+        .primary-btn:hover,
+        .secondary-btn:hover {
+            transform:
+                translateY(-3px);
+        }
+
+
+        .primary-btn:hover {
+            box-shadow:
+                0 16px 35px
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.42
+                );
+        }
+
+
+        /* =====================================================
+           LOGIN CARD
+           ===================================================== */
+
+        .login-card {
+            width: 100%;
+
+            max-width: 420px;
+
+            margin-left: auto;
+
+            padding: 34px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.20
+                );
+
+            border-radius: 22px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.95
+                );
+
+            box-shadow:
+                0 30px 70px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.38
+                );
+
+            backdrop-filter:
+                blur(18px);
+
+            -webkit-backdrop-filter:
+                blur(18px);
+        }
+
+
+        .login-icon {
+            width: 58px;
+            height: 58px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 15px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #172554,
+                    #2563eb,
+                    #06b6d4
+                );
+
+            color: #ffffff;
+
+            font-size: 27px;
+
+            box-shadow:
+                0 10px 24px
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.25
+                );
+        }
+
+
+        .login-card h2 {
+            text-align: center;
+
+            color: #172554;
+
+            font-size: 28px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .login-card-subtitle {
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+            margin-bottom: 26px;
+        }
+
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #172554;
+
+            font-size: 13px;
+
+            font-weight: 800;
+        }
+
+
+        .form-group input {
+            width: 100%;
+
+            padding:
+                13px 14px;
+
+            border:
+                1px solid
+                #dbe4f0;
+
+            border-radius: 10px;
+
+            background: #f8fafc;
+
+            color: #172554;
+
+            font-size: 14px;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .form-group input:focus {
+            outline: none;
+
+            border-color:
+                #2563eb;
+
+            background: #ffffff;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.12
+                );
+        }
+
+
+        .login-button {
+            width: 100%;
+
+            padding:
+                14px 18px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #172554,
+                    #2563eb,
+                    #06b6d4
+                );
+
+            color: #ffffff;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 22px
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.27
+                );
+
+            transition:
+                transform 0.22s ease,
+                box-shadow 0.22s ease;
+        }
+
+
+        .login-button:hover {
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 15px 30px
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.36
+                );
+        }
+
+
+        #message {
+            min-height: 20px;
+
+            margin-top: 13px;
+
+            text-align: center;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           ABOUT SECTION
+           ===================================================== */
+
+        .section {
+            padding:
+                90px 0;
+        }
+
+
+        .section-heading {
+            max-width: 700px;
+
+            margin:
+                0 auto 38px;
+
+            text-align: center;
+        }
+
+
+        .section-heading span {
+            color: #67e8f9;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.2px;
+        }
+
+
+        .section-heading h2 {
+    color: #fff8e1;
+
+    margin:
+        10px 0 12px;
+
+    font-size: 36px;
+
+    text-shadow:
+        0 3px 18px
+        rgba(0, 0, 0, 0.35);
+}
+
+
+        .section-heading p {
+            color:
+                rgba(
+                    226,
+                    232,
+                    240,
+                    0.72
+                );
+
+            line-height: 1.7;
+        }
+
+
+        .about-card {
+            max-width: 900px;
+
+            margin: auto;
+
+            padding: 32px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.10
+                );
+
+            border-radius: 20px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.055
+                );
+
+            box-shadow:
+                0 18px 45px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.16
+                );
+
+            backdrop-filter:
+                blur(12px);
+        }
+
+
+        .about-card p {
+            color:
+                rgba(
+                    226,
+                    232,
+                    240,
+                    0.80
+                );
+
+            line-height: 1.85;
+
             font-size: 15px;
         }
 
-        button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            background: #1f3c88;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
+
+        /* =====================================================
+           FEATURES
+           ===================================================== */
+
+        .feature-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    1fr
+                );
+
+            gap: 18px;
         }
 
-        button:hover {
-            background: #162d68;
+
+        .feature-card {
+    padding: 26px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.65);
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffdf5 0%,
+            #fff7df 55%,
+            #f8e7b0 100%
+        );
+
+    box-shadow:
+        0 15px 35px
+        rgba(0, 0, 0, 0.28);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+
+.feature-card:hover {
+    transform:
+        translateY(-7px);
+
+    box-shadow:
+        0 22px 45px
+        rgba(0, 0, 0, 0.36);
+
+    border-color:
+        #f59e0b;
+}
+
+
+        .feature-icon {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 17px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #3b2508,
+            #8a5a08
+        );
+
+    color: #ffd76a;
+
+    font-size: 23px;
+
+    box-shadow:
+        0 8px 18px
+        rgba(120, 75, 5, 0.25);
+}
+
+
+        .feature-card h3 {
+    color: #3b2508;
+
+    font-size: 18px;
+
+    margin-bottom: 9px;
+
+    font-weight: 800;
+}
+
+
+        .feature-card p {
+    color: #6b4f24;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+        /* =====================================================
+           DEVELOPER
+           ===================================================== */
+
+        .developer-card {
+            max-width: 720px;
+
+            margin: auto;
+
+            padding: 32px;
+
+            display: grid;
+
+            grid-template-columns: 90px 1fr;
+
+            gap: 24px;
+
+            align-items: center;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.12
+                );
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(
+                        37,
+                        99,
+                        235,
+                        0.12
+                    ),
+                    rgba(
+                        6,
+                        182,
+                        212,
+                        0.08
+                    )
+                );
         }
 
-        #message {
-            margin-top: 15px;
+
+        .developer-avatar {
+            width: 88px;
+            height: 88px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #06b6d4
+                );
+
+            color: #ffffff;
+
+            font-size: 30px;
+
+            font-weight: 900;
+
+            box-shadow:
+                0 10px 28px
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.28
+                );
+        }
+
+
+        .developer-card h3 {
+            color: #ffffff;
+
+            font-size: 23px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .developer-role {
+            color: #67e8f9;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            margin-bottom: 10px;
+        }
+
+
+        .developer-card p {
+            color:
+                rgba(
+                    226,
+                    232,
+                    240,
+                    0.72
+                );
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+
+        footer {
+            margin-top: 20px;
+
+            padding:
+                28px 0;
+
+            border-top:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.08
+                );
+
             text-align: center;
-            font-weight: bold;
+
+            color:
+                rgba(
+                    226,
+                    232,
+                    240,
+                    0.55
+                );
+
+            font-size: 13px;
         }
+
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+
+                gap: 45px;
+
+                padding-top: 60px;
+            }
+
+
+            .login-card {
+                margin:
+                    0 auto;
+            }
+
+
+            .feature-grid {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .navbar-inner {
+                min-height: 65px;
+
+                padding:
+                    0 15px;
+            }
+
+
+            .brand {
+                font-size: 18px;
+            }
+
+
+            .nav-links {
+                gap: 10px;
+            }
+
+
+            .nav-links a:not(.nav-login) {
+                display: none;
+            }
+
+
+            .hero {
+                padding:
+                    50px 0 60px;
+            }
+
+
+            .hero h1 {
+                font-size: 43px;
+            }
+
+
+            .hero-text {
+                font-size: 15px;
+            }
+
+
+            .login-card {
+                padding:
+                    28px 22px;
+            }
+
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .developer-card {
+                grid-template-columns: 1fr;
+
+                text-align: center;
+            }
+
+
+            .developer-avatar {
+                margin: auto;
+            }
+
+
+            .section {
+                padding:
+                    65px 0;
+            }
+
+        }
+
+/* =====================================================
+   DARK GOLD THEME - GLOBAL TEXT COLORS
+   ===================================================== */
+
+body {
+    color: #fff8e1;
+}
+
+
+/* Navigation */
+
+.nav-links a {
+    color: #fff8e1;
+}
+
+.nav-links a:hover {
+    color: #ffd76a;
+}
+
+
+/* Brand */
+
+.brand {
+    color: #fff8e1;
+}
+
+.brand span {
+    color: #ffd76a;
+}
+
+
+/* Hero */
+
+.hero h1 {
+    color: #fffaf0;
+}
+
+.hero h1 span {
+    background:
+        linear-gradient(
+            90deg,
+            #ffd76a,
+            #ffb300,
+            #ffe9a3
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+}
+
+.hero-text {
+    color: #f5e6bf;
+}
+
+
+/* Hero badge */
+
+.hero-badge {
+    color: #ffd76a;
+
+    border-color:
+        rgba(255, 215, 106, 0.35);
+
+    background:
+        rgba(120, 78, 8, 0.25);
+}
+
+
+/* Section labels */
+
+.section-heading span {
+    color: #ffd76a;
+}
+
+
+/* Section headings */
+
+.section-heading h2 {
+    color: #fff8e1;
+}
+
+
+/* Section descriptions */
+
+.section-heading p {
+    color: #ead9b0;
+}
+
+
+/* About section */
+
+.about-card p {
+    color: #f4e7c5;
+}
+
+
+/* Developer section */
+
+.developer-card h3 {
+    color: #fff8e1;
+}
+
+.developer-role {
+    color: #ffd76a;
+}
+
+.developer-card p {
+    color: #ead9b0;
+}
+
+
+/* Feature cards */
+
+.feature-card h3 {
+    color: #3b2508;
+}
+
+.feature-card p {
+    color: #6b4f24;
+}
+
+
+/* Footer */
+
+footer {
+    color: #cdbd97;
+}
+
+
+/* Login card */
+
+.login-card h2 {
+    color: #3b2508;
+}
+
+.login-card-subtitle {
+    color: #765d32;
+}
+
+.form-group label {
+    color: #3b2508;
+}
+
+
+/* Login message */
+
+#message {
+    color: #6b4f24;
+}  
+
+/* =====================================================
+   DARK NAVY TEXT + GOLD HEADING THEME
+   ===================================================== */
+
+/* Main section headings */
+
+.section-heading h2 {
+    color: #d4af37 !important;
+
+    text-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+
+/* Small section labels */
+
+.section-heading span {
+    color: #f5d76e !important;
+}
+
+
+/* Section description */
+
+.section-heading p {
+    color: #fff4d6 !important;
+}
+
+
+/* About information box */
+
+.about-card {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 248, 220, 0.96),
+            rgba(255, 250, 240, 0.94)
+        ) !important;
+
+    border:
+        1px solid
+        rgba(212, 175, 55, 0.45) !important;
+
+    box-shadow:
+        0 18px 45px
+        rgba(0, 0, 0, 0.28);
+}
+
+
+/* About text */
+
+.about-card p {
+    color: #0b1f3a !important;
+
+    font-size: 15px;
+
+    line-height: 1.85;
+
+    font-weight: 500;
+}
+
+
+/* Feature headings */
+
+.feature-card h3 {
+    color: #0b1f3a !important;
+}
+
+
+/* Feature descriptions */
+
+.feature-card p {
+    color: #243b5a !important;
+}
+
+
+/* Developer heading */
+
+.developer-card h3 {
+    color: #d4af37 !important;
+}
+
+
+/* Developer role */
+
+.developer-role {
+    color: #f5d76e !important;
+}
+
+
+/* Developer description */
+
+.developer-card p {
+    color: #fff1c7 !important;
+}
+
+
+/* Hero main heading */
+
+.hero h1 {
+    color: #fff8e7 !important;
+}
+
+
+/* Hero highlighted word */
+
+.hero h1 span {
+    background:
+        linear-gradient(
+            90deg,
+            #ffd86b,
+            #d4af37,
+            #fff0b3
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+}
+
+
+/* Hero paragraph */
+
+.hero-text {
+    color: #fff1c7 !important;
+}
+
+
+/* Navigation */
+
+.nav-links a {
+    color: #f8e9c2 !important;
+}
+
+.nav-links a:hover {
+    color: #ffd86b !important;
+}
+
+/* =====================================================
+   DARK NAVY HEADINGS
+   ===================================================== */
+
+.hero h1,
+.section-heading h2 {
+    color: #0b1f3a !important;
+    text-shadow: none !important;
+}
+
+.hero h1 span {
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: #0b1f3a !important;
+    background-clip: initial !important;
+    color: #0b1f3a !important;
+}
+
+.section-heading span {
+    color: #0b1f3a !important;
+}
+
+/* =====================================================
+   TEXT + HEADING COLORS ONLY
+   Background remains unchanged
+   ===================================================== */
+
+/* Main hero heading */
+.hero h1 {
+    color: #fff8e7 !important;
+}
+
+.hero h1 span {
+    background: linear-gradient(
+        90deg,
+        #ffd86b,
+        #fff0b3
+    ) !important;
+
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+}
+
+
+/* Hero paragraph */
+.hero-text {
+    color: #f1e5c8 !important;
+}
+
+
+/* Badge text */
+.hero-badge {
+    color: #ffd86b !important;
+}
+
+
+/* Navigation text */
+.nav-links a {
+    color: #fff3d6 !important;
+}
+
+.nav-links a:hover {
+    color: #ffd86b !important;
+}
+
+
+/* Section small heading */
+.section-heading span {
+    color: #ffd86b !important;
+}
+
+
+/* Section main heading */
+.section-heading h2 {
+    color: #fff8e7 !important;
+}
+
+
+/* Section description */
+.section-heading p {
+    color: #eadfc8 !important;
+}
+
+
+/* About text */
+.about-card p {
+    color: #1b2b3f !important;
+}
+
+
+/* Feature card text */
+.feature-card h3 {
+    color: #16283d !important;
+}
+
+.feature-card p {
+    color: #40566d !important;
+}
+
+
+/* Developer section */
+.developer-card h3 {
+    color: #fff8e7 !important;
+}
+
+.developer-role {
+    color: #ffd86b !important;
+}
+
+.developer-card p {
+    color: #eadfc8 !important;
+}
+
+
+/* Login card */
+.login-card h2 {
+    color: #172554 !important;
+}
+
+.login-card-subtitle {
+    color: #596b80 !important;
+}
+
+.form-group label {
+    color: #172554 !important;
+}
+
+
+/* Footer */
+footer {
+    color: #d8c9a7 !important;
+}
+
     </style>
+
 </head>
+
 
 <body>
 
-    <div class="login-container">
 
-        <h1>SubAlloc Hub</h1>
+    <!-- =====================================================
+         NAVIGATION
+         ===================================================== -->
 
-        <p class="subtitle">
-            Faculty Substitution Management System
-        </p>
+    <header class="navbar">
 
-        <form id="loginForm">
+        <div class="navbar-inner">
 
-            <label for="username">Username</label>
-            <input
-                type="text"
-                id="username"
-                placeholder="Enter username"
-                required
+            <a
+                href="#home"
+                class="brand"
             >
+                SubAlloc <span>Hub</span>
+            </a>
 
-            <label for="password">Password</label>
-            <input
-                type="password"
-                id="password"
-                placeholder="Enter password"
-                required
-            >
 
-            <button type="submit">Login</button>
+            <nav class="nav-links">
 
-        </form>
+                <a href="#home">
+                    Home
+                </a>
 
-        <div id="message"></div>
+                <a href="#about">
+                    About
+                </a>
 
-    </div>
+                <a href="#features">
+                    Features
+                </a>
+
+                <a href="#developer">
+                    Developer
+                </a>
+
+                <a
+                    href="#login"
+                    class="nav-login"
+                >
+                    Login
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main>
+
+
+        <!-- =================================================
+             HERO / HOME
+             ================================================= -->
+
+        <section
+            id="home"
+            class="hero"
+        >
+
+            <div class="container">
+
+                <div class="hero-content">
+
+                    <span class="hero-badge">
+                        Faculty Substitution Management System
+                    </span>
+
+
+                    <h1>
+                        Smart Faculty
+                        <span>Substitution</span>
+                        Management
+                    </h1>
+
+
+                    <p class="hero-text">
+
+                        SubAlloc Hub is a web-based system designed
+                        to simplify faculty substitution management.
+                        It connects attendance, timetable information,
+                        automatic allocation, notifications and
+                        substitution status tracking in one place.
+
+                    </p>
+
+
+                    <div class="hero-actions">
+
+                        <a
+                            href="#login"
+                            class="primary-btn"
+                        >
+                            Login to SubAlloc Hub
+                        </a>
+
+
+                        <a
+                            href="#about"
+                            class="secondary-btn"
+                        >
+                            Explore Project
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOGIN -->
+
+                <section
+                    id="login"
+                    class="login-card"
+                >
+
+                    <div class="login-icon">
+                        🔐
+                    </div>
+
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+
+                    <p class="login-card-subtitle">
+                        Sign in to access your SubAlloc Hub dashboard.
+                    </p>
+
+
+                    <form
+                        id="loginForm"
+                    >
+
+                        <div class="form-group">
+
+                            <label for="username">
+                                Username
+                            </label>
+
+                            <input
+                                type="text"
+                                id="username"
+                                placeholder="Enter username"
+                                autocomplete="username"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="password">
+                                Password
+                            </label>
+
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Enter password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="login-button"
+                        >
+                            Login
+                        </button>
+
+
+                        <div id="message"></div>
+
+                    </form>
+
+                </section>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ABOUT
+             ================================================= -->
+
+        <section
+            id="about"
+            class="section"
+        >
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span>
+                        About the Project
+                    </span>
+
+                    <h2>
+                        What is SubAlloc Hub?
+                    </h2>
+
+                    <p>
+                        A centralized platform for managing faculty
+                        absences and substitute assignments.
+                    </p>
+
+                </div>
+
+
+                <div class="about-card">
+
+                    <p>
+
+                        When a faculty member is absent, SubAlloc Hub
+                        identifies the classes affected by the absence
+                        and searches for an available faculty member.
+                        The system checks attendance status, timetable
+                        conflicts and daily substitution workload before
+                        creating an allocation.
+
+                        <br><br>
+
+                        The system also prevents duplicate allocations,
+                        generates notifications for substitute faculty,
+                        and supports the complete workflow from
+                        assignment to acknowledgement and completion.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FEATURES
+             ================================================= -->
+
+        <section
+            id="features"
+            class="section"
+        >
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span>
+                        Core Features
+                    </span>
+
+                    <h2>
+                        Built for Smarter Management
+                    </h2>
+
+                    <p>
+                        The major features implemented in the project.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-grid">
+
+
+                    <article class="feature-card">
+
+                        <div class="feature-icon">
+                            👨‍🏫
+                        </div>
+
+                        <h3>
+                            Faculty Management
+                        </h3>
+
+                        <p>
+                            Manage faculty records, profiles and
+                            substitution-related information.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card">
+
+                        <div class="feature-icon">
+                            📅
+                        </div>
+
+                        <h3>
+                            Timetable Management
+                        </h3>
+
+                        <p>
+                            Maintain class schedules, periods,
+                            rooms and faculty assignments.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card">
+
+                        <div class="feature-icon">
+                            ⚡
+                        </div>
+
+                        <h3>
+                            Automatic Allocation
+                        </h3>
+
+                        <p>
+                            Find available substitute faculty using
+                            attendance, timetable and workload checks.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card">
+
+                        <div class="feature-icon">
+                            🔔
+                        </div>
+
+                        <h3>
+                            Notifications
+                        </h3>
+
+                        <p>
+                            Notify faculty about assigned substitutions
+                            and track read and unread messages.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card">
+
+                        <div class="feature-icon">
+                            🛡️
+                        </div>
+
+                        <h3>
+                            Reliable Allocation
+                        </h3>
+
+                        <p>
+                            Prevent duplicate allocations and avoid
+                            assigning unavailable faculty members.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card">
+
+                        <div class="feature-icon">
+                            📊
+                        </div>
+
+                        <h3>
+                            Reports & Analytics
+                        </h3>
+
+                        <p>
+                            View substitution activity, workloads and
+                            allocation status through reports.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             DEVELOPER
+             ================================================= -->
+
+        <section
+            id="developer"
+            class="section"
+        >
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span>
+                        Developer
+                    </span>
+
+                    <h2>
+                        About the Developer
+                    </h2>
+
+                    <p>
+                        Project development and technical implementation.
+                    </p>
+
+                </div>
+
+
+                <div class="developer-card">
+
+                    <div class="developer-avatar">
+                        DR
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Your Name
+                        </h3>
+
+
+                        <div class="developer-role">
+                            BCA Project Developer
+                        </div>
+
+
+                        <p>
+
+                            Developed SubAlloc Hub as an academic
+                            project to demonstrate a practical solution
+                            for faculty absence and substitution
+                            management.
+
+                            The project uses HTML, CSS and JavaScript
+                            for the frontend, Node.js and Express.js
+                            for the backend, and MySQL for data storage.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer>
+
+        <div class="container">
+
+            SubAlloc Hub · Faculty Substitution Management System
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         LOGIN JAVASCRIPT
+         ===================================================== -->
 
     <script>
-        const loginForm = document.getElementById("loginForm");
-        const message = document.getElementById("message");
 
-        loginForm.addEventListener("submit", async function(event) {
+        const loginForm =
+            document.getElementById(
+                "loginForm"
+            );
 
-            event.preventDefault();
 
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+        const message =
+            document.getElementById(
+                "message"
+            );
 
-            message.textContent = "Logging in...";
 
-            try {
+        loginForm.addEventListener(
+            "submit",
+            async function(event) {
 
-                const response = await fetch("http://localhost:3000/api/login", {
-                    method: "POST",
+                event.preventDefault();
 
-                    credentials: "include",
 
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                const username =
+                    document.getElementById(
+                        "username"
+                    ).value.trim();
 
-                    body: JSON.stringify({
-                        username: username,
-                        password: password
-                    })
-                });
 
-                const data = await response.json();
+                const password =
+                    document.getElementById(
+                        "password"
+                    ).value;
 
-                if (data.success) {
 
-                    // Save login information
-                    sessionStorage.setItem(
-                        "loggedInUser",
-                        JSON.stringify(data.user)
-                    );
+                message.style.color =
+                    "#475569";
 
-                    message.textContent = "Login successful!";
+                message.textContent =
+                    "Logging in...";
 
-                    // Redirect according to role
-                    if (data.user.role === "ADMIN") {
-                        window.location.href = "admin.html";
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "http://localhost:3000/api/login",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                credentials: "include",
+
+                                body:
+                                    JSON.stringify({
+                                        username:
+                                            username,
+                                        password:
+                                            password
+                                    })
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (
+                        data.success
+                    ) {
+
+                        sessionStorage.setItem(
+                            "loggedInUser",
+                            JSON.stringify(
+                                data.user
+                            )
+                        );
+
+
+                        message.style.color =
+                            "#15803d";
+
+                        message.textContent =
+                            "Login successful!";
+
+
+                        if (
+                            data.user.role ===
+                            "ADMIN"
+                        ) {
+
+                            window.location.href =
+                                "admin.html";
+
+                        } else {
+
+                            window.location.href =
+                                "faculty.html";
+
+                        }
+
                     } else {
-                        window.location.href = "faculty.html";
+
+                        message.style.color =
+                            "#dc2626";
+
+                        message.textContent =
+                            data.message ||
+                            "Invalid username or password.";
+
                     }
 
-                } else {
+                } catch (error) {
 
-                    message.textContent = data.message;
+                    console.error(
+                        "Login error:",
+                        error
+                    );
+
+
+                    message.style.color =
+                        "#dc2626";
+
+                    message.textContent =
+                        "Unable to connect to the server.";
 
                 }
 
-            } catch (error) {
-
-                console.error(error);
-
-                message.textContent =
-                    "Unable to connect to the server.";
-
             }
+        );
 
-        });
     </script>
 
+
 </body>
+
 </html>

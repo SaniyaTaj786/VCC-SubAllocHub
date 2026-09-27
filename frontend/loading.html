@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        SubAlloc Hub | Loading
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+
+        body {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    overflow: hidden;
+
+    background:
+        #07111f;
+}
+
+
+/* Blurred college background */
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    inset: -25px;
+
+    background:
+        linear-gradient(
+            rgba(3, 8, 18, 0.42),
+            rgba(3, 8, 18, 0.42)
+        ),
+        url("./college-loading-bg.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    filter: blur(8px);
+
+    transform: scale(1.05);
+
+    z-index: 0;
+
+    pointer-events: none;
+}
+
+
+/* Soft golden/blue lighting over photo */
+
+body::after {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 20% 25%,
+            rgba(245, 180, 40, 0.18),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 80% 75%,
+            rgba(30, 144, 255, 0.16),
+            transparent 28%
+        );
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+
+        /* ==============================================
+           LOADING CARD
+           ============================================== */
+
+        .loading-card {
+    position: relative;
+    z-index: 2;
+
+    background:
+        rgba(5, 12, 24, 0.72);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.22);
+
+    box-shadow:
+        0 30px 80px
+        rgba(0, 0, 0, 0.40);
+}
+
+
+        @keyframes cardAppear {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(25px)
+                    scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+
+        /* ==============================================
+           LOGO
+           ============================================== */
+
+        .logo {
+            width: 72px;
+            height: 72px;
+
+            margin:
+                0 auto 18px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f5132,
+                    #d4a62a,
+                    #f5d76e
+                );
+
+            color: #ffffff;
+
+            font-size: 32px;
+
+            box-shadow:
+                0 12px 30px
+                rgba(
+                    212,
+                    166,
+                    42,
+                    0.28
+                );
+
+            animation:
+                logoPulse
+                2s
+                ease-in-out
+                infinite;
+        }
+
+
+        @keyframes logoPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+
+        /* ==============================================
+           TEXT
+           ============================================== */
+
+        .brand-name {
+            color: #fffaf0;
+
+            font-size: 34px;
+
+            font-weight: 900;
+
+            margin-bottom: 7px;
+        }
+
+
+        .brand-name span {
+            background:
+                linear-gradient(
+                    90deg,
+                    #f5d76e,
+                    #ffd86b,
+                    #fff0b3
+                );
+
+            -webkit-background-clip:
+                text;
+
+            -webkit-text-fill-color:
+                transparent;
+
+            background-clip:
+                text;
+        }
+
+
+        .tagline {
+            color:
+                rgba(
+                    255,
+                    246,
+                    220,
+                    0.76
+                );
+
+            font-size: 14px;
+
+            margin-bottom: 28px;
+
+            line-height: 1.6;
+        }
+
+
+        .loading-text {
+            color: #f8e9c2;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* ==============================================
+           PROGRESS BAR
+           ============================================== */
+
+        .progress-container {
+            width: 100%;
+
+            height: 12px;
+
+            padding: 2px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.10
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.08
+                );
+
+            overflow: hidden;
+        }
+
+
+        .progress-bar {
+            width: 0%;
+
+            height: 100%;
+
+            border-radius: 999px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #0f5132,
+                    #22c55e,
+                    #d4a62a,
+                    #ffe08a
+                );
+
+            box-shadow:
+                0 0 18px
+                rgba(
+                    245,
+                    215,
+                    110,
+                    0.35
+                );
+
+            transition:
+                width 0.08s
+                linear;
+        }
+
+
+        /* ==============================================
+           PERCENTAGE
+           ============================================== */
+
+        .percentage {
+            margin-top: 12px;
+
+            color: #ffd86b;
+
+            font-size: 15px;
+
+            font-weight: 900;
+        }
+
+
+        .status {
+            margin-top: 8px;
+
+            color:
+                rgba(
+                    226,
+                    232,
+                    240,
+                    0.62
+                );
+
+            font-size: 12px;
+        }
+
+
+        /* ==============================================
+           RESPONSIVE
+           ============================================== */
+
+        @media (max-width: 600px) {
+
+            .loading-card {
+                padding:
+                    34px 22px;
+            }
+
+
+            .brand-name {
+                font-size: 28px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <section class="loading-card">
+
+
+        <div class="logo">
+            🏫
+        </div>
+
+
+        <h1 class="brand-name">
+            SubAlloc <span>Hub</span>
+        </h1>
+
+
+        <p class="tagline">
+            Smart Faculty Substitution Management System
+        </p>
+
+
+        <p
+            id="loadingText"
+            class="loading-text"
+        >
+            Preparing your experience...
+        </p>
+
+
+        <div class="progress-container">
+
+            <div
+                id="progressBar"
+                class="progress-bar"
+            ></div>
+
+        </div>
+
+
+        <div
+            id="percentage"
+            class="percentage"
+        >
+            0%
+        </div>
+
+
+        <div
+            id="status"
+            class="status"
+        >
+            Initializing SubAlloc Hub
+        </div>
+
+
+    </section>
+
+
+    <script>
+
+    const progressBar =
+        document.getElementById("progressBar");
+
+    const percentage =
+        document.getElementById("percentage");
+
+    const loadingText =
+        document.getElementById("loadingText");
+
+    const status =
+        document.getElementById("status");
+
+
+    const totalDuration = 3000;
+
+    const startTime = performance.now();
+
+
+    function updateLoading(currentTime) {
+
+        const elapsed =
+            currentTime - startTime;
+
+
+        const progress =
+            Math.min(
+                (elapsed / totalDuration) * 100,
+                100
+            );
+
+
+        progressBar.style.width =
+            progress + "%";
+
+
+        percentage.textContent =
+            Math.floor(progress) + "%";
+
+
+        if (progress < 25) {
+
+            loadingText.textContent =
+                "Loading system...";
+
+            status.textContent =
+                "Starting SubAlloc Hub";
+
+        }
+
+        else if (progress < 50) {
+
+            loadingText.textContent =
+                "Preparing modules...";
+
+            status.textContent =
+                "Loading faculty management";
+
+        }
+
+        else if (progress < 75) {
+
+            loadingText.textContent =
+                "Preparing schedules...";
+
+            status.textContent =
+                "Loading timetable services";
+
+        }
+
+        else if (progress < 95) {
+
+            loadingText.textContent =
+                "Connecting services...";
+
+            status.textContent =
+                "Preparing substitution services";
+
+        }
+
+        else {
+
+            loadingText.textContent =
+                "Almost ready...";
+
+            status.textContent =
+                "Finalizing SubAlloc Hub";
+
+        }
+
+
+        if (progress < 100) {
+
+            requestAnimationFrame(
+                updateLoading
+            );
+
+        }
+
+        else {
+
+            loadingText.textContent =
+                "Welcome to SubAlloc Hub";
+
+            status.textContent =
+                "Loading complete";
+
+
+            setTimeout(
+                function() {
+
+                    window.location.href =
+                        "index.html";
+
+                },
+                120
+            );
+
+        }
+
+    }
+
+
+    requestAnimationFrame(
+        updateLoading
+    );
+
+</script>
+
+
+</body>
+
+</html>
