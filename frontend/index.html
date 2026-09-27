@@ -2231,6 +2231,16 @@ footer {
 
     <script>
 
+/* =====================================================
+   FIRST-LOAD SCREEN
+   ===================================================== */
+
+if (
+    sessionStorage.getItem("suballocLoadingComplete") !== "true"
+) {
+    window.location.replace("loading.html");
+}
+
         const loginForm =
             document.getElementById(
                 "loginForm"
