@@ -109,7 +109,16 @@ app.post(
 
 app.post("/api/login", (req, res) => {
 
-    const { username, password } = req.body;
+    const { username, password, expectedRole } = req.body;
+
+    if (!["ADMIN", "FACULTY"].includes(expectedRole)) {
+
+        return res.status(400).json({
+            success: false,
+            message: "Select Admin or Faculty login"
+        });
+
+    }
 
     if (!username || !password) {
 
@@ -175,6 +184,15 @@ app.post("/api/login", (req, res) => {
             return res.status(401).json({
                 success: false,
                 message: "Invalid username or password"
+            });
+
+        }
+
+        if (user.role !== expectedRole) {
+
+            return res.status(403).json({
+                success: false,
+                message: `This account is not authorized for the ${expectedRole === "ADMIN" ? "Admin" : "Faculty"} login.`
             });
 
         }
