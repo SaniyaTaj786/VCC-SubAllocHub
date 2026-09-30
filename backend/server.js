@@ -6,6 +6,9 @@ const util = require("util");
 const session = require("express-session");
 require("dotenv").config();
 
+const fs = require("fs");
+const path = require("path");
+
 console.log("Password loaded:", !!process.env.DB_PASSWORD);
 
 const app = express();
@@ -36,10 +39,18 @@ app.use(
 // ======================================================
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: "vcc_faculty_suballoc_hub"
+    database: process.env.DB_NAME,
+
+    ssl: {
+        ca: fs.readFileSync(
+            path.join(__dirname, "..", "database", "aiven-ca.pem")
+        ),
+        rejectUnauthorized: true
+    }
 });
 
 const queryAsync = util.promisify(db.query).bind(db);
@@ -56,7 +67,7 @@ db.connect((err) => {
         return;
     }
 
-    console.log("✅ MySQL connected successfully!");
+    console.log("✅ Aiven MySQL connected successfully!");
 
 });
 
@@ -66,6 +77,7 @@ db.connect((err) => {
 // ======================================================
 
 app.get("/", (req, res) => {
+
 
     res.send("SubAlloc Hub Backend is running!");
 
