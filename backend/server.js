@@ -46,11 +46,12 @@ const db = mysql.createConnection({
     database: process.env.DB_NAME,
 
     ssl: {
-        ca: fs.readFileSync(
-            path.join(__dirname, "..", "database", "aiven-ca.pem")
-        ),
-        rejectUnauthorized: true
-    }
+    ca: fs.readFileSync(
+        path.join(__dirname, "..", "database", "aiven-ca.pem"),
+        "utf8"
+    ),
+    rejectUnauthorized: true
+}
 });
 
 const queryAsync = util.promisify(db.query).bind(db);
