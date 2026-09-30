@@ -7,7 +7,9 @@ const fs = require("fs");
 const util = require("util");
 const session = require("express-session");
 
-require("dotenv").config();
+require("dotenv").config({
+    path: path.join(__dirname, "..", ".env")
+});
 
 console.log("Password loaded:", !!process.env.DB_PASSWORD);
 
