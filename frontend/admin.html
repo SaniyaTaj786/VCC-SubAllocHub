@@ -695,7 +695,7 @@ async function loadDashboardStats() {
     try {
 
         const response = await fetch(
-    "http://https://vcc-suballochub.onrender.com/api/dashboard/stats",
+    "https://vcc-suballochub.onrender.com/api/dashboard/stats",
     {
         credentials: "include"
     }
@@ -759,7 +759,7 @@ async function loadFacultyDashboardCounts() {
     try {
 
         const response = await fetch(
-    `http://https://vcc-suballochub.onrender.com/api/faculty/dashboard/${user.user_id}`,
+    `https://vcc-suballochub.onrender.com/api/faculty/dashboard/${user.user_id}`,
     {
         credentials: "include"
     }
@@ -823,7 +823,7 @@ async function loadMySubstitutions() {
     try {
 
         const response = await fetch(
-            `http://https://vcc-suballochub.onrender.com/api/substitutions/${user.user_id}`
+            `https://vcc-suballochub.onrender.com/api/substitutions/${user.user_id}`
         );
 
         const data = await response.json();
@@ -925,7 +925,7 @@ async function acknowledgeSubstitution(allocationId) {
     try {
 
         const response = await fetch(
-            `http://https://vcc-suballochub.onrender.com/api/substitutions/acknowledge/${allocationId}`,
+            `https://vcc-suballochub.onrender.com/api/substitutions/acknowledge/${allocationId}`,
             {
                 method: "PUT"
             }
@@ -970,7 +970,7 @@ async function completeSubstitution(allocationId) {
     try {
 
         const response = await fetch(
-            `http://https://vcc-suballochub.onrender.com/api/substitutions/complete/${allocationId}`,
+            `https://vcc-suballochub.onrender.com/api/substitutions/complete/${allocationId}`,
             {
                 method: "PUT"
             }
@@ -1017,7 +1017,7 @@ async function completeSubstitution(allocationId) {
 function loadMyNotifications() {
     const user = JSON.parse(sessionStorage.getItem("loggedInUser"));
 
-    fetch(`http://https://vcc-suballochub.onrender.com/api/notifications/${user.user_id}`)
+    fetch(`https://vcc-suballochub.onrender.com/api/notifications/${user.user_id}`)
         .then(response => response.json())
         .then(data => {
             const section = document.getElementById("myNotificationsSection");
@@ -1046,7 +1046,7 @@ markAllButton.onclick = async function () {
     try {
 
         const response = await fetch(
-            `http://https://vcc-suballochub.onrender.com/api/notifications/read-all/${user.user_id}`,
+            `https://vcc-suballochub.onrender.com/api/notifications/read-all/${user.user_id}`,
             {
                 method: "PUT"
             }
@@ -1120,7 +1120,7 @@ section.insertBefore(
 function loadMyTimetable() {
     const user = JSON.parse(sessionStorage.getItem("loggedInUser"));
 
-    fetch(`http://https://vcc-suballochub.onrender.com/api/faculty/timetable/${user.user_id}`)
+    fetch(`https://vcc-suballochub.onrender.com/api/faculty/timetable/${user.user_id}`)
         .then(response => response.json())
         .then(data => {
             if (!data.success || !data.timetable || data.timetable.length === 0) {
@@ -1193,7 +1193,7 @@ async function loadFacultyForAttendance() {
 
         const response =
             await fetch(
-                "http://https://vcc-suballochub.onrender.com/api/faculty",
+                "https://vcc-suballochub.onrender.com/api/faculty",
                 {
                     credentials: "include"
                 }
@@ -1346,7 +1346,7 @@ async function saveFacultyAttendance() {
         // ==========================================
 
         const response = await fetch(
-    "http://https://vcc-suballochub.onrender.com/api/attendance",
+    "https://vcc-suballochub.onrender.com/api/attendance",
     {
         method: "POST",
 
@@ -1409,7 +1409,7 @@ async function saveFacultyAttendance() {
 
             const allocationResponse =
     await fetch(
-        "http://https://vcc-suballochub.onrender.com/api/substitutions/auto-allocate",
+        "https://vcc-suballochub.onrender.com/api/substitutions/auto-allocate",
         {
             method: "POST",
 
@@ -1534,7 +1534,7 @@ async function runAutomaticAllocation() {
     try {
 
         const response = await fetch(
-    "http://https://vcc-suballochub.onrender.com/api/substitutions/auto-allocate",
+    "https://vcc-suballochub.onrender.com/api/substitutions/auto-allocate",
     {
         method: "POST",
 
@@ -1628,7 +1628,7 @@ async function loadFacultySubstitutionDetails() {
 
         const response =
             await fetch(
-                "http://https://vcc-suballochub.onrender.com/api/admin/substitutions",
+                "https://vcc-suballochub.onrender.com/api/admin/substitutions",
                 {
                     credentials: "include"
                 }
@@ -1888,7 +1888,7 @@ async function logout() {
     try {
 
         await fetch(
-            "http://https://vcc-suballochub.onrender.com/api/auth/logout",
+            "https://vcc-suballochub.onrender.com/api/auth/logout",
             {
                 method: "POST",
                 credentials: "include"

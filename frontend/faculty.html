@@ -442,7 +442,7 @@ async function loadNotifications() {
     try {
 
         const response = await fetch(
-    `http://https://vcc-suballochub.onrender.com/api/notifications/${user.user_id}`,
+    `https://vcc-suballochub.onrender.com/api/notifications/${user.user_id}`,
     {
         credentials: "include"
     }
@@ -624,7 +624,7 @@ async function markNotificationAsRead(
     try {
 
         const response = await fetch(
-            `http://https://vcc-suballochub.onrender.com/api/notifications/read/${notificationId}`,
+            `https://vcc-suballochub.onrender.com/api/notifications/read/${notificationId}`,
             {
                 method: "PUT",
                 credentials: "include"
@@ -689,7 +689,7 @@ async function loadSubstitutions() {
     try {
 
         const response = await fetch(
-            `http://https://vcc-suballochub.onrender.com/api/substitutions/${user.user_id}`
+            `https://vcc-suballochub.onrender.com/api/substitutions/${user.user_id}`
         );
 
         const data = await response.json();
@@ -853,7 +853,7 @@ async function loadDashboardCounts() {
     try {
 
         const response = await fetch(
-    `http://https://vcc-suballochub.onrender.com/api/faculty/dashboard/${user.user_id}`,
+    `https://vcc-suballochub.onrender.com/api/faculty/dashboard/${user.user_id}`,
     {
         credentials: "include"
     }
@@ -926,7 +926,7 @@ async function loadMyTimetable() {
     try {
 
         const response = await fetch(
-            `http://https://vcc-suballochub.onrender.com/api/faculty/timetable/${user.user_id}`
+            `https://vcc-suballochub.onrender.com/api/faculty/timetable/${user.user_id}`
         );
 
         const data = await response.json();
@@ -1044,7 +1044,7 @@ async function acknowledgeSubstitution(allocationId) {
     try {
 
         const response = await fetch(
-            `http://https://vcc-suballochub.onrender.com/api/substitutions/acknowledge/${allocationId}`,
+            `https://vcc-suballochub.onrender.com/api/substitutions/acknowledge/${allocationId}`,
             {
                 method: "PUT"
             }
@@ -1091,7 +1091,7 @@ async function completeSubstitution(allocationId) {
     try {
 
         const response = await fetch(
-            `http://https://vcc-suballochub.onrender.com/api/substitutions/complete/${allocationId}`,
+            `https://vcc-suballochub.onrender.com/api/substitutions/complete/${allocationId}`,
             {
                 method: "PUT"
             }
