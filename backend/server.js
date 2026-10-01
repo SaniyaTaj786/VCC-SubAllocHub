@@ -14,6 +14,10 @@ require("dotenv").config({
 console.log("Password loaded:", !!process.env.DB_PASSWORD);
 
 const app = express();
+const frontendPath = path.join(__dirname, "..", "frontend");
+
+app.use("/frontend", express.static(frontendPath));
+app.use(express.static(frontendPath));
 
 app.use(
     cors({
@@ -81,8 +85,9 @@ db.connect((err) => {
 
 app.get("/", (req, res) => {
 
-
-    res.send("SubAlloc Hub Backend is running!");
+    res.sendFile(
+        path.join(frontendPath, "index.html")
+    );
 
 });
 
@@ -2409,13 +2414,6 @@ if (req.session.user.role !== "ADMIN") {
 
 });
 
-
-// ======================================================
-// SERVER START
-// ======================================================
-
-const PORT = 3000;
-
 // ======================================================
 // MARK NOTIFICATION AS READ
 // ======================================================
@@ -3433,13 +3431,14 @@ app.get("/api/admin/reports/substitutions", async (req, res) => {
 
 });
 
+const PORT = process.env.PORT || 3000;
+
 app.listen(
     PORT,
+    "0.0.0.0",
     () => {
-
         console.log(
-            `🚀 Server running on http://localhost:${PORT}`
+            `🚀 Server running on port ${PORT}`
         );
-
     }
 );
