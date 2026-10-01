@@ -448,7 +448,7 @@
             try {
 
                 const response = await fetch(
-    `http://localhost:3000/api/notifications/${user.user_id}`,
+    `http://https://vcc-suballochub.onrender.com/api/notifications/${user.user_id}`,
     {
         credentials: "include"
     }
@@ -720,7 +720,7 @@
             try {
 
                 const response = await fetch(
-                        `http://localhost:3000/api/notifications/read/${notificationId}`,
+                        `http://https://vcc-suballochub.onrender.com/api/notifications/read/${notificationId}`,
                         {
                             method: "PUT",
                             credentials: "include"
@@ -774,7 +774,7 @@
 
                 const response =
                     await fetch(
-                        `http://localhost:3000/api/notifications/read-all/${user.user_id}`,
+                        `http://https://vcc-suballochub.onrender.com/api/notifications/read-all/${user.user_id}`,
                         {
                             method: "PUT",
                             credentials: "include"
