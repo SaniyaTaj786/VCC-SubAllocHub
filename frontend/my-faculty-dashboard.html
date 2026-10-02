@@ -1112,7 +1112,7 @@ async function loadMySubstitutions() {
 
                         <p>
                             <strong>Date:</strong>
-                            ${substitution.allocation_date}
+                            ${formatDate(substitution.allocation_date)}
                         </p>
 
                         <p>
@@ -1262,7 +1262,7 @@ async function loadMyAttendance() {
                     <tr>
 
                         <td>
-                            ${record.attendance_date}
+                            ${formatDate(record.attendance_date)}
                         </td>
 
                         <td>
