@@ -532,6 +532,60 @@
             }
         }
 
+        .faculty-option-button {
+    border: none;
+
+    padding: 12px 18px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e8eef8,
+            #dce4f2
+        );
+
+    color: #172554;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: none;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+}
+
+.faculty-option-button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 15px rgba(67, 56, 202, 0.15);
+}
+
+.faculty-option-button.active {
+    background:
+        linear-gradient(
+            135deg,
+            #3730a3,
+            #5b35e8,
+            #7138ed
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 7px 18px rgba(67, 56, 202, 0.20);
+}
+
     </style>
 </head>
 
@@ -677,41 +731,39 @@
 
         <div class="toolbar">
 
-            <button
-                type="button"
-                onclick="loadMySubstitutions()"
-            >
-                View My Substitutions
-            </button>
+    <button
+        type="button"
+        class="faculty-option-button active"
+        onclick="setActiveOption(this); loadMySubstitutions()"
+    >
+        View My Substitutions
+    </button>
 
+    <button
+        type="button"
+        class="faculty-option-button"
+        onclick="setActiveOption(this); loadMyAttendance()"
+    >
+        View My Attendance
+    </button>
 
-            <button
-                type="button"
-                class="secondary"
-                onclick="loadMyAttendance()"
-            >
-                View My Attendance
-            </button>
+    <button
+        type="button"
+        class="faculty-option-button"
+        onclick="setActiveOption(this); loadMyNotifications()"
+    >
+        View My Notifications
+    </button>
 
+    <button
+        type="button"
+        class="faculty-option-button"
+        onclick="setActiveOption(this); loadMyTimetable()"
+    >
+        View My Timetable
+    </button>
 
-            <button
-                type="button"
-                class="secondary"
-                onclick="loadMyNotifications()"
-            >
-                View My Notifications
-            </button>
-
-
-            <button
-                type="button"
-                class="secondary"
-                onclick="loadMyTimetable()"
-            >
-                View My Timetable
-            </button>
-
-        </div>
+</div>
 
     </section>
 
