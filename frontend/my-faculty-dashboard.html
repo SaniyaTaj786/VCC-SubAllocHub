@@ -1550,7 +1550,116 @@ async function loadMyNotifications() {
     }
 }
 
+// ======================================================
+// MARK ONE NOTIFICATION AS READ
+// ======================================================
 
+async function markNotificationAsRead(
+    notificationId
+) {
+
+    try {
+
+        const response = await fetch(
+            `https://vcc-suballochub.onrender.com/api/notifications/read/${notificationId}`,
+            {
+                method: "PUT",
+                credentials: "include"
+            }
+        );
+
+        const data =
+            await response.json();
+
+
+        if (data.success) {
+
+            await loadMyNotifications();
+
+            await loadDashboardCounts();
+
+        } else {
+
+            alert(
+                data.message ||
+                "Unable to mark notification as read."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Mark notification read error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the server."
+        );
+
+    }
+}
+
+// ======================================================
+// MARK ALL NOTIFICATIONS AS READ
+// ======================================================
+
+async function markAllNotificationsAsRead() {
+
+    const user = getUser();
+
+    if (!user) {
+        return;
+    }
+
+
+    try {
+
+        const response = await fetch(
+            `https://vcc-suballochub.onrender.com/api/notifications/read-all/${user.user_id}`,
+            {
+                method: "PUT",
+                credentials: "include"
+            }
+        );
+
+        const data =
+            await response.json();
+
+
+        if (data.success) {
+
+            alert(
+                "All notifications marked as read! ✅"
+            );
+
+            await loadMyNotifications();
+
+            await loadDashboardCounts();
+
+        } else {
+
+            alert(
+                data.message ||
+                "Unable to mark notifications as read."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Mark all notifications error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the server."
+        );
+
+    }
+}
 // ======================================================
 // MARK ALL NOTIFICATIONS AS READ
 // ======================================================
