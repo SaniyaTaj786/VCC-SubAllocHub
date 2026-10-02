@@ -465,8 +465,10 @@ app.get(
         message: "Not authenticated"
     });
 }
-
-if (req.session.user.role !== "FACULTY") {
+if (
+    req.session.user.role !== "FACULTY" &&
+    req.session.user.role !== "ADMIN"
+) {
     return res.status(403).json({
         success: false,
         message: "Faculty access required"
