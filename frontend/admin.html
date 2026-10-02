@@ -493,7 +493,25 @@ body::after {
                     </div>
                     <div class="form-group">
                         <label for="attendanceDate">Attendance date</label>
-                        <input type="date" id="attendanceDate" required>
+                        <input
+    type="date"
+    id="attendanceDate"
+    required
+    lang="en-GB"
+    onchange="updateSelectedDate('attendanceDate', 'attendanceDateDisplay')"
+>
+
+<div
+    id="attendanceDateDisplay"
+    style="
+        margin-top:6px;
+        font-size:14px;
+        font-weight:700;
+        color:#4338ca;
+    "
+>
+    Selected date: —
+</div>
                     </div>
                     <div class="form-group">
                         <label for="attendanceStatus">Attendance status</label>
@@ -558,7 +576,24 @@ body::after {
             <div class="field-row">
                 <div class="form-group">
                     <label for="allocationDate">Allocation date</label>
-                    <input type="date" id="allocationDate">
+                    <input
+    type="date"
+    id="allocationDate"
+    lang="en-GB"
+    onchange="updateSelectedDate('allocationDate', 'allocationDateDisplay')"
+>
+
+<div
+    id="allocationDateDisplay"
+    style="
+        margin-top:6px;
+        font-size:14px;
+        font-weight:700;
+        color:#4338ca;
+    "
+>
+    Selected date: —
+</div>
                 </div>
             </div>
             <div class="toolbar">
@@ -1466,7 +1501,44 @@ async function loadFacultyForAttendance() {
 // ======================================================
 // SET TODAY'S DATE
 // ======================================================
+function updateSelectedDate(
+    inputId,
+    displayId
+) {
 
+    const input =
+        document.getElementById(inputId);
+
+    const display =
+        document.getElementById(displayId);
+
+    if (!input || !display) {
+        return;
+    }
+
+    if (!input.value) {
+
+        display.textContent =
+            "Selected date: —";
+
+        return;
+    }
+
+    const parts =
+        input.value.split("-");
+
+    const day =
+        parts[2];
+
+    const month =
+        parts[1];
+
+    const year =
+        parts[0].slice(-2);
+
+    display.textContent =
+        `Selected date: ${day}/${month}/${year}`;
+}
 function setAttendanceDate() {
 
     const today =
@@ -1475,6 +1547,10 @@ function setAttendanceDate() {
     document.getElementById(
         "attendanceDate"
     ).value = today;
+    updateSelectedDate(
+    "attendanceDate",
+    "attendanceDateDisplay"
+);
 
 }
 

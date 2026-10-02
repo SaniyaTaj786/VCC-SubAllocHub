@@ -418,7 +418,33 @@ function logout() {
 // ======================================================
 // LOAD NOTIFICATIONS
 // ======================================================
+function formatDate(dateValue) {
 
+    if (!dateValue) {
+        return "";
+    }
+
+    const value = String(dateValue);
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+
+        const parts = value.split("-");
+
+        return `${parts[2]}/${parts[1]}/${parts[0].slice(-2)}`;
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return value;
+    }
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = String(date.getFullYear()).slice(-2);
+
+    return `${day}/${month}/${year}`;
+}
 async function loadNotifications() {
 
     const userData =
@@ -522,11 +548,9 @@ async function loadNotifications() {
                     document.createElement("small");
 
                 date.textContent =
-                    notification.created_at
-                        ? new Date(
-                            notification.created_at
-                          ).toLocaleString("en-IN")
-                        : "";
+    notification.created_at
+        ? formatDate(notification.created_at)
+        : "";
 
                 date.style.display =
                     "block";
@@ -670,7 +694,33 @@ async function markNotificationAsRead(
 // ======================================================
 // LOAD MY SUBSTITUTIONS
 // ======================================================
+function formatDate(dateValue) {
 
+    if (!dateValue) {
+        return "";
+    }
+
+    const value = String(dateValue);
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+
+        const parts = value.split("-");
+
+        return `${parts[2]}/${parts[1]}/${parts[0].slice(-2)}`;
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return value;
+    }
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = String(date.getFullYear()).slice(-2);
+
+    return `${day}/${month}/${year}`;
+}
 async function loadSubstitutions() {
 
     const userData = sessionStorage.getItem("loggedInUser");
@@ -754,8 +804,8 @@ async function loadSubstitutions() {
 
             const values = [
                 substitution.allocation_date
-                    ? new Date(substitution.allocation_date).toLocaleDateString("en-IN")
-                     : "",
+    ? formatDate(substitution.allocation_date)
+    : "",
                 substitution.class_name,
                 substitution.subject_name,
                 substitution.period_number,
