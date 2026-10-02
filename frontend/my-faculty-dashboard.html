@@ -914,6 +914,46 @@ function showContent(html) {
         "dynamicContent"
     ).innerHTML = html;
 }
+// ======================================================
+// DATE FORMAT
+// ======================================================
+
+function formatDate(dateValue) {
+
+    if (!dateValue) {
+        return "—";
+    }
+
+    const value = String(dateValue);
+
+    // Database date: YYYY-MM-DD
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+
+        const parts = value.split("-");
+
+        return `${parts[2]}/${parts[1]}/${parts[0].slice(-2)}`;
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return value;
+    }
+
+    const day = String(
+        date.getDate()
+    ).padStart(2, "0");
+
+    const month = String(
+        date.getMonth() + 1
+    ).padStart(2, "0");
+
+    const year = String(
+        date.getFullYear()
+    ).slice(-2);
+
+    return `${day}/${month}/${year}`;
+}
 
 
 // ======================================================
@@ -981,7 +1021,33 @@ async function loadDashboardCounts() {
 // ======================================================
 // MY SUBSTITUTIONS
 // ======================================================
+function formatDate(dateValue) {
 
+    if (!dateValue) {
+        return "—";
+    }
+
+    const value = String(dateValue);
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+
+        const parts = value.split("-");
+
+        return `${parts[2]}/${parts[1]}/${parts[0].slice(-2)}`;
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return value;
+    }
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = String(date.getFullYear()).slice(-2);
+
+    return `${day}/${month}/${year}`;
+}
 async function loadMySubstitutions() {
 
     const user =
@@ -1111,9 +1177,9 @@ async function loadMySubstitutions() {
                         </h3>
 
                         <p>
-                            <strong>Date:</strong>
-                            ${formatDate(substitution.allocation_date)}
-                        </p>
+    <strong>Date:</strong>
+    ${formatDate(substitution.allocation_date)}
+</p>
 
                         <p>
                             <strong>Period:</strong>
