@@ -1777,6 +1777,31 @@ function logout() {
 
 }
 
+// ======================================================
+// FACULTY OPTION ACTIVE BUTTON
+// ======================================================
+
+function setActiveOption(button) {
+
+    const buttons =
+        document.querySelectorAll(
+            ".faculty-option-button"
+        );
+
+    buttons.forEach(
+        function(item) {
+
+            item.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+    button.classList.add(
+        "active"
+    );
+}
 
 // ======================================================
 // INITIAL LOAD
