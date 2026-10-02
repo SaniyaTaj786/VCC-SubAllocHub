@@ -724,11 +724,14 @@ async function loadDashboardStats() {
     try {
 
         const response = await fetch(
-    "https://vcc-suballochub.onrender.com/api/dashboard/stats",
+    "https://vcc-suballochub.onrender.com/api/attendance",
     {
-        credentials: "include"
-    }
-);
+        method: "POST",
+        credentials: "include",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
 
         const data =
             await response.json();
