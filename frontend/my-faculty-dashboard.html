@@ -734,7 +734,13 @@
     <button
         type="button"
         class="faculty-option-button active"
-        onclick="setActiveOption(this); loadMySubstitutions()"
+        onclick="
+            document
+                .querySelectorAll('.faculty-option-button')
+                .forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            loadMySubstitutions();
+        "
     >
         View My Substitutions
     </button>
@@ -742,7 +748,13 @@
     <button
         type="button"
         class="faculty-option-button"
-        onclick="setActiveOption(this); loadMyAttendance()"
+        onclick="
+            document
+                .querySelectorAll('.faculty-option-button')
+                .forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            loadMyAttendance();
+        "
     >
         View My Attendance
     </button>
@@ -750,7 +762,13 @@
     <button
         type="button"
         class="faculty-option-button"
-        onclick="setActiveOption(this); loadMyNotifications()"
+        onclick="
+            document
+                .querySelectorAll('.faculty-option-button')
+                .forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            loadMyNotifications();
+        "
     >
         View My Notifications
     </button>
@@ -758,7 +776,13 @@
     <button
         type="button"
         class="faculty-option-button"
-        onclick="setActiveOption(this); loadMyTimetable()"
+        onclick="
+            document
+                .querySelectorAll('.faculty-option-button')
+                .forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            loadMyTimetable();
+        "
     >
         View My Timetable
     </button>
