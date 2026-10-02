@@ -1330,29 +1330,24 @@ async function loadMyAttendance() {
 
 async function loadMyNotifications() {
 
-    const user =
-        getUser();
+    const user = getUser();
 
     if (!user) {
         return;
     }
 
-    showLoading(
-        "Loading your notifications..."
-    );
+    showLoading("Loading your notifications...");
 
     try {
 
-        const response =
-            await fetch(
-                `https://vcc-suballochub.onrender.com/api/notifications/${user.user_id}`,
-                {
-                    credentials: "include"
-                }
-            );
+        const response = await fetch(
+            `https://vcc-suballochub.onrender.com/api/notifications/${user.user_id}`,
+            {
+                credentials: "include"
+            }
+        );
 
-        const data =
-            await response.json();
+        const data = await response.json();
 
         if (
             !response.ok ||
@@ -1381,15 +1376,74 @@ async function loadMyNotifications() {
         }
 
 
-        let html = "";
+        let html = `
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    margin-bottom:18px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <h3
+                    style="
+                        margin:0;
+                        color:#172554;
+                    "
+                >
+                    My Notifications
+                </h3>
+
+                <button
+                    class="action-btn"
+                    type="button"
+                    onclick="markAllNotificationsAsRead()"
+                >
+                    Mark All as Read
+                </button>
+
+            </div>
+
+        `;
 
 
         data.notifications.forEach(
             function(notification) {
 
+                const isRead =
+                    Number(notification.is_read) === 1;
+
+
+                const background =
+                    isRead
+                        ? "#f5f7fb"
+                        : "#eef6ff";
+
+
+                const statusText =
+                    isRead
+                        ? "Read"
+                        : "Unread";
+
+
+                const statusColor =
+                    isRead
+                        ? "#047857"
+                        : "#c2410c";
+
+
                 html += `
 
-                    <div class="item-card">
+                    <div
+                        class="item-card"
+                        style="
+                            background:${background};
+                        "
+                    >
 
                         <h3>
                             ${notification.title}
@@ -1403,9 +1457,14 @@ async function loadMyNotifications() {
                             <strong>
                                 Date:
                             </strong>
-                            ${new Date(
+
+                            ${
                                 notification.created_at
-                            ).toLocaleString()}
+                                    ? new Date(
+                                        notification.created_at
+                                      ).toLocaleString("en-IN")
+                                    : "—"
+                            }
                         </p>
 
                         <p>
@@ -1413,12 +1472,53 @@ async function loadMyNotifications() {
                                 Status:
                             </strong>
 
-                            ${notification.is_read
-                                ? "Read"
-                                : "Unread"
-                            }
+                            <span
+                                style="
+                                    display:inline-block;
+                                    margin-left:5px;
+                                    padding:5px 10px;
+                                    border-radius:999px;
+                                    background:#ffffff;
+                                    color:${statusColor};
+                                    font-weight:700;
+                                    font-size:13px;
+                                "
+                            >
+                                ${statusText}
+                            </span>
 
                         </p>
+
+                        ${
+                            isRead
+
+                                ? `
+                                    <span
+                                        style="
+                                            display:inline-block;
+                                            margin-top:10px;
+                                            color:#047857;
+                                            font-weight:700;
+                                        "
+                                    >
+                                        ✓ Already Read
+                                    </span>
+                                  `
+
+                                : `
+                                    <button
+                                        class="action-btn"
+                                        type="button"
+                                        onclick="
+                                            markNotificationAsRead(
+                                                ${notification.notification_id}
+                                            )
+                                        "
+                                    >
+                                        Mark as Read
+                                    </button>
+                                  `
+                        }
 
                     </div>
 
@@ -1434,6 +1534,7 @@ async function loadMyNotifications() {
         );
 
         showContent(html);
+
 
     } catch (error) {
 
