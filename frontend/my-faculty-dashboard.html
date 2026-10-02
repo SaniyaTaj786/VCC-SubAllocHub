@@ -1857,6 +1857,25 @@ async function loadMyTimetable() {
             " timetable entry/entries found."
         );
 
+        function formatDate(dateValue) {
+
+    if (!dateValue) {
+        return "—";
+    }
+
+    const date = new Date(dateValue);
+
+    if (isNaN(date.getTime())) {
+        return dateValue;
+    }
+
+    return date.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
+}
+
         showContent(html);
 
     } catch (error) {
