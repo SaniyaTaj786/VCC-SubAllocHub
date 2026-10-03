@@ -1116,50 +1116,62 @@ body::after {
    ===================================================== */
 
 .future-scope-section {
-    padding: 80px 20px;
+    padding:
+        85px 20px;
+
     background:
         linear-gradient(
             135deg,
-            rgba(5, 32, 21, 0.96),
-            rgba(14, 55, 34, 0.96)
+            #061b13 0%,
+            #0f3823 48%,
+            #071a13 100%
         );
 }
 
 .future-scope-container {
     max-width: 1200px;
+
     margin: 0 auto;
 }
 
 .future-scope-heading {
-    text-align: center;
     max-width: 850px;
-    margin: 0 auto 40px;
+
+    margin:
+        0 auto 45px;
+
+    text-align: center;
 }
 
 .future-scope-badge {
     display: inline-block;
 
-    padding: 8px 16px;
+    padding:
+        8px 16px;
+
+    margin-bottom: 15px;
 
     border-radius: 999px;
 
-    background: rgba(248, 214, 109, 0.15);
+    background:
+        rgba(248,214,109,0.14);
 
-    color: #f8d66d;
+    color:
+        #f8d66d;
 
     font-size: 13px;
 
     font-weight: 800;
 
     letter-spacing: 1px;
-
-    margin-bottom: 14px;
 }
 
 .future-scope-heading h2 {
-    margin: 0 0 14px;
+    margin:
+        0 0 14px;
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
     font-size:
         clamp(
@@ -1170,18 +1182,89 @@ body::after {
 }
 
 .future-scope-heading h2 span {
-    color: #65c8ff;
+    color:
+        #62c9ff;
 }
 
 .future-scope-heading p {
     margin: 0;
 
-    color: #d7e4ea;
+    color:
+        #d5e2e8;
 
-    font-size: 16px;
+    font-size:
+        16px;
 
-    line-height: 1.7;
+    line-height:
+        1.7;
 }
+
+
+/* ==============================
+   GROUP TITLE
+   ============================== */
+
+.future-scope-group {
+    margin-bottom: 45px;
+}
+
+.future-group-title {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-bottom: 24px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        21px;
+
+    font-weight:
+        800;
+
+    text-align:
+        center;
+}
+
+.future-group-title span {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width:
+        62px;
+
+    padding:
+        6px 10px;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(98,201,255,0.15);
+
+    color:
+        #62c9ff;
+
+    font-size:
+        12px;
+
+    letter-spacing:
+        0.5px;
+}
+
+
+/* ==============================
+   GRID
+   ============================== */
 
 .future-scope-grid {
     display: grid;
@@ -1189,27 +1272,40 @@ body::after {
     grid-template-columns:
         repeat(
             auto-fit,
-            minmax(280px, 1fr)
+            minmax(270px, 1fr)
         );
 
-    gap: 22px;
+    gap:
+        22px;
 }
 
+
+/* ==============================
+   CARD
+   ============================== */
+
 .future-card {
+    position: relative;
+
+    min-height:
+        285px;
+
+    padding:
+        27px;
+
+    border-radius:
+        20px;
+
     background:
         linear-gradient(
             145deg,
             #fffdf3,
-            #fff0bb
+            #ffefb7
         );
-
-    border-radius: 20px;
-
-    padding: 26px;
 
     border:
         1px solid
-        rgba(255,255,255,0.6);
+        rgba(255,255,255,0.55);
 
     box-shadow:
         0 12px 30px
@@ -1225,56 +1321,174 @@ body::after {
         translateY(-6px);
 
     box-shadow:
-        0 18px 38px
+        0 18px 40px
         rgba(0,0,0,0.25);
 }
 
+
+/* ==============================
+   NUMBER
+   ============================== */
+
+.future-number {
+    position: absolute;
+
+    top:
+        18px;
+
+    right:
+        20px;
+
+    color:
+        rgba(32,77,160,0.18);
+
+    font-size:
+        15px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        1px;
+}
+
+
+/* ==============================
+   ICON
+   ============================== */
+
 .future-icon {
-    width: 54px;
+    width:
+        56px;
 
-    height: 54px;
+    height:
+        56px;
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    border-radius: 14px;
+    margin-bottom:
+        18px;
+
+    border-radius:
+        15px;
 
     background:
         linear-gradient(
             145deg,
-            #704700,
-            #b57a00
+            #714800,
+            #b77b00
         );
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
-    font-size: 25px;
+    font-size:
+        25px;
 
-    margin-bottom: 18px;
+    box-shadow:
+        0 8px 18px
+        rgba(90,54,0,0.22);
 }
+
+
+/* ==============================
+   HEADING
+   ============================== */
 
 .future-card h3 {
-    color: #204da0;
+    margin:
+        0 0 10px;
 
-    font-size: 20px;
+    color:
+        #214da0;
 
-    line-height: 1.35;
+    font-size:
+        19px;
 
-    margin-bottom: 10px;
+    line-height:
+        1.35;
 }
+
+
+/* ==============================
+   DESCRIPTION
+   ============================== */
 
 .future-card p {
-    color: #294158;
+    margin:
+        0;
 
-    font-size: 15px;
+    color:
+        #294158;
 
-    line-height: 1.7;
+    font-size:
+        15px;
 
-    margin: 0;
+    line-height:
+        1.7;
 }
+
+
+/* ==============================
+   ADVANCED SECTION
+   ============================== */
+
+.advanced-group {
+    margin-top:
+        10px;
+}
+
+
+/* ==============================
+   NOTE
+   ============================== */
+
+.future-scope-note {
+    margin-top:
+        20px;
+
+    padding:
+        24px;
+
+    border-radius:
+        18px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.12);
+
+    color:
+        #dce8ed;
+
+    text-align:
+        center;
+
+    font-size:
+        15px;
+
+    line-height:
+        1.7;
+}
+
+.future-scope-note strong {
+    color:
+        #f8d66d;
+}
+
+
+/* ==============================
+   MOBILE
+   ============================== */
 
 @media (max-width: 700px) {
 
@@ -1283,8 +1497,20 @@ body::after {
             60px 15px;
     }
 
+    .future-group-title {
+        flex-direction:
+            column;
+
+        gap:
+            8px;
+    }
+
     .future-card {
-        padding: 22px;
+        min-height:
+            auto;
+
+        padding:
+            23px;
     }
 
 }
@@ -3163,157 +3389,460 @@ html[data-theme="light"] .password-toggle:hover {
             </h2>
 
             <p>
-                SubAlloc Hub can be further enhanced with intelligent
-                automation, mobile accessibility, better academic
-                integration, advanced analytics and wider institutional
-                support.
+                The current system can be extended with additional
+                faculty services, improved request management,
+                communication features, intelligent allocation and
+                larger institutional support.
             </p>
 
         </div>
 
 
-        <div class="future-scope-grid">
+        <!-- =================================================
+             INITIAL / PRACTICAL FUTURE SCOPE
+             ================================================= -->
+
+        <div class="future-scope-group">
+
+            <div class="future-group-title">
+                <span>01–10</span>
+                Practical Future Enhancements
+            </div>
 
 
-            <!-- 1 -->
-
-            <article class="future-card">
-
-                <div class="future-icon">
-                    🤖
-                </div>
-
-                <h3>
-                    AI/ML-Based Intelligent
-                    Substitution Suggestions
-                </h3>
-
-                <p>
-                    Future versions can use Artificial Intelligence
-                    and Machine Learning to provide more intelligent
-                    substitution suggestions based on faculty
-                    availability, workload, previous allocations
-                    and substitution patterns.
-                </p>
-
-            </article>
+            <div class="future-scope-grid">
 
 
-            <!-- 2 -->
+                <!-- 01 -->
 
-            <article class="future-card">
+                <article class="future-card">
 
-                <div class="future-icon">
-                    📱
-                </div>
+                    <div class="future-icon">
+                        📝
+                    </div>
 
-                <h3>
-                    Mobile Application
-                    for Faculty and Admins
-                </h3>
+                    <div class="future-number">
+                        01
+                    </div>
 
-                <p>
-                    A dedicated mobile application can provide
-                    faculty members and administrators with easier
-                    access to attendance, timetable information,
-                    substitution assignments and notifications.
-                </p>
+                    <h3>
+                        Faculty Self Attendance
+                    </h3>
 
-            </article>
+                    <p>
+                        Faculty members can mark their own daily
+                        attendance directly from their dashboard.
+                    </p>
 
-
-            <!-- 3 -->
-
-            <article class="future-card">
-
-                <div class="future-icon">
-                    📅
-                </div>
-
-                <h3>
-                    Academic Calendar and
-                    Leave Management Integration
-                </h3>
-
-                <p>
-                    Integration with the academic calendar and
-                    leave management system can automatically
-                    consider approved leave, holidays and
-                    institutional schedules during substitution
-                    planning.
-                </p>
-
-            </article>
+                </article>
 
 
-            <!-- 4 -->
+                <!-- 02 -->
 
-            <article class="future-card">
+                <article class="future-card">
 
-                <div class="future-icon">
-                    📊
-                </div>
+                    <div class="future-icon">
+                        🙋
+                    </div>
 
-                <h3>
-                    Advanced Analytics and
-                    Performance Insights
-                </h3>
+                    <div class="future-number">
+                        02
+                    </div>
 
-                <p>
-                    Future analytics can provide deeper insights
-                    into substitution frequency, faculty workload,
-                    allocation patterns and other performance
-                    indicators for better academic planning.
-                </p>
+                    <h3>
+                        Substitution Request
+                    </h3>
 
-            </article>
+                    <p>
+                        Faculty can request a substitute for their
+                        class and send the request directly to
+                        the Admin.
+                    </p>
 
-
-            <!-- 5 -->
-
-            <article class="future-card">
-
-                <div class="future-icon">
-                    ☁️
-                </div>
-
-                <h3>
-                    Multi-Institution
-                    Cloud Expansion
-                </h3>
-
-                <p>
-                    The platform can be expanded into a scalable
-                    cloud solution supporting multiple institutions,
-                    while keeping each institution's faculty,
-                    timetable, attendance and substitution data
-                    properly separated.
-                </p>
-
-            </article>
+                </article>
 
 
-            <!-- 6 -->
+                <!-- 03 -->
 
-            <article class="future-card">
+                <article class="future-card">
 
-                <div class="future-icon">
-                    ⚙️
-                </div>
+                    <div class="future-icon">
+                        ✅
+                    </div>
 
-                <h3>
-                    Enhanced Room Allocation
-                    and Conflict Handling
-                </h3>
+                    <div class="future-number">
+                        03
+                    </div>
 
-                <p>
-                    Future versions can introduce more advanced
-                    room allocation and conflict handling by
-                    considering room availability, timetable
-                    conflicts and additional scheduling constraints.
-                </p>
+                    <h3>
+                        Admin Approval
+                    </h3>
 
-            </article>
+                    <p>
+                        Admin can review substitution requests
+                        and approve or reject them before assigning
+                        a substitute.
+                    </p>
+
+                </article>
+
+
+                <!-- 04 -->
+
+                <article class="future-card">
+
+                    <div class="future-icon">
+                        🕒
+                    </div>
+
+                    <div class="future-number">
+                        04
+                    </div>
+
+                    <h3>
+                        Faculty Availability
+                    </h3>
+
+                    <p>
+                        Faculty can specify their available and
+                        unavailable periods so the system can
+                        consider their availability.
+                    </p>
+
+                </article>
+
+
+                <!-- 05 -->
+
+                <article class="future-card">
+
+                    <div class="future-icon">
+                        👤
+                    </div>
+
+                    <div class="future-number">
+                        05
+                    </div>
+
+                    <h3>
+                        Manual Substitute Selection
+                    </h3>
+
+                    <p>
+                        Admin can manually select a suitable
+                        substitute when automatic allocation
+                        is not appropriate.
+                    </p>
+
+                </article>
+
+
+                <!-- 06 -->
+
+                <article class="future-card">
+
+                    <div class="future-icon">
+                        👍
+                    </div>
+
+                    <div class="future-number">
+                        06
+                    </div>
+
+                    <h3>
+                        Substitute Acceptance
+                    </h3>
+
+                    <p>
+                        Faculty can accept an assigned substitution
+                        or communicate that they are unable to
+                        handle the assigned class.
+                    </p>
+
+                </article>
+
+
+                <!-- 07 -->
+
+                <article class="future-card">
+
+                    <div class="future-icon">
+                        🔄
+                    </div>
+
+                    <div class="future-number">
+                        07
+                    </div>
+
+                    <h3>
+                        Automatic Reallocation
+                    </h3>
+
+                    <p>
+                        If an assigned substitute becomes unavailable,
+                        the system can automatically search for
+                        another suitable faculty member.
+                    </p>
+
+                </article>
+
+
+                <!-- 08 -->
+
+                <article class="future-card">
+
+                    <div class="future-icon">
+                        📲
+                    </div>
+
+                    <div class="future-number">
+                        08
+                    </div>
+
+                    <h3>
+                        Email / Mobile Notifications
+                    </h3>
+
+                    <p>
+                        Important substitution, attendance and
+                        approval updates can be delivered through
+                        email and mobile notifications.
+                    </p>
+
+                </article>
+
+
+                <!-- 09 -->
+
+                <article class="future-card">
+
+                    <div class="future-icon">
+                        📄
+                    </div>
+
+                    <div class="future-number">
+                        09
+                    </div>
+
+                    <h3>
+                        Leave Request Management
+                    </h3>
+
+                    <p>
+                        Faculty can submit leave requests through
+                        the system, while Admin can approve or
+                        reject those requests.
+                    </p>
+
+                </article>
+
+
+                <!-- 10 -->
+
+                <article class="future-card">
+
+                    <div class="future-icon">
+                        ⚖️
+                    </div>
+
+                    <div class="future-number">
+                        10
+                    </div>
+
+                    <h3>
+                        Better Workload Tracking
+                    </h3>
+
+                    <p>
+                        The system can provide clearer workload
+                        information to help distribute substitution
+                        duties more evenly among faculty.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ADVANCED FUTURE SCOPE
+             ================================================= -->
+
+        <div class="future-scope-group advanced-group">
+
+            <div class="future-group-title">
+                <span>11–16</span>
+                Advanced Future Enhancements
+            </div>
+
+
+            <div class="future-scope-grid">
+
+
+                <!-- 11 -->
+
+                <article class="future-card">
+
+                    <div class="future-icon">
+                        🤖
+                    </div>
+
+                    <div class="future-number">
+                        11
+                    </div>
+
+                    <h3>
+                        AI/ML-Based Intelligent Allocation
+                    </h3>
+
+                    <p>
+                        Artificial Intelligence and Machine Learning
+                        can be used to provide more intelligent
+                        substitution suggestions using historical
+                        allocation and workload data.
+                    </p>
+
+                </article>
+
+
+                <!-- 12 -->
+
+                <article class="future-card">
+
+                    <div class="future-icon">
+                        📱
+                    </div>
+
+                    <div class="future-number">
+                        12
+                    </div>
+
+                    <h3>
+                        Mobile Application / PWA
+                    </h3>
+
+                    <p>
+                        A dedicated mobile application or PWA can
+                        provide easier access to timetables, attendance,
+                        substitutions and notifications.
+                    </p>
+
+                </article>
+
+
+                <!-- 13 -->
+
+                <article class="future-card">
+
+                    <div class="future-icon">
+                        📅
+                    </div>
+
+                    <div class="future-number">
+                        13
+                    </div>
+
+                    <h3>
+                        Academic Calendar Integration
+                    </h3>
+
+                    <p>
+                        Academic calendars, holidays and approved
+                        leave can be integrated so scheduling decisions
+                        automatically consider institutional dates.
+                    </p>
+
+                </article>
+
+
+                <!-- 14 -->
+
+                <article class="future-card">
+
+                    <div class="future-icon">
+                        📊
+                    </div>
+
+                    <div class="future-number">
+                        14
+                    </div>
+
+                    <h3>
+                        Advanced Analytics
+                    </h3>
+
+                    <p>
+                        Future versions can provide deeper analytics
+                        for faculty workload, substitution patterns,
+                        department activity and performance trends.
+                    </p>
+
+                </article>
+
+
+                <!-- 15 -->
+
+                <article class="future-card">
+
+                    <div class="future-icon">
+                        ☁️
+                    </div>
+
+                    <div class="future-number">
+                        15
+                    </div>
+
+                    <h3>
+                        Multi-Institution Expansion
+                    </h3>
+
+                    <p>
+                        SubAlloc Hub can be expanded to support
+                        multiple departments and institutions while
+                        keeping each institution's data separated.
+                    </p>
+
+                </article>
+
+
+                <!-- 16 -->
+
+                <article class="future-card">
+
+                    <div class="future-icon">
+                        ⚙️
+                    </div>
+
+                    <div class="future-number">
+                        16
+                    </div>
+
+                    <h3>
+                        Enhanced Room & Conflict Handling
+                    </h3>
+
+                    <p>
+                        Advanced scheduling can consider room
+                        availability, timetable conflicts and
+                        additional institutional scheduling rules.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </div>
+
+
+        <div class="future-scope-note">
+
+            <strong>Future Vision:</strong>
+
+            SubAlloc Hub can gradually evolve from a faculty
+            substitution management system into a broader academic
+            scheduling and faculty management platform.
 
         </div>
 
